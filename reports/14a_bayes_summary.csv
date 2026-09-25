@@ -1,0 +1,14 @@
+parameter,mean,sd,q05,q95,rhat,ess
+beta_idx_grievance,-0.02894,0.00972,-0.04468,-0.01259,1.0004,4461.0
+beta_idx_modernity,-0.00079,0.01296,-0.02198,0.02076,1.0003,5262.0
+beta_idx_demographic_pressure,0.00549,0.00493,-0.00249,0.01366,1.0003,11868.0
+beta_pct_employment_agriculture,-0.00651,0.00659,-0.01724,0.00443,1.0004,9892.0
+beta_pct_maghiari,-0.01528,0.00607,-0.02516,-0.00526,1.0001,9411.0
+beta_pct_romi,-0.00559,0.0051,-0.01371,0.00281,1.0,9277.0
+beta_gva_deindustrial_index,-0.0102,0.00436,-0.01717,-0.00287,1.0006,10551.0
+beta_long_term_unemployment_rate,0.01533,0.00598,0.00542,0.02499,1.0005,6743.0
+alpha_Arcul Identitar,0.08418,0.01569,0.05851,0.10995,,
+alpha_Campia Uitata,0.11757,0.00885,0.10261,0.13159,,
+alpha_Centrele Dinamice,0.07644,0.01156,0.05738,0.09547,,
+alpha_Insula Capitalei,-0.00047,0.03238,-0.05331,0.05274,,
+alpha_Moldova Profunda,0.07386,0.02384,0.03528,0.11347,,

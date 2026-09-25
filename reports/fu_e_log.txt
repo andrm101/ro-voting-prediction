@@ -1,0 +1,49 @@
+﻿=================================================================
+Follow-up E â€” Annulment Effect on Vote-Choice Composition
+=================================================================
+
+  n = 42  counties
+
+  Mean nationalist uplift (2024â†’2025): +4.22 pp  (SD=2.22 pp)
+  Mean Georgescu fraction of 2024 bloc: 0.592  (SD=0.044)
+
+  Model A (structural only): RÂ²=0.541  n=42
+
+  FWL partial corr (Georgescu fraction | controls) â†’ nationalist uplift residuals:
+    r = -0.2585  p = 0.0984
+
+  Model B (+ Georgescu fraction):
+    RÂ²=0.572  adj-RÂ²=0.451
+    Î²_georgescu_fraction = -0.0049  SE=0.0035  p=0.1645
+    95% CI: [-0.0119, 0.0020]
+
+  >> No significant composition annulment effect (p=0.165)
+
+  Secondary â€” Simion R1 share model:
+    Î²_georgescu_fraction = -0.0009  p=0.9226  RÂ²=0.789
+
+  Implied effect on uplift: -0.02 pp per +1 SD in Georgescu fraction
+
+  Saved -> 13b_annulment_composition.png
+  Saved -> reports/13b_annulment_composition.csv
+
+  Top 5 counties with highest positive uplift surprise:
+    judet  georgescu_fraction  nationalist_uplift  resid_A
+Satu Mare            0.550379            0.097512 0.043611
+MehedinÈ›i            0.485130            0.095589 0.033095
+      Olt            0.594783            0.076467 0.018339
+     Alba            0.578103            0.055952 0.017068
+     Arad            0.574585            0.061233 0.015982
+
+  Top 5 counties with largest negative uplift surprise:
+    judet  georgescu_fraction  nationalist_uplift   resid_A
+   VÃ¢lcea            0.551823            0.031221 -0.019273
+Hunedoara            0.545117            0.031591 -0.020587
+   BrÄƒila            0.636106            0.038560 -0.020953
+    Bihor            0.590307            0.031393 -0.025132
+ IalomiÈ›a            0.606603            0.026152 -0.031786
+
+=================================================================
+FOLLOW-UP E COMPLETE
+=================================================================
+

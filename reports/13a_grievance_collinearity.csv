@@ -1,0 +1,6 @@
+statistic,value
+Pearson r (grievance vs deindustrialisation),-0.1779
+p-value,0.2597
+R² grievance alone (AUR OLS),0.0124
+R² deindustrialisation alone (AUR OLS),0.1408
+R² both (AUR OLS),0.1429

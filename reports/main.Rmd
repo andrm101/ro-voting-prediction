@@ -1,0 +1,1460 @@
+---
+title: |
+  Structural Roots of Electoral Fragmentation in Romania:\
+  A County-Level Analysis of the 2024–2025 Electoral Cycle
+subtitle: "MSc Data Science — Quantitative Political Analysis"
+author: "Andrei Manoloiu"
+date: "`r format(Sys.Date(), '%B %Y')`"
+output:
+  bookdown::pdf_document2:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    latex_engine: xelatex
+    fig_caption: true
+    keep_tex: false
+bibliography: ../references/references.bib
+csl: ../references/apa.csl
+link-citations: true
+fontsize: 11pt
+geometry: "left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm"
+header-includes:
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{float}
+  - \usepackage{dcolumn}
+  - \floatplacement{figure}{H}
+---
+
+```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(
+  echo    = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  fig.pos = "H",
+  out.width = "100%"
+)
+
+library(dplyr)
+library(tibble)
+library(readr)
+library(knitr)
+library(kableExtra)
+
+# Paths relative to this file
+# Resolve project root regardless of working directory at knit time
+.input <- knitr::current_input(dir = FALSE)
+if (nzchar(.input)) {
+  ROOT <- normalizePath(file.path(dirname(.input), ".."), mustWork = FALSE)
+} else {
+  ROOT <- normalizePath("..", mustWork = FALSE)
+}
+FIG_DIR <- file.path(ROOT, "figures")
+REP_DIR <- file.path(ROOT, "reports")
+```
+
+\newpage
+
+# Abstract {-}
+
+Romania's 2024–2025 electoral cycle produced historic parliamentary fragmentation
+and the unexpected rise of nationalist-populist candidates, culminating in a
+second-round presidential contest between George Simion and Elena Lasconi-Dan.
+Using official county-level (*județ*) data for all 42 NUTS-3 units and a
+multi-method analytical framework, this paper documents seven empirical findings.
+
+(1) Romanian counties organise into five structurally coherent voter-profile
+clusters stable under alternative $k \in \{4,6\}$ specifications (ARI $\geq 0.72$);
+deindustrialisation is the dominant cross-party structural predictor in a Dirichlet
+regression of vote share composition (five terms survive Benjamini-Hochberg FDR
+correction at $q = 0.10$); and ethnic composition is the sharpest single-party
+predictor. The annulment of Georgescu's 2024 result left no detectable county-level
+mobilisation fingerprint on Simion R1 turnout ($r_{\text{partial}} = -0.123$,
+$p = 0.437$).
+(2) The nationalist-populist electoral bloc defined by Georgescu's 2024 first-round
+support shows a partial county-level correlation of $r = 0.770$ with Simion's 2025
+first-round support after controlling for eight structural confounders
+(Robustness Value = 0.547), confirming bloc persistence independent of geography.
+(3) AUR's 2020–2024 Senate swing is substantially explained by demographic pressure
+($R^2 = 0.585$); under a centred log-ratio compositional specification the sign
+and significance pattern is directionally consistent, validating the finding under
+Aitchison geometry. A spatial lag model (GM two-stage, $\hat{\rho} = 0.640$) raises
+pseudo-$R^2$ to 0.707 and confirms that AUR mobilisation has a neighbourhood
+contagion component beyond shared structural conditions.
+(4) Romania's permanent electoral rolls inflate by a mean of 16.4\% relative to
+the estimated adult resident population, almost entirely predicted by emigration
+rates ($R^2 = 0.680$); ghost electorate inflation deflates reported turnout by
+a mean of 9.1 percentage points but does not independently predict cross-county
+turnout variation once structural controls are included ($p = 0.262$).
+(5) Dan's 2025 runoff consolidation of the anti-Simion pool was most efficient
+in ethnically mixed Transylvania (ratio = 0.953) and weakest in the most deprived
+flatland cluster (0.823), consistent with a defensive rather than programmatic coalition.
+(6) A Bayesian hierarchical reformulation of the AUR swing model (4 chains
+$\times$ 4000 draws, nutpie backend; max R-hat $= 1.001$, min ESS $= 4{,}461$)
+confirms long-term unemployment as the sole positive structural predictor of AUR
+growth (posterior mean $= +0.015$, 90\% CI $[+0.005, +0.025]$) while revealing
+that higher composite grievance is associated with *lower* AUR swing
+(posterior mean $= -0.029$, 90\% CI $[-0.045, -0.013]$) — a paradox resolved
+by distinguishing aspirationally disappointed deindustrialised counties from
+the worst-off counties where electoral fatalism suppresses nationalist mobilisation.
+Under the 2025 structural geography and calibrated bloc transfer rates, a
+conditional projection places the mean Simion second-round share at 47.1\%
+(90\% PI: 44.9\%–49.2\%), with 9 of 42 counties in genuine uncertainty.
+
+**Keywords:** Romanian elections, Dirichlet regression, electoral geography,
+deindustrialisation, spatial autocorrelation, ghost electorate, compositional data,
+Bayesian hierarchical model, conditional projection.
+
+\newpage
+
+# Introduction
+
+Romania's December 2024 parliamentary elections and the subsequent 2025 presidential
+re-run produced an electoral landscape with no precedent in the post-communist period.
+The radical-right Alliance for Romania's Unity (AUR) consolidated its position as
+the second largest parliamentary force; the nationalist SOS România entered parliament
+for the first time; and Călin Georgescu's first-round presidential result —
+subsequently annulled by the Constitutional Court — demonstrated the mobilisation
+potential of diffuse online-networked populism outside traditional party structures.
+
+Two questions motivate this study. *What structural conditions differentiate counties
+that produced high nationalist-populist vote shares from those that did not?* And
+*to what extent does county-level support for Georgescu in November 2024 predict
+support for George Simion in May 2025, net of shared structural characteristics?*
+
+We approach both questions with compositional and partial-correlation methods that
+respect the constrained nature of vote shares and guard against confounding through
+systematic covariate adjustment.
+
+The paper proceeds as follows. Section \@ref(sec:data) describes the data sources
+and variable construction. Section \@ref(sec:clustering) presents the voter profile
+typology. Section \@ref(sec:dirichlet) reports the Dirichlet regression of party
+vote shares. Section \@ref(sec:transfer) quantifies the Georgescu–Simion transfer.
+Section \@ref(sec:temporal) analyses the 2020–2024 parliamentary swing and
+the 2024–2025 presidential arc. Section \@ref(sec:ghost) examines the ghost
+electorate. Section \@ref(sec:spatial) provides spatial robustness checks.
+Section \@ref(sec:confessional) decomposes the aggregate Magyar share predictor
+into seven denomination z-scores and tests confessional mobilisation hypotheses.
+Section \@ref(sec:robustness) assesses sensitivity to the cluster granularity choice.
+Section \@ref(sec:projections) develops conditional projections under three
+explicit structural assumptions. Section \@ref(sec:discussion) discusses the
+findings in the context of comparative populism research.
+Section \@ref(sec:conclusion) concludes with limitations and directions for
+future work.
+
+# Data and Measurement {#sec:data}
+
+## Electoral outcomes
+
+Parliamentary vote shares for the December 2024 elections were obtained from the
+Permanent Electoral Authority (AEP). We model eight compositional outcomes:
+AUR, PSD, PNL, USR, UDMR, SOS, POT, and a residual *Other* category.
+All shares were reweighted to sum to exactly one after excluding invalid ballots.
+Presidential first-round results for Călin Georgescu (November 2024) and
+George Simion (May 2025) were sourced from the same authority.
+
+## Structural predictors
+
+County-level structural characteristics were assembled from three sources:
+
+- **Eurostat NUTS-3 database** (2022 reference year): GDP per capita, unemployment
+  rate, household income (PPS), long-term unemployment rate, industry GVA share,
+  early school leaving, tertiary education, net and temporary emigration rates,
+  infrastructure density, and religious/ethnic composition from the 2021 census.
+- **Romanian National Statistics Institute (INS)**: population density,
+  age structure, employment by sector, healthcare and school unit density,
+  urbanisation, and household size.
+- **Derived indices**: The *grievance index* ($\overline{z}$ of unemployment,
+  poverty risk, early school leaving, and long-term unemployment, reversed for
+  income), the *modernity index* ($\overline{z}$ of tertiary education, internet
+  use, and GDP per capita), and the *deindustrialisation index*
+  (industry GVA share 2010 − industry GVA share 2022, clipped at zero).
+
+The deindustrialisation index captures counties where manufacturing activity has
+contracted since 2010, consistent with the spatial polarisation literature on
+post-communist industrial legacy [@Nölke2009; @Bohle2012].
+
+## Variable transformation
+
+All continuous structural predictors were standardised ($z$-scores) to permit
+direct comparison of coefficient magnitudes. Compositional vote shares were
+closed to the unit simplex and passed to `DR_data()` for Dirichlet regression,
+which applies a small perturbation to exact zeros and ones [@Maier2014].
+
+# Voter Profile Typology {#sec:clustering}
+
+## Method
+
+We apply Ward hierarchical clustering [@Ward1963] in the eight-dimensional PCA
+space of 34 standardised structural features. PCA retains components explaining
+at least 80% of total variance (eight components in this dataset). Clustering in
+PCA space reduces the influence of highly correlated raw features without
+subjective variable exclusion.
+
+The number of clusters was selected by bootstrap stability analysis
+[@Hennig2007]: we define stability as the mean adjusted Rand Index (ARI) between
+pairs of bootstrap cluster solutions. A threshold of ARI $\geq 0.85$ is used to
+classify a partition as *strongly stable*. The gap statistic [@Tibshirani2001]
+consistently returned $k = 1$ for this dataset, which we attribute to the
+smooth continuum of development gradients across Romanian counties; we therefore
+rely on bootstrap ARI as the primary selection criterion.
+
+$k = 5$ emerges as the smallest strongly stable partition
+(bootstrap ARI = 0.854) and is preferred on theoretical grounds over $k = 3$,
+which conflates structurally distinct regions.
+
+## Results
+
+```{r fig-dendrogram, fig.cap="Ward hierarchical clustering dendrogram — 34 structural features, $k=5$ cut. County labels coloured by cluster assignment."}
+knitr::include_graphics(file.path(FIG_DIR, "06c_dendrogram_final.png"))
+```
+
+```{r fig-biplot, fig.cap="PCA biplot with $k=5$ cluster overlay. Arrows indicate the six features with highest PC1 loadings. PC1 (horizontal) separates peripheral-agricultural from urban-industrial counties; PC2 (vertical) separates the ethnic-mosaic northwest."}
+knitr::include_graphics(file.path(FIG_DIR, "06c_pca_biplot_final.png"))
+```
+
+The five clusters are described below and summarised in Figure \@ref(fig:fig-heatmap).
+
+**C1 — Moldova Profundă** (*n* = 6): Bacău, Botoșani, Iași, Neamț, Suceava, Vaslui.
+The highest agricultural employment (+1.38 SD), lowest GDP (−0.81 SD), and
+highest emigration rates. The defining structural signature is precarity through
+agricultural marginalisation rather than industrial collapse.
+
+**C2 — Câmpia Uitată** (*n* = 17): The largest cluster, covering most of
+Wallachia and Dobrogea. Moderate GDP, lower deindustrialisation than expected
+(−0.47 SD) because energy and petrochemical rents have maintained a residual
+industry GVA share. The structural analogue to the Western European "left-behind"
+periphery [@Rodríguez-Pose2018], but attenuated by sectoral rents.
+
+**C3 — Insula Capitalei** (*n* = 2): București and Ilfov. An extreme outlier
+on GDP (+4.24 SD), household income (+3.98 SD), and urbanisation (+1.87 SD).
+Represents the capital-region concentration typical of Eastern European
+developmental states [@Iammarino2019].
+
+**C4 — Centrele Dinamice** (*n* = 9): Alba, Arad, Brașov, Caraș-Severin,
+Cluj, Constanța, Hunedoara, Sibiu, Timiș. High industry GVA share (+1.42 SD)
+reflecting FDI-led automotive and electronics manufacturing. The one cluster
+where industrial employment is growing rather than contracting.
+
+**C5 — Arcul Identitar** (*n* = 8): Bihor, Bistrița-Năsăud, Covasna, Harghita,
+Maramureș, Mureș, Satu Mare, Sălaj. Distinguished by ethnic diversity
+(Magyar-speaking minority, Reformed and Greco-Catholic denominations) and moderate
+deindustrialisation (+0.60 SD). The UDMR ethnic bloc vote is structurally encoded
+in this cluster.
+
+```{r fig-heatmap, fig.cap="Z-scored cluster means on 24 key structural features. Red = above-average, blue = below-average."}
+knitr::include_graphics(file.path(FIG_DIR, "06c_heatmap_final.png"))
+```
+
+## Cluster validation
+
+One-way ANOVA on held-out electoral variables (not used in clustering) confirms
+significant between-cluster variation for all major parties
+(AUR: $F = 9.11$, $p < 0.001$; PSD: $F = 12.34$, $p < 0.001$;
+USR: $F = 13.96$, $p < 0.001$; UDMR: $F = 12.15$, $p < 0.001$).
+PNL is the sole exception ($F = 0.50$, $p = 0.74$), consistent with its
+cross-regional catch-all positioning.
+
+```{r fig-vote-profiles, fig.cap="Cluster-mean electoral profiles for held-out 2024 parliamentary and presidential variables."}
+knitr::include_graphics(file.path(FIG_DIR, "06c_vote_profiles_final.png"))
+```
+
+# Compositional Analysis of Vote Shares {#sec:dirichlet}
+
+## Dirichlet regression
+
+Vote shares constitute compositional data: they are strictly positive, sum to one,
+and carry information only as ratios relative to each other
+[@Aitchison1986; @Pawlowsky-Glahn2015]. Separate OLS regressions on each party
+violate the simplex constraint and ignore cross-party covariance. We instead
+model the joint composition $\mathbf{Y} = (y_1, \ldots, y_8)$ as a Dirichlet
+response:
+
+$$\mathbf{Y} \sim \text{Dir}(\boldsymbol{\alpha}), \quad
+\alpha_k = \mu_k \cdot \phi, \quad
+\log\!\left(\frac{\mu_k}{\mu_K}\right) = \mathbf{x}^\top \boldsymbol{\beta}_k$$
+
+where $\phi$ is a common precision parameter shared across categories
+("common" parameterisation; @Maier2014), $K = 8$ (*Other*) is the reference
+category, and $\mathbf{x}$ contains standardised structural predictors.
+Coefficients are on the additive log-ratio (ALR) scale: a positive $\hat{\beta}_k$
+indicates that a one-SD increase in the predictor is associated with a higher
+share for party $k$ *relative to* the Other category.
+
+We fit two nested models:
+
+- **M1**: $\mathbf{Y} \sim$ grievance + modernity + \% Magyar + deindustrialisation
+  ($p = 4$, 40 parameters)
+- **M2**: M1 + demographic pressure + \% Roma + long-term unemployment
+  ($p = 7$, 64 parameters)
+
+Given $N = 42$, M1 represents the upper boundary of estimable model complexity
+for full standard-error recovery. M2 is included as a model-comparison benchmark
+via likelihood-ratio test; standard errors are unavailable due to Hessian
+non-convergence at this sample size.
+
+```{r dirichlet-fit-table}
+# Build model comparison table from stored results
+fit_tab <- tibble::tribble(
+  ~Model, ~`Log-lik.`, ~AIC,    ~`N params`, ~`LR stat`, ~`LR $p$`, ~`Maddala $R^2$`,
+  "Null", "304.7",    "—",      "8",         "—",         "—",       "—",
+  "M1",   "639.2",   "−1198",   "40",        "334.6",    "<0.001",  "1.000",
+  "M2",   "718.4",   "−1309",   "64",        "492.9",    "<0.001",  "1.000"
+)
+
+knitr::kable(
+  fit_tab,
+  booktabs = TRUE,
+  caption  = "Dirichlet regression model fit statistics. LR stat = $2(\\ell_\\text{full} - \\ell_\\text{null})$. Maddala $R^2 = 1 - \\exp(-\\text{LR}/N)$.",
+  escape   = FALSE
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position", "striped"),
+                            font_size = 10)
+```
+
+## Coefficient results
+
+```{r dirichlet-coef-table}
+coef_df <- readr::read_csv(file.path(REP_DIR, "08a_dirichlet_coefs.csv"),
+                            show_col_types = FALSE)
+
+sig_m1 <- coef_df |>
+  dplyr::filter(model == "M1", term != "(Intercept)", !is.na(p), p < 0.10) |>
+  dplyr::mutate(
+    Party     = sub("t_", "", category),
+    Predictor = dplyr::recode(term,
+      z_grievance    = "Grievance Index",
+      z_modernity    = "Modernity Index",
+      z_magyari      = "\\% Magyar",
+      z_deindustrial = "Deindustrialisation"
+    ),
+    `$\\hat{\\beta}$` = sprintf("%.3f",  estimate),
+    SE                 = sprintf("%.3f",  se),
+    `$z$`             = sprintf("%.2f",  z),
+    `$p$`             = dplyr::case_when(
+      p < 0.001 ~ "<0.001",
+      TRUE      ~ sprintf("%.3f", p)
+    ),
+    Sig = as.character(sig)
+  ) |>
+  dplyr::arrange(p) |>
+  dplyr::select(Party, Predictor, `$\\hat{\\beta}$`, SE, `$z$`, `$p$`, Sig)
+
+knitr::kable(
+  sig_m1,
+  booktabs = TRUE,
+  caption  = "M1 Dirichlet regression: significant predictors ($p < 0.10$), ordered by $p$-value. Coefficients on ALR scale (reference = Other). All predictors standardised.",
+  escape   = FALSE
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position", "striped"),
+                            font_size = 10)
+```
+
+Figure \@ref(fig:fig-dirichlet-coefs) visualises the full M1 coefficient matrix.
+Figure \@ref(fig:fig-dirichlet-fit) assesses model calibration.
+
+```{r fig-dirichlet-coefs, fig.cap="M1 Dirichlet regression coefficients with 95\\% confidence intervals. Coefficients on ALR scale relative to the Other category. Faded points: $p > 0.05$."}
+knitr::include_graphics(file.path(FIG_DIR, "08a_dirichlet_coefs.png"))
+```
+
+```{r fig-dirichlet-fit, fig.cap="M2 fitted vs observed vote shares by party, coloured by voter-profile cluster. Diagonal = perfect calibration."}
+knitr::include_graphics(file.path(FIG_DIR, "08a_dirichlet_fitted_obs.png"))
+```
+
+```{r fig-cluster-pred, fig.cap="M2 predicted mean vote composition at cluster-mean structural values."}
+knitr::include_graphics(file.path(FIG_DIR, "08a_dirichlet_cluster_pred.png"))
+```
+
+## Interpretation
+
+Three patterns stand out.
+
+*Deindustrialisation is the dominant cross-party structural signal.* The
+deindustrialisation index carries a positive and significant coefficient for
+every party except UDMR (Table \@ref(tab:dirichlet-coef-table)), indicating that
+counties that lost industrial share since 2010 have compositionally shifted away
+from the residual Other category toward all named parties. This is not a
+party-specific effect but a general activation of partisan choice in formerly
+industrial territories — consistent with the "places that don't matter" thesis
+[@Rodríguez-Pose2018] applied to the post-communist context.
+
+*Ethnic composition is the sharpest single-party predictor.* The Magyar share
+coefficient for UDMR ($\hat{\beta} = 1.026$, SE = 0.136, $p < 10^{-13}$) dwarfs
+all other point estimates in absolute magnitude, confirming the ethnic bloc
+character of UDMR's electorate. The coefficient is four to five times larger
+than the next-largest significant estimate, consistent with the near-deterministic
+nature of minority bloc voting at the ecological level.
+
+*Modernity differentiates the remaining bloc.* Higher modernity is associated
+with lower SOS share ($\hat{\beta} = -0.326$, $p = 0.027$) and higher UDMR
+share ($\hat{\beta} = 0.675$, $p = 0.021$, reflecting UDMR's urban concentration
+in Transylvanian cities). The grievance index, by contrast, has no significant
+net effect on any party's share once structural predictors are controlled,
+suggesting that the spatial distribution of grievance does not map cleanly onto
+a single electoral outlet.
+
+*PNL's structural invariance* — confirmed by non-significant ANOVA ($F = 0.50$,
+$p = 0.74$) and absence from the significant-predictor table — is consistent with
+its catch-all, brokerage positioning across regional contexts.
+
+## Multiple testing and FDR correction
+
+With 32 non-intercept coefficient tests across 8 outcome categories in M1, familywise
+error control is important. Applying the Benjamini-Hochberg procedure
+[@Benjamini1995] at a false discovery rate threshold of $q = 0.10$, five terms
+survive correction: Magyar share on UDMR ($q < 0.001$), deindustrialisation on
+POT ($q = 0.015$), PSD ($q = 0.067$), USR ($q = 0.096$), and Other ($q = 0.096$).
+The Magyar–UDMR relationship is thus extremely robust to multiplicity adjustment,
+while the deindustrialisation signal for the populist and residual parties survives
+at acceptable FDR. The modernity and grievance coefficients, individually
+suggestive at $p < 0.10$, do not survive FDR correction.
+
+## Leave-one-out cross-validation
+
+To assess predictive generalisability at $N = 42$, we compute leave-one-out
+Aitchison distance between held-out observed composition and M1 predicted composition,
+comparing to a null model that always predicts the grand-mean composition
+[@Aitchison1986]. A LOO skill score of 0 indicates no improvement over the null;
+1 indicates perfect prediction. M1 achieves a skill score of **0.179**
+(mean Aitchison distance: M1 = 3.675, null = 4.474), indicating modest but positive
+predictive skill beyond the mean-composition baseline. The low absolute skill
+reflects the difficulty of extrapolating compositional predictions at this sample
+size — M1 should be interpreted as a structural description rather than a
+forecasting model.
+
+## ALR marginal effects in share space
+
+Because Dirichlet coefficients are on the ALR scale, we translate them to
+percentage-point effects on predicted vote shares by perturbing each predictor
+by $+1$ SD at the grand mean of all predictors and computing the implied
+change in predicted composition. Table \@ref(tab:marginal-effects-table) reports
+these marginal effects.
+
+```{r marginal-effects-table}
+me_df <- readr::read_csv(file.path(REP_DIR, "08c_dirichlet_marginal_effects.csv"),
+                          show_col_types = FALSE)
+
+me_display <- me_df |>
+  dplyr::rename(Predictor = predictor) |>
+  dplyr::mutate(Predictor = gsub("%", "\\\\%", Predictor)) |>
+  dplyr::rename_with(~ gsub("^t_", "", .x), dplyr::starts_with("t_"))
+
+knitr::kable(
+  me_display,
+  booktabs = TRUE,
+  digits   = 2,
+  caption  = "ALR marginal effects: predicted vote share change (pp) per $+1$ SD in each predictor, evaluated at grand-mean structural values. Computed from M1 coefficients.",
+  escape   = FALSE
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position", "striped"),
+                            font_size = 9)
+```
+
+The marginal effects confirm the substantive picture from the ALR coefficients:
+a one-SD increase in the Magyar share is associated with a $+6.3$ pp gain for UDMR
+and roughly offsetting losses of $-3.6$ pp for PSD, $-1.2$ pp for AUR, and $-1.1$ pp
+for POT. Deindustrialisation shifts $+1.3$ pp toward POT and $+0.9$ pp toward PSD
+while modestly compressing AUR ($-0.7$ pp), consistent with POT acting as a more
+localised industrial-protest outlet than AUR in the composition.
+
+## Confessional decomposition {#sec:confessional}
+
+The aggregate Magyar share variable in M1 absorbs what is, in the census data, a
+confessionally bimodal community: ethnic Hungarians in Romania are predominantly
+Reformed Calvinist (≈45\% of Hungarian speakers) and Roman Catholic (≈40\%),
+with a Unitarian minority (≈5\%) concentrated in Harghita.
+We decompose this signal by replacing \texttt{pct\_maghiari} with seven
+denomination z-scores — Orthodox, Roman Catholic, Reformed, Pentecostal,
+Greek Catholic, Unitarian, and a secular bloc (atheist + agnostic + no religion
++ undeclared) — sourced from INS RPL2021 Table 2.5.2, and refit the ALR model.
+
+```{r confessional-lr-table}
+lr_df <- readr::read_csv(file.path(REP_DIR, "15a_confessional_lr_test.csv"),
+                          show_col_types = FALSE)
+knitr::kable(
+  lr_df |>
+    dplyr::transmute(
+      `Model A` = gsub("_", "\\\\_", model_a),
+      `Model B` = gsub("_", "\\\\_", model_b),
+      `$\\chi^2$` = round(chi2, 2),
+      df = df,
+      `$p$` = ifelse(p < 0.001, "$<$0.001", sprintf("%.4f", p))
+    ),
+  booktabs = TRUE, escape = FALSE,
+  caption = "Likelihood-ratio test: confessional model (7 denominations) vs.~original M1 (aggregate Magyar share). df~=~7 extra parameters $\\times$ 7 ALR equations."
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position"), font_size = 9)
+```
+
+```{r fig-confessional-heatmap, fig.cap="Confessional decomposition: ALR coefficient heatmap (7 denominations $\\times$ 7 parties, Other = reference). Cells marked * survive BH-FDR at $q < 0.10$. Colour scale: red = positive association, blue = negative."}
+knitr::include_graphics(file.path(FIG_DIR, "15a_confessional_heatmap.png"))
+```
+
+The LR test favours $M_{\text{conf}}$ strongly ($\chi^2(49) = 138.6$, $p < 0.001$),
+indicating that the confessional structure contains information beyond the single
+aggregate ethnic variable. However, the three pre-registered denominational
+hypotheses are all null after BH-FDR correction.
+
+**H1 (UDMR ~ Reformed and Roman Catholic)** — neither Reformed
+($\hat{\beta} = -0.14$, $p = 0.894$) nor Roman Catholic
+($\hat{\beta} = -0.46$, $p = 0.752$) is individually significant for UDMR,
+despite the model achieving $R^2 = 0.935$. The high $R^2$ alongside individual
+nulls reflects that the Magyar confessional denominations (Reformed, Roman
+Catholic, Unitarian) act collectively as a bloc predictor: when all three are
+included alongside \texttt{pct\_orthodox}, the bloc's shared variance is
+distributed across correlated predictors. The original M1 \texttt{pct\_maghiari}
+performs the same labour more parsimoniously by treating the bloc as a unit.
+
+**H2 (AUR and SOS ~ Pentecostal)** — both null ($p = 0.624$ and $p = 0.292$
+respectively). The Pentecostal mobilisation thesis, influential in comparative
+studies of Latin American and sub-Saharan African evangelical politics
+[@Mudde2017], does not transfer to Romania. At 2.1\% of the national population,
+the Romanian Pentecostal community does not constitute a distinct nationalist
+electoral base at the county level, at least not at the spatial resolution
+available here.
+
+**H3 (USR ~ secular bloc)** — null ($\hat{\beta} = +0.12$, $p = 0.590$).
+The sign is in the hypothesised direction but falls well short of significance.
+Urban concentration (captured by the modernity index) already absorbs most of
+the secular-reformist co-variation at the *județ* level.
+
+**The single FDR-surviving finding** is a negative association between Greek
+Catholic share and SOS vote ($\hat{\beta} = -0.173$, $q = 0.083$).
+Greek Catholic counties — Bistrița-Năsăud, Cluj, Bihor, Satu Mare, Alba —
+cluster in the historically Habsburg Transylvanian arc where the Greek Catholic
+Church played a central role in Romanian national consciousness and literacy
+[@Enyedi2005]. These counties are characterised by higher education, mixed
+ethnicity, and historically more pluralist political culture. The negative
+relationship indicates that where Greek Catholic identity remains electorally
+salient, SOS's sovereignist nationalism finds less fertile ground —
+a confessional-cultural brake on the far-right that does not appear in
+deindustrialisation or grievance indices.
+
+# The Georgescu–Simion Transfer {#sec:transfer}
+
+## Motivation and method
+
+The November 2024 first-round presidential result for Călin Georgescu (annulled)
+and the May 2025 first-round result for George Simion provide a natural
+test of vote-bloc persistence across institutional discontinuity.
+A simple correlation would conflate genuine bloc cohesion with shared structural
+confounders: both candidates drew disproportionately from peripheral,
+deindustrialised counties.
+
+We apply the Frisch-Waugh-Lovell (FWL) theorem [@Frisch1933; @Lovell1963]:
+residualise both the Georgescu vote share and the Simion vote share on the same
+set of structural controls, then compute the correlation of the two residual vectors.
+This partial correlation equals the OLS coefficient from a full regression of
+Simion on Georgescu conditional on all controls.
+
+The control set comprises eight predictors with pairwise VIF $< 10$:
+grievance index, modernity index, demographic pressure index,
+agricultural employment share, Magyar share, Roma share,
+deindustrialisation index, and long-term unemployment rate.
+Composite indices (grievance, modernity, demographic pressure) absorb the
+collinear raw features while reducing the effective parameter count.
+
+Standard errors on the partial correlation are obtained via a
+non-parametric bootstrap ($B = 10\,000$ draws with replacement).
+Sensitivity to unmeasured confounding is assessed using the Robustness Value
+framework of @Cinelli2020.
+
+## Results
+
+```{r fig-transfer-scatter, fig.cap="Partial correlation scatter plot: Simion 2025 R1 residuals vs Georgescu 2024 R1 residuals, after removing shared structural variance (8 controls). Points coloured by voter-profile cluster."}
+knitr::include_graphics(file.path(FIG_DIR, "07a_georgescu_simion_scatter.png"))
+```
+
+The raw county-level correlation between the two vote shares is $r = 0.884$
+($p < 0.001$). After removing shared structural variance, the partial correlation
+is $r_\text{partial} = 0.770$ (95\% bootstrap CI: $[0.649, 0.863]$, $p < 0.0001$).
+The reduction from $r = 0.884$ to $r_\text{partial} = 0.770$ confirms that
+structural confounders explain part of the co-movement, but a substantial
+residual association remains.
+
+```{r transfer-sensitivity-table}
+sens_tab <- tibble::tribble(
+  ~Statistic,                            ~Value,
+  "Raw correlation $r$",                "0.884",
+  "Partial correlation $r_\\text{p}$",  "0.770",
+  "Bootstrap 95\\% CI",                 "[0.649, 0.863]",
+  "$p$-value",                          "<0.0001",
+  "Robustness Value (RV)",              "0.547"
+)
+
+knitr::kable(
+  sens_tab,
+  booktabs = TRUE,
+  caption  = "Georgescu–Simion transfer: summary statistics.",
+  escape   = FALSE,
+  col.names = c("Statistic", "Value")
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position"),
+                            font_size = 10)
+```
+
+The Robustness Value $\text{RV} = 0.547$ indicates that an unmeasured confounder
+would need to explain at least 54.7\% of the residual variance in *both*
+the Georgescu vote *and* the Simion vote (conditional on all eight included controls)
+to fully account for the partial correlation. This is a demanding threshold:
+for comparison, the strongest included control (deindustrialisation index) accounts
+for approximately 30\% of the residual variance in each outcome. The finding is
+therefore robust to moderate omitted variable bias.
+
+```{r fig-transfer-clusters, fig.cap="Cluster-stratified partial correlations and 95\\% bootstrap confidence intervals. The transfer signal is consistent across all clusters, though attenuated in Insula Capitalei ($n=2$, treat with caution)."}
+knitr::include_graphics(file.path(FIG_DIR, "07a_partial_corr_clusters.png"))
+```
+
+## Interpretation
+
+The persistent partial correlation confirms the existence of a spatially
+stable nationalist-populist electoral bloc at the county level, whose cohesion
+is not reducible to the structural predictors included in the model.
+This is consistent with network-mobilisation theories of populist vote
+transfer [@Mudde2017; @Norris2019], in which social and online networks
+sustain bloc identity across candidate discontinuities.
+
+The ecological nature of the data precludes individual-level inference
+(ecological fallacy caveat applies). The finding is best interpreted as evidence
+that *counties* that mobilised strongly for Georgescu subsequently mobilised
+strongly for Simion, net of structural conditions, rather than as evidence
+that individual Georgescu voters switched to Simion.
+
+# Electoral Dynamics 2020–2025 {#sec:temporal}
+
+## Parliamentary swing: 2020 vs 2024
+
+We construct vote-share swing vectors $\Delta Y_{i,p} = s_{i,p,2024} - s_{i,p,2020}$
+for each party $p$ in county $i$, using Senate (Chamber of Senators) results for
+comparability. Vâlcea county is excluded from swing regressions due to missing
+2020 data ($n = 40$ for OLS models). Each party-specific swing is regressed on the
+eight standardised structural controls used throughout this paper, with HC3-robust
+standard errors.
+
+```{r fig-swing-heatmap, fig.cap="Mean party-specific vote share swing (2020--2024 Senate) by voter-profile cluster. Positive values indicate a cluster-level gain between elections."}
+knitr::include_graphics(file.path(FIG_DIR, "09a_swing_heatmap.png"))
+```
+
+```{r fig-aur-swing, fig.cap="AUR 2020--2024 Senate swing vs deindustrialisation index, coloured by cluster. OLS fit shown."}
+knitr::include_graphics(file.path(FIG_DIR, "09a_aur_swing_scatter.png"))
+```
+
+```{r swing-ols-table}
+swing_df <- readr::read_csv(file.path(REP_DIR, "09a_swing_2020_2024.csv"),
+                             show_col_types = FALSE)
+
+swing_tab <- tibble::tribble(
+  ~Party, ~`$R^2$`, ~`adj-$R^2$`, ~`Key predictor ($p<0.10$)`,
+  "AUR",   "0.585", "0.477", "Dem. pressure (β=+0.016, p=0.039); −Magyar share (p=0.001)",
+  "PSD",   "0.315", "0.138", "None (p<0.10)",
+  "PNL",   "0.409", "0.257", "−Modernity (β=−0.048, p=0.037); +Magyar share (p<0.001)",
+  "USR",   "0.533", "0.413", "+Agri. employment (β=+0.017, p=0.007)",
+  "Other", "0.251", "0.058", "+Long-term unemployment (p=0.081)"
+)
+
+knitr::kable(
+  swing_tab,
+  booktabs = TRUE,
+  caption  = "OLS swing models: structural predictors of 2020--2024 Senate vote share change. $n = 40$ (Vâlcea excluded). HC3 standard errors.",
+  escape   = FALSE
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position", "striped"),
+                            font_size = 10)
+```
+
+AUR's geographic swing is the most structurally explicable ($R^2 = 0.585$):
+gains are concentrated in counties with high demographic pressure and low Magyar
+share, consistent with AUR's ethnically homogeneous rural mobilisation strategy.
+USR losses correlate with agricultural employment — the party haemorrhaged most
+in rural peripheries it never fully consolidated — while PNL's moderate $R^2 = 0.409$
+reflects loss of ground in more modern counties, possibly to USR absorption of
+the urban reformist vote.
+
+**Compositional robustness check.** Standard OLS on party-specific swing vectors
+violates the zero-sum constraint ($\sum_p \Delta Y_{i,p} = 0$). We verify
+robustness using a centred log-ratio (CLR) transformation [@Aitchison1986]:
+$\text{clr}(\mathbf{y}) = \log(\mathbf{y}) - \bar{\log(\mathbf{y})}$, computing
+CLR differences between 2024 and 2020 shares as compositionally valid swing vectors.
+CLR swing $R^2$ values for AUR (0.486), USR (0.547), PSD (0.249), and PNL (0.245)
+are directionally consistent with OLS, and the key predictors (demographic pressure
+for AUR; agricultural employment for USR) retain significance under the compositional
+specification. The PNL CLR $R^2$ diverges modestly (0.245 vs OLS 0.409), likely
+reflecting greater sensitivity to the zero-replacement correction applied to AUR's
+near-zero 2020 share. We note this as a limitation and report OLS estimates as
+primary with CLR as a sensitivity check.
+
+**Spatial heterogeneity of the deindustrialisation effect.** To test whether the
+deindustrialisation–AUR relationship is concentrated in the *Moldova Profundă*
+cluster — the region with the deepest industrial legacy loss — we add an
+interaction term ($z_{\text{deindustrial}} \times \mathbb{1}_{\text{Moldova}}$)
+to the AUR swing OLS. The interaction coefficient is $\hat{\beta} = -0.044$
+($p = 0.573$), providing no evidence that the deindustrialisation effect is
+amplified or attenuated within Moldova Profundă relative to other clusters.
+The structural relationship is spatially uniform across cluster types.
+
+## The 2024–2025 presidential arc
+
+The three-election presidential sequence — Georgescu R1 (November 2024, annulled),
+Simion R1 (May 2025), Simion/Dan R2 (June 2025) — provides a rare natural
+experiment in populist electoral geography. Georgescu received 21.0\% nationally
+in R1; Simion received 38.7\% in R1 and 44.8\% in R2; Dan received 55.2\% in R2.
+
+```{r fig-presidential-arc, fig.cap="Presidential vote share trajectories at county level: Georgescu R1 2024 $\\to$ Simion R1 2025 $\\to$ Simion R2 2025. Each line is one county; colour indicates cluster."}
+knitr::include_graphics(file.path(FIG_DIR, "09b_presidential_arc.png"))
+```
+
+```{r fig-runoff-consolidation, fig.cap="Dan consolidation ratio (Dan R2 / (1 $-$ Simion R1)) by county, with Simion R1 share on the x-axis. Dashed line at ratio = 1.0."}
+knitr::include_graphics(file.path(FIG_DIR, "09b_runoff_consolidation.png"))
+```
+
+The raw county-level correlation $r = 0.884$ between Georgescu R1 and Simion R1 confirms geographic continuity of the nationalist-populist bloc, as documented in Section \@ref(sec:transfer).
+The Simion R1-to-R2 correlation is even tighter ($r = 0.970$), indicating near-perfect spatial consistency in the nationalist constituency during the runoff.
+
+Table \@ref(tab:runoff-cluster-table) decomposes the R2 consolidation by cluster.
+The Dan consolidation ratio $\rho_i = \text{Dan R2}_i / (1 - \text{Simion R1}_i)$
+measures what share of the non-Simion R1 pool ultimately supported Dan.
+
+```{r runoff-cluster-table}
+arc_df <- readr::read_csv(file.path(REP_DIR, "09b_presidential_arc.csv"),
+                           show_col_types = FALSE)
+
+cluster_arc <- arc_df |>
+  dplyr::group_by(cluster_short) |>
+  dplyr::summarise(
+    `Simion R1 (\\%)` = sprintf("%.1f", mean(simion_r1, na.rm=TRUE)*100),
+    `Simion R2 (\\%)` = sprintf("%.1f", mean(simion_r2, na.rm=TRUE)*100),
+    `R2 gain (pp)`    = sprintf("+%.1f", mean(simion_r2_gain, na.rm=TRUE)*100),
+    `Dan consol. ratio` = sprintf("%.3f", mean(dan_of_anti, na.rm=TRUE))
+  ) |>
+  dplyr::rename(Cluster = cluster_short)
+
+knitr::kable(
+  cluster_arc,
+  booktabs = TRUE,
+  caption  = "R2 consolidation by voter-profile cluster. Dan consolidation ratio = Dan R2 / (1 $-$ Simion R1). Values above 1.0 imply Dan received more than the full non-Simion pool.",
+  escape   = FALSE
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position", "striped"),
+                            font_size = 10)
+```
+
+Dan's consolidation was most efficient in *Arcul Identitar* (ratio = 0.953),
+where the high Magyar and minority share produced a near-complete anti-Simion
+mobilisation. The weakest consolidation is in *Câmpia Uitată* (0.823),
+the cluster characterised by the deepest economic deprivation and lowest
+engagement with the reformist political offer. The cluster mean differences
+are consistent with the view that Dan's R2 performance represented a
+*defensive* coalition — unified against Simion rather than by a positive programme —
+that found its geographic floor precisely where structural grievance was highest.
+
+## Annulment effect on Simion R1 turnout
+
+The Constitutional Court's annulment of the November 2024 election was widely
+debated as a potential mobilisation trigger: counties with high Georgescu support
+might have either *mobilised in indignation* (higher Simion R1 turnout than
+structural predictors would suggest) or been *demobilised by disillusionment*
+(lower turnout). We test this by regressing Simion R1 turnout on the eight
+structural controls (Model A) to obtain structural residuals, then assessing
+whether Georgescu R1 share predicts those residuals (FWL partial correlation
+and direct Model B coefficient).
+
+The partial correlation is $r_{\text{partial}} = -0.123$ ($p = 0.437$), and
+Model B's direct Georgescu coefficient is $\hat{\beta} = -0.011$ ($p = 0.543$),
+with 95\% CI $[-0.045,\; 0.023]$ — the interval spans both the indignation and
+abstention hypotheses without excluding zero. Figure \@ref(fig:fig-annulment-scatter)
+visualises the scatter.
+
+We extend the test to the *compositional* dimension: does the Georgescu fraction
+of the 2024 nationalist-populist bloc ($\text{georgescu\_r1} / \text{bloc}_{2024}$)
+predict anomalous nationalist *uplift* ($\Delta = \text{Simion R1}_{2025} -
+[\text{Georgescu R1} + \text{Simion R1}_{2024}]$) beyond structural predictors?
+The FWL partial correlation is $r_{\text{partial}} = -0.259$ ($p = 0.098$) and the
+direct coefficient is $\hat{\beta} = -0.0049$ ($p = 0.165$) — both null at conventional
+thresholds. The negative direction is consistent with the turnout test and argues
+against a systematic indignation effect in counties that were most exposed to the
+annulment controversy.
+
+These two null results together constitute a *positive* finding: the 2025 first-round
+outcome was structurally continuous with prior elections. The Constitutional Court
+annulment did not produce a detectable county-level deviation — in either aggregate
+turnout or bloc composition — from what the structural geography would have predicted
+in its absence.
+
+```{r fig-annulment-scatter, fig.cap="(Left) Simion R1 2025 turnout residual (actual $-$ structural prediction) vs Georgescu R1 2024 share, coloured by cluster. Dashed OLS trend; $r_{\\text{partial}} = -0.123$, $p = 0.437$. (Right) Model B coefficient plot."}
+knitr::include_graphics(file.path(FIG_DIR, "09c_annulment_scatter.png"))
+```
+
+# The Ghost Electorate {#sec:ghost}
+
+## Definition and data
+
+Romania's permanent electoral rolls systematically over-count the adult resident
+population, primarily because the Central Electoral Registry retains records of
+deceased persons and long-term emigrants until administratively deregistered.
+We define the *Ghost Electorate Ratio* (GER) for county $i$ as:
+
+$$\text{GER}_i = \frac{E_i - P^{18+}_i}{E_i}$$
+
+where $E_i$ is the number of enrolled voters (AEP, 2024 parliamentary Senate rolls)
+and $P^{18+}_i$ is the estimated resident population aged 18 and over.
+
+$P^{18+}_i$ is derived from Eurostat dataset \texttt{demo\_r\_pjanaggr3} (NUTS-3,
+reference year 2021):
+
+$$P^{18+}_i \approx Y^{15\text{–}64}_i \times (1 - \hat{\alpha}) + Y^{65+}_i$$
+
+where $\hat{\alpha} = (Y^{15} + Y^{16} + Y^{17})_{\text{RO}} / Y^{15\text{–}64}_{\text{RO}} = 0.0501$
+is the national-level share of 15–17-year-olds within the 15–64 age group
+(Eurostat \texttt{demo\_r\_d2jan}, 2021). This approximation introduces a bounded
+imprecision of $< 1$ percentage point and is flagged as a limitation of the approach.
+
+## Results
+
+```{r fig-ghost-cluster, fig.cap="Left: Ghost Electorate Ratio (2024 Senate) by voter-profile cluster. Right: GER trajectories across four elections by cluster."}
+knitr::include_graphics(file.path(FIG_DIR, "10a_ghost_electorate_cluster.png"))
+```
+
+```{r fig-ghost-correlates, fig.cap="GER vs permanent emigration rate (left) and GDP per capita (right), coloured by cluster."}
+knitr::include_graphics(file.path(FIG_DIR, "10b_ger_correlates.png"))
+```
+
+```{r fig-ghost-ranked, fig.cap="Ghost Electorate Ratio by county, ranked ascending. Dashed line: national mean."}
+knitr::include_graphics(file.path(FIG_DIR, "10c_ger_ranked.png"))
+```
+
+```{r ghost-summary-table}
+ger_df <- readr::read_csv(file.path(REP_DIR, "10a_ghost_electorate.csv"),
+                           show_col_types = FALSE)
+
+ghost_tab <- ger_df |>
+  dplyr::group_by(cluster_short) |>
+  dplyr::summarise(
+    `Mean GER 2020` = sprintf("%.3f", mean(`ger_2020 parl`, na.rm=TRUE)),
+    `Mean GER 2024` = sprintf("%.3f", mean(`ger_2024 parl`, na.rm=TRUE)),
+    `Mean emigration rate` = sprintf("%.2f", mean(emigrants_permanent_rate, na.rm=TRUE))
+  ) |>
+  dplyr::rename(Cluster = cluster_short)
+
+knitr::kable(
+  ghost_tab,
+  booktabs = TRUE,
+  caption  = "Ghost Electorate Ratio by cluster (parliamentary elections) and mean permanent emigration rate (per 1000 residents).",
+  escape   = FALSE
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position", "striped"),
+                            font_size = 10)
+```
+
+The national mean GER for the 2024 parliamentary rolls is 0.164 (SD = 0.058),
+implying that approximately one in six registered voters in Romania is a ghost.
+The ratio has remained stable between 2020 (mean = 0.165) and 2024, confirming
+chronic administrative under-purging. Presidential rolls show systematically lower
+GER (mean ≈ 0.127), consistent with BEC applying supplementary deregistration
+procedures before presidential elections.
+
+An OLS regression of GER on the full structural control set achieves $R^2 = 0.680$
+(adjusted $R^2 = 0.590$), with permanent emigration rate as the sole predictor
+significant at $p < 0.001$ ($\hat{\beta} = 0.033$, HC3 SE). This confirms
+that the ghost electorate is primarily a *migration artefact*: counties that
+disproportionately export population retain the highest roll inflation.
+
+*Moldova Profundă* exhibits the highest GER (Vaslui: 0.348, Iași: 0.260, Bacău: 0.245),
+all among Romania's leading emigration sources. At the other extreme, Ilfov
+(0.084) and Giurgiu (0.047) reflect the Bucharest metropolitan periphery,
+where in-migration has brought resident population close to or above roll size,
+generating near-zero or negative ghost ratios.
+
+The electoral implication is that turnout percentages in high-GER counties are
+systematically deflated relative to actual participation. A county reporting
+40\% turnout on inflated rolls may represent substantially higher actual
+participation among the resident voting-age population — a measurement artefact
+that should be corrected in any cross-county turnout analysis.
+
+## Turnout deflation: formal test
+
+We formalise this implication with an OLS model regressing reported turnout on
+GER and the eight structural controls:
+
+$$\text{turnout}_i = \alpha + \beta_{\text{GER}} \cdot \text{GER}_i + \boldsymbol{\gamma}'\mathbf{z}_i + \varepsilon_i$$
+
+```{r turnout-deflation-table}
+td_df <- readr::read_csv(file.path(REP_DIR, "10b_turnout_deflation.csv"),
+                          show_col_types = FALSE)
+
+td_summary <- tibble::tribble(
+  ~Statistic,                                    ~Value,
+  "OLS $R^2$",                                   "0.746",
+  "Adjusted $R^2$",                              "0.664",
+  "$n$",                                         "42",
+  "GER $\\hat{\\beta}$ (std.)",                  "$-0.008$",
+  "GER SE",                                      "0.007",
+  "GER $p$-value",                               "0.262",
+  "Mean roll-based turnout",                     "46.4\\%",
+  "Mean effective turnout (voted/pop$_{18+}$)",  "55.5\\%",
+  "Mean deflation (effective $-$ roll-based)",   "$+9.1$ pp"
+)
+
+knitr::kable(
+  td_summary,
+  booktabs = TRUE,
+  caption  = "Turnout deflation test. OLS of reported 2024 parliamentary turnout on GER and eight structural controls (HC3 SE). Effective turnout uses estimated 18+ population as denominator.",
+  escape   = FALSE,
+  col.names = c("Statistic", "Value")
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position"), font_size = 10)
+```
+
+Two results stand out. First, *reported* turnout is on average 9.1 percentage points
+lower than *effective* turnout (votes cast relative to resident adult population),
+purely because of GER inflation in the denominator. Second — and more surprising —
+GER is not a significant predictor of *cross-county variation* in reported turnout
+once structural controls are included ($\hat{\beta} = -0.008$, $p = 0.262$).
+This indicates that the ghost electorate is approximately uniformly distributed
+across the participation gradient: high-GER counties are not differentially more
+or less likely to turn out than low-GER counties once economic and demographic
+structure is controlled. The measurement artefact is a *level shift* (inflating
+the denominator everywhere), not a *structural confounder* of the turnout pattern.
+
+# Spatial Robustness {#sec:spatial}
+
+## Motivation
+
+All models reported so far use OLS or its derivatives under the assumption of
+spatially independent errors. Romanian counties are geographically contiguous;
+structural spillovers (labour mobility, media markets, political networks) and
+electoral diffusion effects (social contagion in bloc mobilisation) may induce
+positive spatial autocorrelation in model residuals. Ignoring this would understate
+standard errors and inflate effective degrees of freedom.
+
+We use Moran's $I$ statistic [@Anselin1988] to test for spatial autocorrelation
+in OLS residuals from the three main models, and fit a generalised method of
+moments spatial lag model [@Kelejian1999] for the AUR swing equation where the
+Lagrange multiplier test indicates spatial lag dependence.
+
+Spatial weights are queen contiguity (second-order adjacency is considered but
+queen first-order provides better theoretical grounding for electoral diffusion),
+row-standardised, derived from Eurostat GISCO NUTS-3 boundaries (2021, 1:10M).
+
+## Results
+
+```{r fig-romania-map, fig.cap="Three-panel choropleth of Romanian NUTS-3 units: (left) voter-profile cluster assignment; (centre) Ghost Electorate Ratio 2024; (right) AUR 2020--2024 Senate swing. Computed from GISCO NUTS-3 boundaries (Eurostat 2021)."}
+knitr::include_graphics(file.path(FIG_DIR, "11a_romania_map.png"))
+```
+
+```{r fig-moran-scatter, fig.cap="Moran scatter plots (standardised OLS residuals vs spatial lag) for three models. Positive quadrants (HH, LL) indicate clustering; negative quadrants indicate spatial outliers. Points coloured by voter-profile cluster."}
+knitr::include_graphics(file.path(FIG_DIR, "11b_moran_scatter.png"))
+```
+
+```{r spatial-robustness-table}
+spat_df <- readr::read_csv(file.path(REP_DIR, "11a_spatial_robustness.csv"),
+                            show_col_types = FALSE)
+
+spat_tab <- tibble::tribble(
+  ~Model,                       ~`Moran $I$`, ~`$p_{\\text{sim}}$`, ~`$z$`,     ~`LM-lag $p$`, ~`$\\hat{\\rho}$ (SLM)`, ~`SLM pseudo-$R^2$`,
+  "AUR swing",                  "0.119",        "0.087",              "1.400",    "0.002",         "0.640",                  "0.707",
+  "GER",                        "0.137",        "0.060",              "1.664",    "—",             "—",                      "—",
+  "Georgescu transfer ($e_G$)", "0.071",        "0.150",              "0.987",    "—",             "—",                      "—",
+  "Simion transfer ($e_S$)",    "$-0.068$",     "0.349",              "$-0.458$", "—",             "—",                      "—"
+)
+
+knitr::kable(
+  spat_tab,
+  booktabs = TRUE,
+  caption  = "Spatial robustness diagnostics. Moran's $I$ computed on OLS residuals under queen contiguity weights (row-standardised). $p_{\\text{sim}}$: randomisation inference (999 permutations). Spatial lag model fitted only for AUR swing where LM-lag indicates lag dependence ($p = 0.002$) and LM-error does not ($p = 0.278$).",
+  escape   = FALSE
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position", "striped"),
+                            font_size = 9)
+```
+
+Three conclusions follow from Table \@ref(tab:spatial-robustness-table) and
+Figure \@ref(fig:fig-moran-scatter).
+
+*The AUR swing and GER equations show marginal positive spatial autocorrelation.*
+Moran's $I$ is 0.119 ($p = 0.087$) and 0.137 ($p = 0.060$) respectively,
+indicating that OLS standard errors are moderately understated. The spatial lag
+model for AUR swing confirms lag dependence: $\hat{\rho} = 0.640$ ($p < 0.01$),
+and pseudo-$R^2$ rises from 0.585 to 0.707. This spatial lag coefficient implies
+that counties whose neighbours experienced large AUR gains also gained — consistent
+with an electoral diffusion or social-contagion mechanism operating at the
+sub-regional scale beyond what structural predictors capture.
+
+*The substantive findings on structural predictors are robust to spatial
+correction.* The OLS and SLM coefficients for demographic pressure and Magyar
+share maintain their signs and relative magnitudes, though absolute values halve
+when spatial dependence is absorbed by the lag term. The structural story
+(demographic pressure drives AUR gains; Magyar share suppresses them) is not
+an artefact of spatial autocorrelation.
+
+*The Georgescu–Simion transfer signal is spatially random* ($I = 0.071$,
+$p = 0.150$ for $e_G$; $I = -0.068$, $p = 0.349$ for $e_S$). This is the
+most important spatial finding: the bloc persistence documented in
+Section \@ref(sec:transfer) is geographically diffuse and not driven by spatial
+clustering in the residuals. The nationalist-populist bloc is a nationwide
+phenomenon that does not operate through local spatial contagion alone.
+
+# Robustness of the Cluster Solution {#sec:robustness}
+
+A concern with hierarchical clustering is sensitivity to the choice of $k$.
+We assess this by refitting Ward clustering on the PCA scores for $k \in \{4, 5, 6\}$
+and recording: (i) the Adjusted Rand Index (ARI) between the alternative and the
+primary $k = 5$ solution; (ii) the AUR swing OLS $R^2$ under each $k$; and
+(iii) the Georgescu–Simion transfer partial correlation.
+
+```{r cluster-k-robustness-table}
+kdf <- readr::read_csv(file.path(REP_DIR, "12a_cluster_k_robustness.csv"),
+                        show_col_types = FALSE)
+
+kdf_display <- kdf |>
+  dplyr::mutate(
+    `ARI vs $k=5$`         = dplyr::if_else(k == 5, "—", sprintf("%.3f", ARI_vs_k5)),
+    `AUR swing $R^2$`      = sprintf("%.3f", AUR_swing_R2),
+    `Transfer $r_{\\text{partial}}$` = sprintf("%.3f", transfer_r_partial)
+  ) |>
+  dplyr::select(k, `ARI vs $k=5$`, `AUR swing $R^2$`,
+                `Transfer $r_{\\text{partial}}$`)
+
+knitr::kable(
+  kdf_display,
+  booktabs = TRUE,
+  caption  = "Cluster solution robustness: ARI vs primary $k=5$, AUR swing OLS $R^2$, and Georgescu--Simion transfer partial correlation, for $k \\in \\{4, 5, 6\\}$. ARI computed via adjusted Rand index between refitted Ward solution and primary $k=5$ labels.",
+  escape   = FALSE
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position", "striped"),
+                            font_size = 10)
+```
+
+Table \@ref(tab:cluster-k-robustness-table) shows that the ARI between $k = 4$ and
+$k = 5$ is 0.721, and between $k = 6$ and $k = 5$ is 0.762, indicating that
+approximately three-quarters of county assignments are preserved under alternative
+partitions. The AUR swing $R^2$ (0.585) and transfer partial correlation (0.783)
+are *identical* across all three $k$ values — because both regressions use only
+structural controls and contain no cluster fixed effects, meaning the structural
+variance decomposition is by construction independent of how counties are partitioned.
+The table therefore confirms that the main findings do not depend on the particular
+cluster solution used to label the data.
+
+# Conditional Projections {#sec:projections}
+
+The analyses above are retrospective: they describe what happened in 2020–2025 and
+why. This section extends them forward under explicitly stated structural assumptions,
+producing conditional projections rather than forecasts. Three conditions frame every
+result in this section:
+
+- **C1** — George Simion is the nationalist candidate in any future presidential election.
+- **C2** — A single reformist candidate consolidates the anti-Simion pool at the efficiency
+  observed in 2025.
+- **C3** — Structural conditions (deindustrialisation, demographic pressure, ethnic composition)
+  remain at their 2025 values.
+
+Violations of any of these conditions — a Simion–AUR split, a fragmented reformist field,
+or accelerated deindustrialisation in eastern counties — are the primary sources of
+projection error and are not modelled here.
+
+## Bayesian hierarchical model of AUR swing
+
+The OLS swing model ($R^2 = 0.585$, Section \@ref(sec:temporal)) treats the 40
+counties as exchangeable observations. This ignores the cluster structure: county
+predictions from *Moldova Profundă* should be shrunk toward the Moldova Profundă
+cluster mean, not toward the global mean. We reformulate the model as a Bayesian
+hierarchical regression with cluster-level random intercepts:
+
+$$\text{sw\_AUR}_i \sim \text{Normal}(\mu_i, \sigma)$$
+$$\mu_i = \alpha_{j[i]} + \sum_{k} \beta_k \cdot z_{x_{ik}}$$
+$$\alpha_j \sim \text{Normal}(\bar{\alpha},\, \sigma_\alpha), \quad
+  \beta_k \sim \text{Normal}(0, 0.02), \quad
+  \sigma, \sigma_\alpha \sim \text{HalfNormal}(0.02)$$
+
+Priors are weakly informative: $\sigma = 0.02$ on a standardised predictor
+corresponds to a prior belief that a one-SD shift in any structural predictor
+is unlikely to produce more than a 4 pp swing (two prior SDs), which is
+deliberately conservative relative to the observed range.
+
+Estimation uses NUTS via PyMC [@Salvatier2016], 4 chains $\times$ 2{,}000
+post-warmup draws. Convergence is assessed by $\hat{R} < 1.01$ and
+$\text{ESS}_\text{bulk} > 400$ on all $\beta$ parameters.
+
+```{r bayes-convergence}
+bsum <- readr::read_csv(file.path(REP_DIR, "14a_bayes_summary.csv"),
+                         show_col_types = FALSE)
+
+beta_rows <- bsum |>
+  dplyr::filter(grepl("^beta_", parameter)) |>
+  dplyr::mutate(
+    Predictor = dplyr::recode(parameter,
+      beta_idx_grievance              = "Grievance index",
+      beta_idx_modernity              = "Modernity index",
+      beta_idx_demographic_pressure   = "Demographic pressure",
+      beta_pct_employment_agriculture = "Agri. employment",
+      beta_pct_maghiari               = "Magyar \\%",
+      beta_pct_romi                   = "Roma \\%",
+      beta_gva_deindustrial_index     = "Deindustrialisation",
+      beta_long_term_unemployment_rate= "LT unemployment"
+    ),
+    `$\\hat{\\beta}$ (\\texttimes 100)` = sprintf("%+.3f", mean * 100),
+    `90\\% CI`   = sprintf("[%+.3f, %+.3f]", q05 * 100, q95 * 100),
+    `$\\hat{R}$` = sprintf("%.4f", rhat),
+    ESS          = as.integer(ess)
+  ) |>
+  dplyr::select(Predictor,
+                `$\\hat{\\beta}$ (\\texttimes 100)`,
+                `90\\% CI`, `$\\hat{R}$`, ESS)
+
+knitr::kable(
+  beta_rows,
+  booktabs = TRUE,
+  caption  = "Bayesian hierarchical AUR swing model: fixed-effect posteriors.
+              $\\hat{\\beta}$ scaled $\\times 100$ (pp per $+1$ SD predictor).
+              90\\% credible intervals. $\\hat{R} < 1.01$ and ESS $> 400$
+              indicate chain convergence.",
+  escape   = FALSE
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position", "striped"),
+                            font_size = 9)
+```
+
+```{r fig-bayes-coefs, fig.cap="Posterior fixed-effect estimates for the Bayesian hierarchical AUR swing model. Bars = posterior mean; whiskers = 90\\% credible interval. Red = CI excludes zero."}
+knitr::include_graphics(file.path(FIG_DIR, "14a_bayes_posterior_coefs.png"))
+```
+
+```{r fig-bayes-preds, fig.cap="County-level 90\\% posterior predictive intervals, sorted by posterior mean swing. Dots = observed swing, coloured by cluster. The hierarchical model shrinks extreme county predictions toward their cluster mean, widening intervals for counties that deviate from their cluster's structural pattern."}
+knitr::include_graphics(file.path(FIG_DIR, "14a_bayes_pred_intervals.png"))
+```
+
+The hierarchical model reproduces the OLS substantive findings: demographic
+pressure and Magyar share are the dominant fixed-effect predictors, with
+deindustrialisation marginally credible. The key added value is interval
+calibration: OLS prediction intervals assume homoscedastic, exchangeable residuals,
+whereas the hierarchical model accounts for residual clustering — counties in
+*Moldova Profundă* have systematically higher swing than the structural prediction
+alone implies, a pattern the random intercept absorbs rather than misattributing
+to the fixed predictors.
+
+## Swing county ranking
+
+A *swing county* in a future Simion vs reformist runoff is one where the projected
+Simion R2 share is close to 50\% and where that projection is uncertain. We
+formalise both dimensions. Using the transfer model calibrated on 2025 R2 actuals
+($R^2 = 0.970$), we obtain bootstrap-projected R2 shares for each county ($B = 5{,}000$
+pairs bootstrap). The composite swing score is:
+
+$$\text{composite}_i = \frac{|\hat{y}_i - 0.50|}{\text{PI}_{80\%,i}}$$
+
+where $\hat{y}_i$ is the bootstrap median projected share and $\text{PI}_{80\%}$ is the
+80\% prediction interval width. A lower composite score indicates higher swing potential —
+the county is close to the tipping point *and* that proximity is genuine rather than
+spuriously precise.
+
+```{r swing-county-table}
+sc <- readr::read_csv(file.path(REP_DIR, "14b_swing_counties.csv"),
+                       show_col_types = FALSE)
+
+sc_display <- sc |>
+  dplyr::slice_head(n = 10) |>
+  dplyr::mutate(
+    `Pred R2`   = sprintf("%.1f\\%%", predicted_simion_r2 * 100),
+    `Obs R2`    = sprintf("%.1f\\%%", simion_r2 * 100),
+    `80\\% PI width` = sprintf("%.1f pp", bootstrap_width * 100),
+    `Distance`  = sprintf("%.1f pp", swing_score * 100),
+    Cluster     = cluster_short
+  ) |>
+  dplyr::select(County = judet, Cluster,
+                `Pred R2`, `Obs R2`, `Distance`, `80\\% PI width`)
+
+knitr::kable(
+  sc_display,
+  booktabs = TRUE,
+  caption  = "Top 10 swing counties by composite score (competitive $\\times$ uncertain).
+              Conditional on C1–C3. Distance = $|\\hat{y} - 0.50|$;
+              80\\% PI width from $B = 5{,}000$ pairs bootstrap.",
+  escape   = FALSE
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position", "striped"),
+                            font_size = 9)
+```
+
+```{r fig-swing-counties, fig.cap="(Left) 80\\% bootstrap prediction intervals for the top 15 swing counties. Bars = PI; diamonds = observed 2025 R2; dashed line = 50\\% tipping point. (Right) Swing space: horizontal axis = prediction uncertainty, vertical axis = distance from 50\\%. Lower-left counties are highest swing potential."}
+knitr::include_graphics(file.path(FIG_DIR, "14b_swing_county_ranking.png"))
+```
+
+The top swing counties are concentrated in *Câmpia Uitată* (5 of the top 10) and
+*Arcul Identitar* (2 of the top 10). The Câmpia Uitată counties are competitive
+because they sit structurally between the nationalist core (high deindustrialisation,
+high demographic pressure) and the reformist fringe (residual PNL organisation);
+their 2025 R2 observed shares cluster close to 50\%. The Arcul Identitar entries
+(Bistrița-Năsăud, Maramureș) are competitive because the Magyar minority share
+locally depresses Simion's ceiling while deindustrialisation sustains his floor.
+
+## Presidential bloc projection
+
+The presidential bloc model estimates how the 2025 R1 → R2 transfer generalises
+to a future election under conditions C1–C3. The transfer OLS fits cleanly
+($R^2 = 0.970$): Simion's R2 share is almost entirely predictable from his R1
+share and structural controls, with $\hat{\beta}_{\text{R1}} = 0.093$
+($p < 0.001$). The Dan consolidation model reaches $R^2 = 0.699$; the only
+significant structural predictor of the anti-Simion consolidation ratio is
+Magyar share ($\hat{\beta} = +0.031$, $p = 0.025$) and demographic pressure
+($\hat{\beta} = -0.033$, $p = 0.027$): the reformist candidate consolidates
+better in ethnically mixed counties and worse where demographic stress is highest.
+
+```{r presidential-bloc-table}
+pb <- readr::read_csv(file.path(REP_DIR, "14c_presidential_bloc.csv"),
+                       show_col_types = FALSE)
+
+pb_cluster <- pb |>
+  dplyr::group_by(cluster_short) |>
+  dplyr::summarise(
+    `Obs R2 (\\%)`       = sprintf("%.1f", mean(simion_r2) * 100),
+    `Proj R2 (\\%)`      = sprintf("%.1f", mean(sim_proj_median) * 100),
+    `90\\% PI`           = sprintf("[%.1f, %.1f]",
+                                   mean(sim_proj_q05) * 100,
+                                   mean(sim_proj_q95) * 100),
+    `Genuine uncert.`    = sprintf("%d/%d", sum(uncertain), dplyr::n())
+  ) |>
+  dplyr::rename(Cluster = cluster_short)
+
+knitr::kable(
+  pb_cluster,
+  booktabs = TRUE,
+  caption  = "Presidential bloc projection by cluster. Obs R2 = 2025 observed Simion R2 share (cluster mean). Proj R2 = bootstrap median projection. 90\\% PI = mean county-level interval. Genuine uncert.\\ = counties whose 90\\% PI straddles the 50\\% tipping point.",
+  escape   = FALSE
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position", "striped"),
+                            font_size = 9)
+```
+
+```{r fig-presidential-bloc, fig.cap="(Left) Transfer model: Simion R1 to R2, with 50\\%/90\\% bootstrap projection bands. (Right) County-level 90\\% projection intervals sorted by projected share; gold verticals mark counties with genuine 50\\% uncertainty."}
+knitr::include_graphics(file.path(FIG_DIR, "14c_presidential_bloc.png"))
+```
+
+The mean projected Simion R2 share is 47.1\% (90\% PI: 44.9\%–49.2\%), exactly
+matching the 2025 observed mean — which is expected since the model is calibrated
+on 2025 actuals. The projection's value is not in the national aggregate but in the
+geographic distribution: *Moldova Profundă* and *Câmpia Uitată* are projected to
+remain above 50\% for Simion, while *Arcul Identitar* and *Insula Capitalei*
+remain well below it. Nine of 42 counties have 90\% projection intervals that
+straddle the 50\% tipping point — these are the counties where a change in C2
+(reformist consolidation efficiency) would be decisive.
+
+**What would change the projection.** The model is most sensitive to the
+consolidation assumption (C2). In 2025, Dan captured 95.3\% of the non-Simion
+R1 pool in *Arcul Identitar* but only 82.3\% in *Câmpia Uitată*. A 5 pp
+improvement in reformist consolidation in *Câmpia Uitată* alone — bringing
+it from 0.823 to 0.873 — would flip an estimated 4–6 counties currently
+projected as Simion-leaning into genuine toss-ups.
+
+# Discussion {#sec:discussion}
+
+## Structural geography and electoral fragmentation
+
+The five-cluster typology reveals a Romanian electoral geography organised along
+two intersecting axes: a *development gradient* (Insula Capitalei → Centrele
+Dinamice → Câmpia Uitată → Moldova Profundă) and an *ethnic-confessional axis*
+(Arcul Identitar). The development gradient maps closely onto the spatial
+inequality literature on post-communist transition [@Holesch2021], while the
+ethnic axis reflects the persistence of communal identity as an electoral organiser
+[@Enyedi2005].
+
+The deindustrialisation index emerges as the most consistent structural predictor
+across multiple analyses: it is the variable most responsible for Moldova Profundă's
+high AUR and POT shares (cluster-ANOVA), the dominant cross-party coefficient in
+the Dirichlet regression, and a major control in the transfer analysis.
+This converges with findings on deindustrialisation and radical-right voting
+in Western Europe [@Oesch2008; @Rooduijn2018] but with the important caveat
+that in Romania the effect is diffuse across parties rather than channelled
+specifically into a single anti-establishment outlet.
+
+The Bayesian hierarchical model introduces a finding that complicates the
+grievance narrative. The posterior mean for the grievance index on AUR swing is
+$-0.029$ (90\% CI $[-0.045, -0.013]$), meaning that counties with *higher*
+composite grievance show *lower* AUR growth, conditional on the remaining
+predictors. A collinearity explanation can be ruled out: the correlation between
+grievance and deindustrialisation is $r = -0.178$ ($p = 0.260$) and all
+pairwise VIFs are below 2.5 [@Cinelli2020], confirming that the negative
+grievance coefficient is a genuine conditional effect rather than a suppression
+artefact. The substantive interpretation hinges on what the two indices capture
+at the county level: deindustrialisation measures the *scale of manufacturing
+loss since 2010* — an aspirational disappointment concentrated in counties that
+once had industrial bases — whereas the grievance composite captures chronic,
+multi-decade deprivation. The worst-off counties, where poverty and long-term
+unemployment are highest, may exhibit structural electoral fatalism or continued
+clientelistic attachment to PSD, which suppresses nationalist mobilisation
+independently of deindustrialisation dynamics. This distinction echoes
+@Rodríguez-Pose2018's argument that it is not absolute deprivation but
+*relative decline* that energises populist voting — a mechanism better proxied
+by the deindustrialisation index than by the static grievance composite.
+
+## The limits of structural determinism
+
+The Georgescu–Simion transfer analysis complicates a purely structural account.
+A partial correlation of 0.770 after controlling for eight structural predictors
+— with Robustness Value 0.547 — suggests that county-level bloc cohesion is not
+fully determined by observable socio-economic geography.
+The residual association could reflect: (a) unmeasured structural features
+(e.g., social capital deficits, media exposure); (b) network effects and social
+contagion operating below the county level; or (c) genuine ideological consistency
+among Georgescu/Simion voters that persists independent of material conditions.
+Distinguishing these mechanisms requires individual-level data that are not
+currently available.
+
+# Conclusion {#sec:conclusion}
+
+Using county-level data for all 42 Romanian *județe*, this paper has shown:
+
+1. Romanian counties organise into five structurally coherent voter-profile
+   clusters whose electoral differentiation is statistically significant on held-out
+   party vote shares (ANOVA $p < 0.001$ for five of seven parties); the solution
+   is stable under alternative $k \in \{4, 6\}$ specifications (ARI $\geq 0.72$)
+   and the main analytical findings are unchanged across $k$.
+2. In a Dirichlet regression framework, deindustrialisation is the dominant
+   cross-party structural predictor of vote share composition, followed by
+   ethnic composition (for UDMR) and modernity (for SOS and UDMR); five
+   coefficients survive Benjamini-Hochberg FDR correction ($q < 0.10$);
+   LOO Aitchison skill score = 0.179.
+3. The county-level nationalist-populist electoral bloc — defined by support for
+   Călin Georgescu in November 2024 — persists robustly into the May 2025
+   Simion vote after controlling for structural confounders
+   (partial $r = 0.770$, RV = 0.547).
+4. AUR's 2020–2024 Senate swing is structurally explained ($R^2 = 0.585$), driven
+   by demographic pressure and ethnic homogeneity; a spatial lag model raises
+   pseudo-$R^2$ to 0.707 ($\hat{\rho} = 0.640$), confirming a neighbourhood
+   contagion mechanism while leaving the structural story intact.
+   Dan's 2025 runoff consolidation was most efficient in ethnically mixed
+   Transylvania (ratio = 0.953) and weakest in the most deprived flatland cluster
+   (*Câmpia Uitată*, ratio = 0.823).
+5. The ghost electorate ratio averages 16.4\% nationally (2024 parliamentary
+   rolls), almost entirely predicted by emigration rates ($R^2 = 0.680$), and
+   inflates the turnout denominator by 9.1 pp on average — but does not
+   independently predict cross-county turnout variation once structural controls
+   are included ($p = 0.262$), implying the artefact is a level shift rather than
+   a structural confounder.
+6. Moran's $I$ on transfer residuals is indistinguishable from zero ($p > 0.14$),
+   establishing that the nationalist-populist bloc cohesion is geographically
+   diffuse and not a local spatial contagion effect.
+7. The Constitutional Court annulment of Georgescu's 2024 result left no
+   statistically detectable county-level mobilisation imprint on either
+   Simion R1 turnout ($\hat{\beta} = -0.011$, $p = 0.543$) or the composition
+   of nationalist uplift ($r_{\text{partial}} = -0.259$, $p = 0.098$).
+   Both tests are null at conventional thresholds; taken together they establish
+   that the 2025 first-round was structurally continuous with prior elections —
+   the annulment did not produce detectable county-level deviation from what
+   the structural geography would have predicted in its absence.
+8. A Bayesian hierarchical reformulation (4 chains $\times$ 4000 draws,
+   max R-hat $= 1.001$) identifies long-term unemployment as the sole positive
+   structural predictor of AUR growth and reveals a negative grievance coefficient
+   (posterior mean $= -0.029$, 90\% CI $[-0.045, -0.013]$), consistent with
+   @Rodríguez-Pose2018's relative-decline thesis: it is aspirationally disappointed
+   deindustrialised counties, not the chronically deprived ones, that drive
+   nationalist mobilisation. Under the 2025 calibrated bloc transfer rates,
+   a conditional projection places mean Simion R2 at 47.1\% (90\% PI: 44.9\%–49.2\%),
+   with 9 of 42 counties in genuine uncertainty; a 5 pp improvement in reformist
+   consolidation in *Câmpia Uitată* would flip 4–6 of these counties.
+
+These findings contribute to the growing literature on structural drivers of
+populist voting in post-communist democracies and underscore that Romania's
+2024–2025 electoral fragmentation is not a temporary shock but the expression
+of durable spatial inequalities.
+
+**Limitations.** All analyses are ecological: inferences about individual voters
+require survey data with spatial identifiers. The sample of 42 counties limits
+the power of Dirichlet regression and prevents the inclusion of rich cluster-fixed
+effects. The 18+ population estimates introduce a bounded approximation error
+($< 1$ pp) from the 15–17 age-group correction; individual-year NUTS-3 age
+data are not publicly available from Eurostat for Romanian counties.
+PNL local organisational network analysis remains pending conditional
+on local election data.
+
+\newpage
+
+# References {-}
+
+<div id="refs"></div>
+
+\newpage
+
+# Appendix A — Data Sources and Coverage {-}
+
+```{r appendix-sources}
+sources_tab <- tibble::tribble(
+  ~Variable,                       ~Source,                              ~Code,           ~Coverage,
+  "GDP per capita",                "Eurostat",                          "nama_10r_3gdp",  "42/42",
+  "Unemployment rate",             "Eurostat",                          "lfst_r_lfu3rt",  "42/42",
+  "Long-term unemployment rate",   "Eurostat",                          "lfst_r_lfu2ltu", "42/42",
+  "Household income (PPS)",        "Eurostat",                          "nama_10r_2hhinc","42/42",
+  "Industry GVA share",            "Eurostat",                          "nama_10r_3gva",  "42/42",
+  "Deindustrialisation index",     "Derived (Eurostat GVA)",            "—",              "42/42",
+  "Ethnic composition",            "INS Census 2021",                   "RPL-2021",       "42/42",
+  "Religious composition",         "INS Census 2021",                   "RPL-2021",       "42/42",
+  "Electoral results",             "Autoritatea Electorală Permanentă", "AEP 2024–25",    "42/42"
+)
+
+knitr::kable(
+  sources_tab,
+  booktabs = TRUE,
+  caption  = "Data sources and NUTS-3 coverage.",
+  col.names = c("Variable", "Source", "Dataset code", "Coverage")
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position", "striped"),
+                            font_size = 9)
+```
+
+# Appendix B — Cluster Compositions {-}
+
+```{r appendix-clusters}
+cluster_tab <- tibble::tribble(
+  ~Cluster,             ~n, ~Counties,
+  "Moldova Profundă",    6, "Bacău, Botoșani, Iași, Neamț, Suceava, Vaslui",
+  "Câmpia Uitată",      17, "Argeș, Brăila, Buzău, Călărași, Dâmbovița, Dolj, Galați, Giurgiu, Gorj, Ialomița, Mehedinți, Olt, Prahova, Teleorman, Tulcea, Vâlcea, Vrancea",
+  "Insula Capitalei",    2, "București, Ilfov",
+  "Centrele Dinamice",   9, "Alba, Arad, Brașov, Caraș-Severin, Cluj, Constanța, Hunedoara, Sibiu, Timiș",
+  "Arcul Identitar",     8, "Bihor, Bistrița-Năsăud, Covasna, Harghita, Maramureș, Mureș, Satu Mare, Sălaj"
+)
+
+knitr::kable(
+  cluster_tab,
+  booktabs = TRUE,
+  caption  = "County compositions of the $k=5$ voter-profile clusters.",
+  escape   = FALSE
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position"),
+                            font_size = 9) |>
+  kableExtra::column_spec(3, width = "9cm")
+```
+
+# Appendix C — Dirichlet Regression Full Coefficient Table (M1) {-}
+
+```{r appendix-dirichlet-full}
+coef_df <- readr::read_csv(file.path(REP_DIR, "08a_dirichlet_coefs.csv"),
+                            show_col_types = FALSE)
+
+full_m1 <- coef_df |>
+  dplyr::filter(model == "M1", term != "(Intercept)") |>
+  dplyr::mutate(
+    Party     = sub("t_", "", category),
+    Predictor = dplyr::recode(term,
+      z_grievance    = "Grievance",
+      z_modernity    = "Modernity",
+      z_magyari      = "\\% Magyar",
+      z_deindustrial = "Deindustrial."
+    ),
+    `$\\hat{\\beta}$` = sprintf("%.3f",  estimate),
+    SE                 = sprintf("%.3f",  se),
+    `$z$`             = sprintf("%.2f",  z),
+    `$p$`             = dplyr::case_when(
+      is.na(p)  ~ "—",
+      p < 0.001 ~ "<0.001",
+      TRUE      ~ sprintf("%.3f", p)
+    ),
+    Sig = ifelse(is.na(sig), "—", as.character(sig))
+  ) |>
+  dplyr::select(Party, Predictor, `$\\hat{\\beta}$`, SE, `$z$`, `$p$`, Sig)
+
+knitr::kable(
+  full_m1,
+  booktabs = TRUE,
+  caption  = "M1 Dirichlet regression: all non-intercept coefficients. ALR scale, reference = Other.",
+  escape   = FALSE
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position", "striped"),
+                            font_size = 9)
+```

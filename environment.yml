@@ -1,0 +1,27 @@
+name: ro-voting
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pandas=2.2
+  - numpy=1.26
+  - scikit-learn=1.4
+  - xgboost=2.0
+  - lightgbm=4.3
+  - statsmodels=0.14
+  - scipy=1.12
+  - geopandas=0.14
+  - libpysal=4.9
+  - esda=2.5
+  - spreg=1.4
+  - matplotlib=3.8
+  - seaborn=0.13
+  - pyarrow=15.0
+  - openpyxl=3.1
+  - jupyter=1.0
+  - ipykernel=6.29
+  - pip
+  - pip:
+      - pingouin==0.5.4
+      - shap==0.45.0

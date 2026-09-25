@@ -1,0 +1,40 @@
+﻿GISCO shapefile cached at nuts3_2021_10M.geojson
+Romanian NUTS-3 units: 42
+Counties with geometry: 42
+
+Building queen contiguity weights...
+  42 units,  mean neighbours: 4.86
+
+=== Moran's I on OLS residuals ===
+  AUR swing OLS residuals: I=0.1188  p_sim=0.087  E[I]=-0.0256  z=1.400
+  GER OLS residuals: I=0.1367  p_sim=0.060  E[I]=-0.0244  z=1.664
+  Georgescu transfer residuals (e_G): I=0.0712  p_sim=0.150  E[I]=-0.0244  z=0.987
+  Simion transfer residuals (e_S): I=-0.0687  p_sim=0.349  E[I]=-0.0244  z=-0.458
+
+=== Spatial Lag Model: AUR Swing ===
+GM_Lag
+
+  OLS:  RÂ²=0.585  LM-lag p=0.002  LM-error p=0.278
+  SLM:  pseudo-RÂ²=0.707  spatial lag Ï�=0.6405
+
+  Coefficient comparison (OLS vs SLM):
+  Term                                    OLS Î²     SLM Î²
+  Intercept                             +0.0904   +0.0316
+  idx_grievance                         -0.0129   -0.0064
+  idx_modernity                         +0.0007   -0.0056
+  idx_demographic_pressure              +0.0163   +0.0096
+  pct_employment_agriculture            -0.0039   -0.0056
+  pct_maghiari                          -0.0205   -0.0137
+  pct_romi                              +0.0018   +0.0037
+  gva_deindustrial_index                -0.0088   -0.0075
+  long_term_unemployment_rate           +0.0125   +0.0049
+  WÂ·sw_AUR (Ï�)                                â€”   +0.6405
+
+  Saved -> 11b_moran_scatter.png
+  Saved -> 11a_romania_map.png
+  Saved -> 11a_spatial_robustness.csv
+
+=================================================================
+TASK 8 COMPLETE â€” Spatial Robustness Analysis
+=================================================================
+

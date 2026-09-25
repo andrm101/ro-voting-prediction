@@ -1,0 +1,85 @@
+﻿conda : 
+At line:1 char:1
++ conda run -n r-dirichlet Rscript -e "rmarkdown::render('reports/main. ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+processing file: main.Rmd
+output file: main.knit.md
+
+Warning: LaTeX Warning: `!h' float specifier changed to `!ht'.
+Warning: LaTeX Warning: `!h' float specifier changed to `!ht'.
+Warning: LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+Output created: reports/main.pdf
+
+1/66                             
+2/66 [setup]                     
+3/66                             
+4/66 [fig-dendrogram]            
+5/66                             
+6/66 [fig-biplot]                
+7/66                             
+8/66 [fig-heatmap]               
+9/66                             
+10/66 [fig-vote-profiles]         
+11/66                             
+12/66 [dirichlet-fit-table]       
+13/66                             
+14/66 [dirichlet-coef-table]      
+15/66                             
+16/66 [fig-dirichlet-coefs]       
+17/66                             
+18/66 [fig-dirichlet-fit]         
+19/66                             
+20/66 [fig-cluster-pred]          
+21/66                             
+22/66 [marginal-effects-table]    
+23/66                             
+24/66 [fig-transfer-scatter]      
+25/66                             
+26/66 [transfer-sensitivity-table]
+27/66                             
+28/66 [fig-transfer-clusters]     
+29/66                             
+30/66 [fig-swing-heatmap]         
+31/66                             
+32/66 [fig-aur-swing]             
+33/66                             
+34/66 [swing-ols-table]           
+35/66                             
+36/66 [fig-presidential-arc]      
+37/66                             
+38/66 [fig-runoff-consolidation]  
+39/66                             
+40/66 [runoff-cluster-table]      
+41/66                             
+42/66 [fig-annulment-scatter]     
+43/66                             
+44/66 [fig-ghost-cluster]         
+45/66                             
+46/66 [fig-ghost-correlates]      
+47/66                             
+48/66 [fig-ghost-ranked]          
+49/66                             
+50/66 [ghost-summary-table]       
+51/66                             
+52/66 [turnout-deflation-table]   
+53/66                             
+54/66 [fig-romania-map]           
+55/66                             
+56/66 [fig-moran-scatter]         
+57/66                             
+58/66 [spatial-robustness-table]  
+59/66                             
+60/66 [cluster-k-robustness-table]
+61/66                             
+62/66 [appendix-sources]          
+63/66                             
+64/66 [appendix-clusters]         
+65/66                             
+66/66 [appendix-dirichlet-full]   
+"C:/Users/andre/ANACON~3/Scripts/pandoc" +RTS -K512m -RTS main.knit.md --to latex --from markdown+autolink_bare_uris+tex_math_single_backslash --output pandoc2e3c1c1a3827.tex --lua-filter "C:\Users\andre\anaconda3\envs\r-dirichlet\lib\R\library\bookdown\rmarkdown\lua\custom-environment.lua" --lua-filter "C:\Users\andre\anaconda3\envs\r-dirichlet\lib\R\library\rmarkdown\rmarkdown\lua\pagebreak.lua" --lua-filter "C:\Users\andre\anaconda3\envs\r-dirichlet\lib\R\library\rmarkdown\rmarkdown\lua\latex-div.lua" --self-contained --table-of-contents --toc-depth 3 --number-sections --highlight-style tango --pdf-engine xelatex --variable graphics --wrap preserve --extract-media "C:\Users\andre\Desktop\Sandbox\RO-Voting-Prediction\reports\main_files" --include-in-header "C:\Users\andre\AppData\Local\Temp\Rtmpgfw3iV\rmarkdown-str2e3c643261b3.html" --include-in-header "C:\Users\andre\AppData\Local\Temp\Rtmpgfw3iV\rmarkdown-str2e3c42713129.html" --variable tables=yes --standalone -Mhas-frontmatter=false --citeproc 
+

@@ -1,0 +1,41 @@
+﻿=================================================================
+Conditional Projections (c) â€” Presidential Bloc Model
+=================================================================
+
+  n=42 counties calibrated on 2025 R2
+
+  Explicit conditions:
+    C1. Simion is the nationalist candidate
+    C2. Single reformist candidate consolidates the anti-Simion pool
+    C3. Structural conditions held at 2025 values
+
+  Simion transfer model:
+    RÂ²=0.970  adj-RÂ²=0.961
+    Î²_simion_r1 = +0.0925  p=0.0000
+
+  Dan consolidation model (ratio = Dan R2 / (1 âˆ’ Simion R1)):
+    RÂ²=0.699  adj-RÂ²=0.627
+    Î²_pct_maghiari = +0.0305  p=0.0247
+    Î²_idx_demographic_pressure = -0.0328  p=0.0270
+
+  Bootstrap projection (B=5000, 90% PI):
+    Counties where 90% PI straddles 50%: 9 / 42
+    Mean projected Simion R2 share: 47.1%  90% PI [44.9%, 49.2%]
+    (Observed 2025 R2: 47.1%)
+
+  Cluster-level projections (median Simion R2 share):
+                   obs_r2  proj_r2  proj_q05  proj_q95  n_uncert   n
+cluster_short                                                       
+Arcul Identitar    0.3345   0.3365    0.2982    0.3558         2   8
+Campia Uitata      0.5408   0.5336    0.5154    0.5515         5  17
+Centrele Dinamice  0.4572   0.4651    0.4487    0.4854         2   9
+Insula Capitalei   0.3669   0.3622    0.3181    0.4085         0   2
+Moldova Profunda   0.5136   0.5215    0.5033    0.5416         0   6
+
+  Saved -> figures/14c_presidential_bloc.png
+  Saved -> reports/14c_presidential_bloc.csv
+
+=================================================================
+CONDITIONAL PROJECTIONS (c) COMPLETE
+=================================================================
+

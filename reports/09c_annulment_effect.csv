@@ -1,0 +1,43 @@
+judet,cluster_short,georgescu_r1,turnout_2025r1,resid_A,simion_r1,predicted_turnout_A
+Ilfov,Insula Capitalei,0.2356,0.6814,0.1061,0.3612,0.5753
+Cluj,Centrele Dinamice,0.1537,0.5599,0.0767,0.2788,0.4832
+Giurgiu,Campia Uitata,0.2297,0.5941,0.0703,0.4175,0.5238
+Olt,Campia Uitata,0.2180,0.5317,0.0698,0.4430,0.4620
+Argeș,Campia Uitata,0.2485,0.5471,0.0602,0.4332,0.4869
+Buzău,Campia Uitata,0.2232,0.4998,0.0528,0.4118,0.4470
+Harghita,Arcul Identitar,0.0350,0.4180,0.0377,0.0896,0.3803
+Bihor,Arcul Identitar,0.1681,0.4856,0.0364,0.3162,0.4492
+Sălaj,Arcul Identitar,0.1648,0.4875,0.0353,0.3421,0.4522
+Teleorman,Campia Uitata,0.1860,0.5044,0.0331,0.4071,0.4713
+Brăila,Campia Uitata,0.2634,0.4604,0.0302,0.4526,0.4301
+Dolj,Campia Uitata,0.1792,0.4989,0.0282,0.3936,0.4708
+Constanța,Centrele Dinamice,0.2650,0.5204,0.0175,0.4429,0.5029
+Mehedinți,Campia Uitata,0.1544,0.5125,0.0148,0.4138,0.4977
+Vrancea,Campia Uitata,0.2034,0.4585,0.0147,0.4476,0.4438
+Neamț,Moldova Profunda,0.2424,0.4277,0.0139,0.4541,0.4138
+Vâlcea,Campia Uitata,0.2277,0.5037,0.0132,0.4439,0.4905
+Hunedoara,Centrele Dinamice,0.2235,0.4781,0.0057,0.4415,0.4724
+Tulcea,Campia Uitata,0.2689,0.4609,0.0040,0.5119,0.4569
+Dâmbovița,Campia Uitata,0.2603,0.5028,0.0037,0.4603,0.4991
+Timiș,Centrele Dinamice,0.2137,0.4919,0.0034,0.3799,0.4885
+Suceava,Moldova Profunda,0.2847,0.4292,-0.0013,0.4855,0.4305
+Călărași,Campia Uitata,0.2617,0.4996,-0.0023,0.4790,0.5019
+Gorj,Campia Uitata,0.2345,0.5109,-0.0023,0.4954,0.5132
+Bacău,Moldova Profunda,0.2336,0.4159,-0.0078,0.4452,0.4237
+Covasna,Arcul Identitar,0.0726,0.3857,-0.0152,0.1616,0.4009
+Iași,Moldova Profunda,0.2201,0.4238,-0.0156,0.3618,0.4393
+Bistrița-Năsăud,Arcul Identitar,0.2544,0.4317,-0.0191,0.4439,0.4508
+Alba,Centrele Dinamice,0.2189,0.5056,-0.0206,0.4345,0.5262
+Brașov,Centrele Dinamice,0.2071,0.5186,-0.0314,0.3339,0.5500
+Prahova,Campia Uitata,0.2603,0.5213,-0.0330,0.4168,0.5543
+Botoșani,Moldova Profunda,0.2576,0.3791,-0.0348,0.4568,0.4139
+Arad,Centrele Dinamice,0.2329,0.4561,-0.0388,0.4666,0.4949
+Galați,Campia Uitata,0.2212,0.4175,-0.0406,0.4155,0.4581
+Mureș,Arcul Identitar,0.1471,0.4418,-0.0458,0.3193,0.4875
+Ialomița,Campia Uitata,0.2706,0.4496,-0.0477,0.4723,0.4973
+Caraș-Severin,Centrele Dinamice,0.2210,0.4316,-0.0504,0.4635,0.4821
+Sibiu,Centrele Dinamice,0.2635,0.4787,-0.0512,0.3934,0.5299
+Vaslui,Moldova Profunda,0.2307,0.3272,-0.0582,0.4445,0.3854
+Satu Mare,Arcul Identitar,0.1328,0.3639,-0.0629,0.3389,0.4268
+Municipiul București,Insula Capitalei,0.1454,0.5065,-0.0680,0.2480,0.5745
+Maramureș,Arcul Identitar,0.2264,0.4072,-0.0806,0.4340,0.4878

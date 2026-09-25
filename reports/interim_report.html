@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RO Voting Prediction — Interim Research Report</title>
+  <style>
+    :root {
+      --blue:   #1a73e8;
+      --red:    #d93025;
+      --green:  #188038;
+      --orange: #e37400;
+      --grey:   #5f6368;
+      --bg:     #f8f9fa;
+      --card:   #ffffff;
+      --border: #dadce0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--bg);
+      color: #202124;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+    header {
+      background: linear-gradient(135deg, #1a237e 0%, #283593 60%, #1565c0 100%);
+      color: white;
+      padding: 40px 48px 32px;
+    }
+    header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 6px; }
+    header .subtitle { font-size: 1rem; opacity: 0.85; }
+    header .meta { margin-top: 16px; font-size: 0.85rem; opacity: 0.7; }
+    nav {
+      background: #283593;
+      padding: 0 48px;
+      display: flex;
+      gap: 0;
+      border-top: 1px solid rgba(255,255,255,0.15);
+    }
+    nav a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      padding: 12px 18px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      border-bottom: 3px solid transparent;
+      transition: all .15s;
+    }
+    nav a:hover { color: white; border-bottom-color: #64b5f6; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 36px 24px; }
+    section { margin-bottom: 48px; }
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1a237e;
+      border-bottom: 3px solid var(--blue);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    h3 { font-size: 1.05rem; font-weight: 600; color: #283593; margin: 20px 0 10px; }
+    h4 { font-size: 0.95rem; font-weight: 600; color: var(--grey); margin: 14px 0 6px; }
+    p { margin-bottom: 12px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .kpi {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    }
+    .kpi .val { font-size: 2rem; font-weight: 700; }
+    .kpi .lbl { font-size: 0.8rem; color: var(--grey); margin-top: 4px; }
+    .kpi.blue  .val { color: var(--blue); }
+    .kpi.green .val { color: var(--green); }
+    .kpi.red   .val { color: var(--red); }
+    .kpi.orange .val { color: var(--orange); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.87rem;
+    }
+    thead th {
+      background: #e8eaf6;
+      color: #1a237e;
+      padding: 9px 12px;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 2px solid #9fa8da;
+    }
+    tbody tr:nth-child(even) { background: #f8f9fa; }
+    tbody tr:hover { background: #e8eaf6; }
+    td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+    .r2-bar {
+      display: inline-block;
+      height: 10px;
+      border-radius: 5px;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .badge-green  { background: #e6f4ea; color: #188038; }
+    .badge-orange { background: #fef3e2; color: #b45309; }
+    .badge-red    { background: #fce8e6; color: #c5221f; }
+    .badge-blue   { background: #e8f0fe; color: #1a73e8; }
+
+    .highlight {
+      background: #fff8e1;
+      border-left: 4px solid #f9a825;
+      padding: 12px 16px;
+      border-radius: 0 6px 6px 0;
+      margin: 12px 0;
+    }
+    .warn {
+      background: #fce8e6;
+      border-left: 4px solid #d93025;
+      padding: 12px 16px;
+      border-radius: 0 6px 6px 0;
+      margin: 12px 0;
+    }
+    .info {
+      background: #e8f0fe;
+      border-left: 4px solid #1a73e8;
+      padding: 12px 16px;
+      border-radius: 0 6px 6px 0;
+      margin: 12px 0;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+    ul, ol { padding-left: 22px; margin-bottom: 10px; }
+    li { margin-bottom: 5px; }
+    code {
+      background: #f1f3f4;
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-family: 'Consolas', monospace;
+      font-size: 0.88em;
+    }
+    .party-tag {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-right: 4px;
+    }
+    .aur   { background: #fff3cd; color: #856404; }
+    .psd   { background: #fce8e6; color: #7b2d00; }
+    .pnl   { background: #fff3cd; color: #5c4a00; border: 1px solid #ffc107; }
+    .usr   { background: #e8f0fe; color: #1a237e; }
+    .udmr  { background: #e8f5e9; color: #1b5e20; }
+    .sos   { background: #f3e5f5; color: #4a148c; }
+    .pot   { background: #e0f7fa; color: #006064; }
+    .idea-box {
+      border: 2px dashed #9fa8da;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 12px 0;
+      background: #fafbff;
+    }
+    .idea-box h4 { color: #1a237e; margin-top: 0; }
+    .progress-bar-wrap {
+      height: 12px;
+      background: #e0e0e0;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .progress-bar { height: 100%; border-radius: 6px; }
+    footer {
+      background: #1a237e;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 18px;
+      font-size: 0.8rem;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Romanian County-Level Voting Prediction</h1>
+  <div class="subtitle">Interim Research Report &mdash; Pipeline v2 with INS Integration &amp; Group A/C Enhancements</div>
+  <div class="meta">Generated: 2026-05-21 &nbsp;|&nbsp; Data: Eurostat 2022, INS Census 2021, roaep.ro 2024&ndash;2025 &nbsp;|&nbsp; N = 42 judete</div>
+</header>
+<nav>
+  <a href="#status">Pipeline Status</a>
+  <a href="#data">Data &amp; Features</a>
+  <a href="#models">Model Results</a>
+  <a href="#findings">Key Findings</a>
+  <a href="#diagnostics">Diagnostics</a>
+  <a href="#profiles">Voter Profiles</a>
+  <a href="#brainstorm">Brainstorm</a>
+  <a href="#next">Next Steps</a>
+</nav>
+
+<div class="container">
+
+<!-- ============================================================ -->
+<section id="status">
+  <h2>1. Pipeline Status</h2>
+  <div class="card-grid">
+    <div class="kpi green"><div class="val">42/42</div><div class="lbl">Counties with complete feature data</div></div>
+    <div class="kpi blue"><div class="val">83</div><div class="lbl">Columns in feature matrix</div></div>
+    <div class="kpi blue"><div class="val">8</div><div class="lbl">Party targets modelled</div></div>
+    <div class="kpi green"><div class="val">3</div><div class="lbl">Models trained (EN / XGB / Stacked)</div></div>
+    <div class="kpi orange"><div class="val">7/8</div><div class="lbl">LOOCV R&sup2; &gt; 0.3 (ElasticNet)</div></div>
+    <div class="kpi blue"><div class="val">r=0.884</div><div class="lbl">Georgescu &rarr; Simion transfer</div></div>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <h3>Stage Completion</h3>
+    <table>
+      <thead><tr><th>Stage</th><th>Script</th><th>Status</th><th>Key Output</th></tr></thead>
+      <tbody>
+        <tr><td>01 Ingest</td><td><code>ingest_roaep / ins / eurostat / ins_extra</code></td><td><span class="badge badge-green">Done</span></td><td>elections_raw, census_raw, ins_extra_clean</td></tr>
+        <tr><td>02 Clean</td><td><code>clean_elections / census / eurostat</code></td><td><span class="badge badge-green">Done</span></td><td>3 clean parquets, 42/42 counties</td></tr>
+        <tr><td>03 Features</td><td><code>build_features</code></td><td><span class="badge badge-green">Done</span></td><td>features_2022_judet.parquet (42 &times; 83)</td></tr>
+        <tr><td>04a Baseline</td><td><code>train_baseline</code></td><td><span class="badge badge-green">Done</span></td><td>OLS + ElasticNet + bootstrap CIs + LRO-CV</td></tr>
+        <tr><td>04b GBM</td><td><code>train_gbm</code></td><td><span class="badge badge-green">Done</span></td><td>XGBoost + SHAP + PDPs</td></tr>
+        <tr><td>04c Spatial</td><td><code>train_spatial</code></td><td><span class="badge badge-green">Done</span></td><td>Moran's I; no spatial lag needed</td></tr>
+        <tr><td>04d Stacked</td><td><code>train_stacked</code></td><td><span class="badge badge-green">Done</span></td><td>EN + XGB &rarr; Ridge meta-learner (nested LOOCV)</td></tr>
+        <tr><td>05 Evaluate</td><td><code>evaluate</code></td><td><span class="badge badge-green">Done</span></td><td>model_comparison.csv, all figures</td></tr>
+        <tr><td>2020 parl data</td><td>&mdash;</td><td><span class="badge badge-orange">Pending</span></td><td>Awaiting user download</td></tr>
+        <tr><td>Senate / Chamber split</td><td>&mdash;</td><td><span class="badge badge-orange">Pending</span></td><td>Awaiting user download</td></tr>
+        <tr><td>Voter profile clusters</td><td>&mdash;</td><td><span class="badge badge-blue">Planned</span></td><td>k-means / GMM on feature matrix</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="data">
+  <h2>2. Data &amp; Feature Matrix</h2>
+
+  <div class="two-col">
+    <div>
+      <h3>Sources Integrated</h3>
+      <table>
+        <thead><tr><th>Source</th><th>Variables</th><th>Coverage</th></tr></thead>
+        <tbody>
+          <tr><td>Eurostat NUTS 3 (2022)</td><td>GDP/cap, unemployment, poverty, education, internet, density, migration, age, employment shares</td><td>42/42</td></tr>
+          <tr><td>INS Census 2021</td><td>Ethnicity (9 groups), religion (10 groups), urban/rural share</td><td>42/42</td></tr>
+          <tr><td>INS Administrative 2022 (NEW)</td><td>Emigrants permanent &amp; temporary, school units, hospitals, tourism units, criminal convictions</td><td>42/42</td></tr>
+          <tr><td>INS Household Census 2021 (NEW)</td><td>Avg household size, census population (normalization base)</td><td>42/42</td></tr>
+          <tr><td>roaep.ro Elections</td><td>EP 2024, Parlamentare 2024, Presidential 2024 R1, 2025 R1 &amp; R2, Presidential 2019 R2</td><td>42/42</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Feature Groups (83 columns total)</h3>
+      <table>
+        <thead><tr><th>Group</th><th>Count</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td>Identity</td><td>4</td><td>siruta, judet, geo_nuts3, nuts2_code</td></tr>
+          <tr><td>Eurostat structural</td><td>13</td><td>gdp_per_capita, unemployment_rate, net_migration_rate</td></tr>
+          <tr><td>Census demographic</td><td>9</td><td>pct_maghiari, pct_orthodox, pct_urban</td></tr>
+          <tr><td>INS extra (rates)</td><td>7</td><td>emigrants_temporary_rate, hospitals_per_100k</td></tr>
+          <tr><td>Composite indices</td><td>3</td><td>idx_grievance, idx_modernity, idx_demographic_pressure</td></tr>
+          <tr><td>Engineered interactions</td><td>8</td><td>rural_elderly, orthodox_poverty, ethno_linguistic_frag</td></tr>
+          <tr><td>Sentiment / electoral</td><td>4</td><td>georgescu_r1_2024, simion_r1_2025, pres19r2_IOHANNIS</td></tr>
+          <tr><td>Targets (8 parties)</td><td>12</td><td>t_AUR, t_PSD, t_PNL&hellip; t_turnout</td></tr>
+          <tr><td>Validation</td><td>3</td><td>pres25r2_DAN, pres25r2_SIMION, pres19r2_DANCILA</td></tr>
+          <tr><td>Source-level metadata</td><td>13+</td><td>source_nuts_level_* flags</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="info" style="margin-top:16px;">
+    <strong>Note on VIF in OLS:</strong> The OLS feature set uses composite indices (absorbing raw Eurostat inputs) plus select INS-derived rates. Interaction terms (<code>rural_elderly</code>, <code>ethno_linguistic_frag</code>, <code>nationalist_consolidation_ratio</code>) are excluded from OLS to avoid VIF inflation &mdash; they are used in ElasticNet and XGBoost where regularisation handles multicollinearity. <em>simion_r1_2025</em> still has VIF=126 in the OLS set due to its strong collinearity with <em>georgescu_r1_2024</em> and <em>ep_2024_anti_estab</em>; all three proxy the same underlying anti-establishment political space at county level.
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="models">
+  <h2>3. Model Performance</h2>
+
+  <h3>3.1 LOOCV R&sup2; Comparison (N=42)</h3>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Target</th>
+          <th>Party</th>
+          <th>ElasticNet R&sup2;</th>
+          <th>Stacked R&sup2;</th>
+          <th>XGBoost R&sup2;</th>
+          <th>EN Bootstrap 95% CI</th>
+          <th>Assessment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="party-tag aur">AUR</span></td>
+          <td>Alliance for Romania's Unity</td>
+          <td class="num"><strong>0.848</strong> <span class="r2-bar" style="width:85px;background:#1a73e8;"></span></td>
+          <td class="num">0.826</td>
+          <td class="num">0.487</td>
+          <td class="num">[0.668, 0.912]</td>
+          <td><span class="badge badge-green">Excellent</span></td>
+        </tr>
+        <tr>
+          <td><span class="party-tag psd">PSD</span></td>
+          <td>Social Democratic Party</td>
+          <td class="num"><strong>0.789</strong> <span class="r2-bar" style="width:79px;background:#1a73e8;"></span></td>
+          <td class="num">0.743</td>
+          <td class="num">0.588</td>
+          <td class="num">[0.566, 0.897]</td>
+          <td><span class="badge badge-green">Very Good</span></td>
+        </tr>
+        <tr>
+          <td><span class="party-tag sos">SOS</span></td>
+          <td>SOS Romania</td>
+          <td class="num"><strong>0.809</strong> <span class="r2-bar" style="width:81px;background:#1a73e8;"></span></td>
+          <td class="num">0.743</td>
+          <td class="num">0.320</td>
+          <td class="num">[0.636, 0.888]</td>
+          <td><span class="badge badge-green">Very Good</span></td>
+        </tr>
+        <tr>
+          <td><span class="party-tag udmr">UDMR</span></td>
+          <td>Hungarian Democratic Union</td>
+          <td class="num"><strong>0.997</strong> <span class="r2-bar" style="width:99px;background:#188038;"></span></td>
+          <td class="num">&mdash;</td>
+          <td class="num">&mdash;</td>
+          <td class="num">&mdash;</td>
+          <td><span class="badge badge-green">OLS only (ethnic bloc)</span></td>
+        </tr>
+        <tr>
+          <td><span class="party-tag usr">USR</span></td>
+          <td>Save Romania Union</td>
+          <td class="num"><strong>0.550</strong> <span class="r2-bar" style="width:55px;background:#f9ab00;"></span></td>
+          <td class="num">0.532</td>
+          <td class="num">0.399</td>
+          <td class="num">[0.348, 0.727]</td>
+          <td><span class="badge badge-orange">Moderate</span></td>
+        </tr>
+        <tr>
+          <td>Turnout</td>
+          <td>&mdash;</td>
+          <td class="num"><strong>0.671</strong> <span class="r2-bar" style="width:67px;background:#1a73e8;"></span></td>
+          <td class="num">0.242</td>
+          <td class="num">0.333</td>
+          <td class="num">[0.425, 0.780]</td>
+          <td><span class="badge badge-orange">Moderate&ndash;Good</span></td>
+        </tr>
+        <tr>
+          <td><span class="party-tag pot">POT</span></td>
+          <td>We Want Our Country Back</td>
+          <td class="num"><strong>0.389</strong> <span class="r2-bar" style="width:39px;background:#f9ab00;"></span></td>
+          <td class="num">0.213</td>
+          <td class="num">0.173</td>
+          <td class="num">[0.134, 0.570]</td>
+          <td><span class="badge badge-orange">Weak&ndash;Moderate</span></td>
+        </tr>
+        <tr>
+          <td><span class="party-tag pnl">PNL</span></td>
+          <td>National Liberal Party</td>
+          <td class="num">0.043 <span class="r2-bar" style="width:4px;background:#d93025;"></span></td>
+          <td class="num">&minus;0.014</td>
+          <td class="num">&minus;0.255</td>
+          <td class="num">[&minus;0.273, 0.316]</td>
+          <td><span class="badge badge-red">Not predictable</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top:12px;font-size:0.83rem;color:var(--grey);">LOOCV = Leave-One-Out Cross-Validation. Bootstrap 95% CI uses 1000 resamples of (actual, predicted) pairs. Stacked = EN + XGBoost &rarr; Ridge meta-learner (nested LOOCV). UDMR OLS R&sup2; = 0.995 (in-sample; pct_maghiari near-deterministic).</p>
+  </div>
+
+  <h3>3.2 Key Takeaway: Why ElasticNet Dominates</h3>
+  <div class="card">
+    <p>With N=42, <strong>ElasticNet outperforms both XGBoost and the stacked ensemble on every target</strong>. This is expected: tree-based models require substantially more observations to discover non-linear interaction effects without overfitting. The stacked meta-learner has only 41 training points per outer fold, insufficient to learn optimal base-learner weights. At this sample size, the <em>bias&ndash;variance tradeoff strongly favours the simpler linear model</em>.</p>
+    <p><strong>PNL is genuinely unpredictable</strong> from structural county-level features. The bootstrap CI crossing zero (&minus;0.27, +0.32) confirms this is not a data quality issue &mdash; PNL votes appear driven by local factors (candidate incumbency, mayoral networks, urban/rural split of specific cities) that are invisible at the NUTS 3 aggregation level. This is an informative null finding.</p>
+    <div class="highlight">
+      <strong>Practical implication:</strong> For a 2025 parliamentary scenario, AUR, PSD, SOS, and UDMR can be predicted with meaningful confidence intervals. PNL and POT require county-specific qualitative input (e.g., incumbency effects, candidate quality) that structural data cannot capture.
+    </div>
+  </div>
+
+  <h3>3.3 Significant OLS Predictors</h3>
+  <div class="two-col">
+    <div class="card">
+      <h4>AUR</h4>
+      <ul>
+        <li><strong>simion_r1_2025</strong> (&beta; = +0.069, p=0.037): Simion's 2025 first-round share is the dominant predictor of 2024 parliamentary AUR, confirming the geographic stability of the ultra-nationalist vote bloc.</li>
+      </ul>
+      <h4>SOS Romania</h4>
+      <ul>
+        <li><strong>idx_grievance</strong> (+, p=0.008): Higher economic distress &rarr; more SOS</li>
+        <li><strong>pct_orthodox</strong> (&minus;, p&lt;0.001): Lower Orthodox share &rarr; more SOS (counter-intuitive; likely driven by Diaspora/mixed urban)</li>
+        <li><strong>georgescu_r1_2024</strong> (+, p&lt;0.001): SOS benefits from the Georgescu mobilisation</li>
+        <li><strong>avg_household_size</strong> (&minus;, p=0.006): Smaller households &rarr; more SOS (urban, atomised communities)</li>
+        <li><strong>pct_maghiari</strong> (&minus;, p=0.001): Ethnic Hungarian areas vote less SOS</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>USR (Save Romania Union)</h4>
+      <ul>
+        <li><strong>pct_maghiari</strong> (&minus;, p&lt;0.001): Transylvanian Hungarian counties don't vote USR</li>
+        <li><strong>pct_orthodox</strong> (&minus;, p=0.008): More secular / minority-religion counties lean USR</li>
+        <li><strong>georgescu_r1_2024</strong> (+, p=0.017): USR paradoxically gains where Georgescu was strong (anti-PSD vote mobilisation in both directions)</li>
+      </ul>
+      <h4>Turnout</h4>
+      <ul>
+        <li><strong>pct_orthodox</strong> (+, p=0.033): Higher religiosity correlates with higher turnout</li>
+        <li><strong>emigrants_permanent_rate</strong> (top SHAP): Emigration depresses turnout &mdash; fewer eligible voters, weaker local attachments</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>3.4 SHAP Feature Importance (XGBoost)</h3>
+  <div class="card">
+    <table>
+      <thead><tr><th>Target</th><th>#1 Feature</th><th>#2 Feature</th><th>#3 Feature</th></tr></thead>
+      <tbody>
+        <tr><td><span class="party-tag aur">AUR</span></td><td>simion_r1_2025</td><td>anti_estab_persistence</td><td>ep_2024_anti_estab</td></tr>
+        <tr><td><span class="party-tag psd">PSD</span></td><td>pres19r2_IOHANNIS</td><td>anti_estab_persistence</td><td>ethno_linguistic_frag</td></tr>
+        <tr><td><span class="party-tag pnl">PNL</span></td><td>pct_romi</td><td>rural_elderly</td><td>pct_pop_under25</td></tr>
+        <tr><td><span class="party-tag usr">USR</span></td><td>net_migration_rate</td><td>pct_employment_agriculture</td><td>nationalist_consolidation_ratio</td></tr>
+        <tr><td><span class="party-tag udmr">UDMR</span></td><td>pct_maghiari (dominant)</td><td>emigrants_permanent_rate</td><td>pct_orthodox</td></tr>
+        <tr><td><span class="party-tag sos">SOS</span></td><td>gdp_per_capita</td><td>georgescu_r1_2024</td><td>emigrants_permanent_rate</td></tr>
+        <tr><td><span class="party-tag pot">POT</span></td><td>ep_2024_anti_estab</td><td>rural_elderly</td><td>pct_employment_agriculture</td></tr>
+        <tr><td>Turnout</td><td>emigrants_permanent_rate</td><td>gdp_per_capita</td><td>simion_r1_2025</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:10px;font-size:0.83rem;color:var(--grey);">Mean |SHAP value| on full model (N=42). Note: XGBoost LOOCV R&sup2; is substantially lower than EN, so SHAP magnitudes are best read as directional signals rather than precise attributions.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="findings">
+  <h2>4. Key Findings</h2>
+
+  <div class="card">
+    <h3>4.1 Georgescu &rarr; Simion Vote Transfer (r = 0.884, p &lt; 0.0001)</h3>
+    <p>The single most striking finding in the dataset. Across all 42 counties, the correlation between Georgescu's annulled November 2024 first-round share and Simion's May 2025 first-round share is 0.884. This implies:</p>
+    <ul>
+      <li>The anti-establishment nationalist vote is <strong>geographically entrenched</strong>, not personality-driven. Annulling Georgescu did not disrupt the underlying geographic coalition.</li>
+      <li>The <em>nationalist_consolidation_ratio</em> (mean = 0.345) shows Georgescu captured ~35% of the combined Georgescu+Simion total. Harghita (0.281) and Mehedinți (0.272) are outliers on the low end — both have structural explanations (Harghita = UDMR dominance suppressing nationalist vote; Mehedinți = weak Georgescu penetration despite high grievance).</li>
+      <li>Simion's absolute shares (mean = 40.1%, range 9.0%&ndash;51.2%) substantially exceed Georgescu's (mean = 21.3%), consistent with vote consolidation from AUR's 2024 parliamentary base.</li>
+    </ul>
+    <div class="highlight">
+      See <code>figures/georgescu_simion_transfer.png</code> for the scatter plot with county labels.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>4.2 The Anti-Establishment Geographic Topology</h3>
+    <p>Top 5 AUR counties in 2024 parliamentary: <strong>Gorj</strong> (27.1%), <strong>Suceava</strong> (26.1%), <strong>Ialomița</strong> (24.6%), <strong>Arad</strong> (23.7%), <strong>Neamț</strong> (23.4%).</p>
+    <p>These span different regions (Oltenia, Moldova, Muntenia, Transylvania) and different economic profiles. What they share is high Simion vote share and moderate-to-high grievance indices. The AUR coalition is not regionally monolithic &mdash; it is <em>socially distributed</em> across multiple "profiles" of discontent.</p>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>4.3 USR Urban Core</h3>
+      <p>Top USR counties: <strong>București</strong> (23.2%), <strong>Timiș</strong> (20.1%), <strong>Brașov</strong> (18.3%), <strong>Ilfov</strong> (17.8%), <strong>Sibiu</strong> (16.7%). These are the highest-modernity, highest-migration-inflow counties. <em>net_migration_rate</em> is USR's #1 SHAP feature &mdash; counties attracting internal migrants vote more reform-oriented.</p>
+    </div>
+    <div class="card">
+      <h3>4.4 Turnout Crisis in Moldova</h3>
+      <p>Lowest turnout counties: <strong>Vaslui</strong> (29.1%), <strong>Botoșani</strong> (36.2%), <strong>Iași</strong> (36.3%), <strong>Bacău</strong> (36.6%), <strong>Ialomița</strong> (37.0%). These are among the highest-emigration counties in Moldova. The SHAP evidence confirms: <em>emigrants_permanent_rate</em> is the strongest predictor of low turnout, suggesting a direct mechanism (registered voters who have emigrated but remain on rolls).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>4.5 Spatial Autocorrelation: None Found</h3>
+    <p>Moran's I tests on OLS residuals for AUR (I = &minus;0.045, p = 0.428), PSD (I = &minus;0.066, p = 0.301), and ANTI_ESTABLISHMENT (I = &minus;0.125, p = 0.133) are all non-significant. This means once structural features are controlled for, there is no residual geographic clustering. The apparent regional patterns in raw vote shares (e.g., Moldova/Oltenia AUR concentration) are explained by the structural variables, not by spatial spillover effects.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="diagnostics">
+  <h2>5. Model Diagnostics</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Leave-Region-Out CV (AUR, ElasticNet)</h3>
+      <p>Held out one of Romania's 8 development regions at a time. MAE range: 0.0088 (București-Ilfov, 2 counties) to 0.0248 (Nord-Est, 6 counties). The Nord-Est region is the most difficult to predict from the rest &mdash; it has distinct emigration patterns and grievance structure. The model generalises reasonably across all regions with no catastrophic failure.</p>
+      <table style="margin-top:8px;">
+        <thead><tr><th>Region</th><th>N Counties</th><th>MAE</th><th>RMSE</th></tr></thead>
+        <tbody>
+          <tr><td>RO11 (Nord-Est)</td><td>6</td><td class="num">0.0248</td><td class="num">0.0290</td></tr>
+          <tr><td>RO21 (Sud-Est)</td><td>6</td><td class="num">0.0197</td><td class="num">0.0219</td></tr>
+          <tr><td>RO31 (Sud-Muntenia)</td><td>7</td><td class="num">0.0208</td><td class="num">0.0262</td></tr>
+          <tr><td>RO12 (Sud-Est subset)</td><td>6</td><td class="num">0.0135</td><td class="num">0.0159</td></tr>
+          <tr><td>RO22 (mixed)</td><td>6</td><td class="num">0.0148</td><td class="num">0.0161</td></tr>
+          <tr><td>RO41 (Sud-Vest)</td><td>5</td><td class="num">0.0138</td><td class="num">0.0172</td></tr>
+          <tr><td>RO42 (Vest)</td><td>4</td><td class="num">0.0141</td><td class="num">0.0169</td></tr>
+          <tr><td>RO32 (Buc-Ilfov)</td><td>2</td><td class="num">0.0088</td><td class="num">0.0100</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Bootstrap R&sup2; Stability</h3>
+      <p>1000 resamples of (actual, LOOCV-predicted) pairs. Wide CIs are expected at N=42; the key is whether the lower bound is above zero.</p>
+      <table style="margin-top:8px;">
+        <thead><tr><th>Target</th><th>Mean R&sup2;</th><th>95% CI Lower</th><th>Stable?</th></tr></thead>
+        <tbody>
+          <tr><td>AUR</td><td class="num">0.831</td><td class="num">0.668</td><td><span class="badge badge-green">Yes</span></td></tr>
+          <tr><td>SOS</td><td class="num">0.794</td><td class="num">0.636</td><td><span class="badge badge-green">Yes</span></td></tr>
+          <tr><td>PSD</td><td class="num">0.780</td><td class="num">0.566</td><td><span class="badge badge-green">Yes</span></td></tr>
+          <tr><td>Turnout</td><td class="num">0.646</td><td class="num">0.425</td><td><span class="badge badge-green">Yes</span></td></tr>
+          <tr><td>USR</td><td class="num">0.540</td><td class="num">0.348</td><td><span class="badge badge-green">Yes</span></td></tr>
+          <tr><td>POT</td><td class="num">0.373</td><td class="num">0.134</td><td><span class="badge badge-orange">Marginal</span></td></tr>
+          <tr><td>PNL</td><td class="num">0.025</td><td class="num">&minus;0.273</td><td><span class="badge badge-red">No signal</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="warn" style="margin-top:4px;">
+    <strong>Overfitting watch:</strong> With N=42 and ~20 OLS predictors, the model is operating at ~2:1 observations-to-parameters ratio in OLS. Inference (p-values, CIs) is unreliable for individual coefficients &mdash; treat OLS results as directional signals confirmed by LOOCV, not as publication-ready estimates. The ElasticNet LOOCV R&sup2; is the primary predictive performance metric.
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="profiles">
+  <h2>6. Toward Voter Profiles</h2>
+
+  <p>The current model treats each county as an independent data point and predicts vote shares from structural features. An alternative and complementary framing is to identify <em>latent voter profiles</em> &mdash; clusters of counties with similar socio-economic and demographic structures that also share similar voting patterns. This offers several advantages:</p>
+
+  <ul>
+    <li><strong>Interpretability:</strong> "This county belongs to the grievance-rural profile" is more communicable than a linear combination of 20 coefficients.</li>
+    <li><strong>Prediction generalisation:</strong> Profiles can be extrapolated to new scenarios (e.g., "if county X shifts from Profile 2 to Profile 3, what happens to AUR?").</li>
+    <li><strong>Avoiding overfitting:</strong> Clustering reduces the problem dimensionality before prediction, acting as a regularisation step.</li>
+  </ul>
+
+  <div class="card">
+    <h3>Candidate Voter Profiles (Hypothesised from Data)</h3>
+    <div class="card-grid">
+      <div class="idea-box">
+        <h4>Profile 1: Urban-Cosmopolitan</h4>
+        <p>High modernity, high in-migration, high GDP/cap, high USR/PNL, low AUR.<br><strong>Counties:</strong> București, Timiș, Cluj, Brașov, Sibiu</p>
+      </div>
+      <div class="idea-box">
+        <h4>Profile 2: Hungarian Minority Bloc</h4>
+        <p>Very high pct_maghiari, near-deterministic UDMR, ethnically fragmented, Reformed religion dominant.<br><strong>Counties:</strong> Harghita, Covasna, (+partial) Mureș, Bihor</p>
+      </div>
+      <div class="idea-box">
+        <h4>Profile 3: Rural Grievance (Moldova)</h4>
+        <p>High grievance index, high emigration, low income, low turnout, high AUR/SOS, lowest USR.<br><strong>Counties:</strong> Vaslui, Botoșani, Neamț, Bacău, Vrancea</p>
+      </div>
+      <div class="idea-box">
+        <h4>Profile 4: Industrial South-West</h4>
+        <p>Declining industry, high poverty, high Orthodox, high AUR &amp; SOS, traditional PSD stronghold.<br><strong>Counties:</strong> Gorj, Dolj, Olt, Mehedinți, Teleorman</p>
+      </div>
+      <div class="idea-box">
+        <h4>Profile 5: Periurban / Ilfov-Adjacent</h4>
+        <p>High in-migration, growing population, mixed urban/rural, high Ilfov specificity, mixed voting.<br><strong>Counties:</strong> Ilfov, Prahova, Dâmbovița</p>
+      </div>
+      <div class="idea-box">
+        <h4>Profile 6: Multicultural Border Counties</h4>
+        <p>German/Romani/other minorities, high tourism, moderate modernity, fragmented religious landscape, AUR below average.<br><strong>Counties:</strong> Arad, Timiș, Caraș-Severin, Satu Mare</p>
+      </div>
+    </div>
+    <p style="margin-top:12px;font-size:0.85rem;color:var(--grey);">These profiles are hypothesised &mdash; formal cluster analysis (k-means or GMM on the feature matrix) is needed to validate, merge, or split them. The number of meaningful clusters is an empirical question; likely 4&ndash;7.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="brainstorm">
+  <h2>7. Brainstorm: Ideas for Next Iteration</h2>
+
+  <h3>7.1 Voter Profile Clustering (High Priority)</h3>
+  <div class="idea-box">
+    <h4>What: k-means / GMM on feature space &rarr; cluster-conditional vote share prediction</h4>
+    <p>Run unsupervised clustering (k=4 to 7, test with silhouette + elbow) on a curated set of structural features only (no vote shares). Then analyse within-cluster vote distributions. A two-stage pipeline:</p>
+    <ol>
+      <li><strong>Stage 1:</strong> Cluster counties into voter profiles using structural features (GDP/cap, grievance, urban share, emigration rate, ethnic frags).</li>
+      <li><strong>Stage 2:</strong> Within each cluster, fit a lighter linear model on vote shares. Cluster membership is the dominant variable; within-cluster residuals reveal idiosyncratic county effects.</li>
+    </ol>
+    <p><strong>Why this helps:</strong> If the 42 counties fall into, say, 5 coherent profiles, and those profiles explain 60% of AUR variance, the remaining 40% is county-level "noise" we can model separately. This also gives a natural language for the report: "In Grievance-Rural counties, AUR averages 22%; in Urban-Cosmopolitan counties, 7%."</p>
+    <p><strong>Open question for you:</strong> Should clusters be defined purely on structural/demographic features (no election data), or should past election data be allowed in the clustering? Pure structural clustering makes out-of-sample generalisation cleaner but may miss politically-relevant groupings.</p>
+  </div>
+
+  <h3>7.2 Additional Data Angles</h3>
+  <div class="two-col">
+    <div class="idea-box">
+      <h4>Diaspora Vote Returns</h4>
+      <p>The roaep.ro data likely includes votes cast abroad by county of registration. These are currently excluded. A diaspora share variable would capture the gap between registered and resident voters &mdash; directly relevant to the turnout crisis finding.</p>
+      <p><strong>Feasibility:</strong> Check if roaep.ro has "circumscriptia diaspora" rows; could be ingested in the current pipeline.</p>
+    </div>
+    <div class="idea-box">
+      <h4>Mayor/Prefect Partisan Affiliation</h4>
+      <p>Local administrative control (PSD mayor, PNL mayor) strongly influences parliamentary vote shares through mobilisation and patronage networks. This would explain PNL's unpredictability &mdash; it's a party where <em>who</em> runs locally matters more than structural factors.</p>
+      <p><strong>Feasibility:</strong> AEP (Autoritatea Electorala Permanenta) publishes local election results by county. Could add as a categorical or share variable.</p>
+    </div>
+    <div class="idea-box">
+      <h4>2020 Parliamentary Data (Pending)</h4>
+      <p>Once downloaded, enables: swing variables (2020&rarr;2024 party-level change), lagged vote shares as predictors, and trend analysis. The anti-establishment swing is currently blank; filling it would add the most explanatory variable we're missing.</p>
+      <p><strong>Caution:</strong> 2020 was COVID election with artificially low turnout. Use as predictor, not baseline for "normal" behaviour.</p>
+    </div>
+    <div class="idea-box">
+      <h4>Senate vs. Chamber Split</h4>
+      <p>Voters can split tickets between Senate and Camera Deputatilor. The divergence between the two reveals preference intensity and strategic voting behaviour. Counties with large Senate/Camera splits are interesting anomalies for profile analysis.</p>
+    </div>
+  </div>
+
+  <h3>7.3 Modelling Enhancements</h3>
+  <div class="two-col">
+    <div class="idea-box">
+      <h4>Dirichlet Regression (R)</h4>
+      <p>Vote shares for all parties within a county must sum to 1 &mdash; they are compositional data. Separate OLS on each party ignores this constraint. Dirichlet regression models all parties jointly, respects the simplex constraint, and produces coherent joint predictions. Best implemented in R via the <code>DirichletReg</code> package. Suitable for the final report methodology section.</p>
+    </div>
+    <div class="idea-box">
+      <h4>Profile-Conditional Prediction Intervals</h4>
+      <p>Rather than a single R&sup2; for all 42 counties, report prediction intervals conditioned on cluster membership. "For counties in the Grievance-Rural cluster, AUR prediction interval is [18%, 27%]." This is more honest and more actionable for scenario analysis.</p>
+    </div>
+    <div class="idea-box">
+      <h4>Counterfactual Scenario Engine</h4>
+      <p>Given the voter profile clusters, build a scenario tool: "What if Gorj's GDP/cap increased by 20%?" &rarr; shift the feature vector, re-predict. This requires fixing the rest of the feature vector and varying one dimension &mdash; exactly what PDPs do, but applied to specific counties rather than the average.</p>
+    </div>
+    <div class="idea-box">
+      <h4>Cross-Election Validation</h4>
+      <p>The 2025 Presidential R2 (Dan vs. Simion) is already in the data as a validation target. Build a model that predicts Dan vs. Simion split from the same structural features and evaluate against observed. This is a strong out-of-sample test because it uses a completely different election.</p>
+    </div>
+  </div>
+
+  <h3>7.4 Overfitting Risk Management</h3>
+  <div class="warn">
+    <strong>Current risk level: Moderate.</strong> With 42 counties and ~20 predictors in OLS, and ~35 predictors in EN/XGBoost, the models are operating at the boundary of what's defensible. The mitigations already in place (LOOCV, bootstrap CIs, LRO-CV, VIF monitoring) are appropriate. Adding more features without increasing N is counterproductive. The voter profile clustering approach is specifically designed to <em>reduce</em> effective dimensionality rather than increase it.
+  </div>
+  <p>The most likely forms of overfitting in this dataset:</p>
+  <ul>
+    <li><strong>Overfitting to the 2024 anti-establishment wave:</strong> The georgescu/simion/ep_2024 variables are collinear proxies for the same underlying signal. The model may be "memorising" this wave rather than learning the structural drivers. Testing on 2020 data will reveal this.</li>
+    <li><strong>Small-cluster artefacts:</strong> Budapest (UDMR) and Ilfov are genuine outliers. LOOCV handles them individually, but any model that explains these two perfectly is likely overfitting.</li>
+    <li><strong>Interaction term proliferation:</strong> The 8 engineered features (rural_elderly, etc.) are all correlated with their component variables. EN regularises this, but in the report these should be presented as exploratory rather than confirmed predictors.</li>
+  </ul>
+</section>
+
+<!-- ============================================================ -->
+<section id="next">
+  <h2>8. Recommended Next Steps</h2>
+  <div class="card">
+    <ol>
+      <li><strong>Voter profile clustering</strong> &mdash; k-means on structural features (k=4&ndash;7), silhouette selection, named profiles with vote share distributions. <em>This is the highest-value next step.</em></li>
+      <li><strong>Ingest 2020 parliamentary data</strong> &mdash; unlocks swing variables and lagged predictors. Adds the most missing explanatory power.</li>
+      <li><strong>Ingest diaspora vote returns</strong> &mdash; directly testable if roaep.ro has abroad rows.</li>
+      <li><strong>Cross-election validation</strong> &mdash; predict Dan/Simion 2025 R2 split from structural features; compare to observed.</li>
+      <li><strong>Dirichlet regression in R Markdown</strong> &mdash; for the final report methodology section; models the full party vote share vector jointly.</li>
+      <li><strong>Mayor/prefect partisanship variable</strong> &mdash; would explain PNL's unpredictability (data available from AEP local election results).</li>
+      <li><strong>Scenario analysis tool</strong> &mdash; county-level counterfactual predictions using the fitted EN model.</li>
+    </ol>
+  </div>
+  <p style="color:var(--grey);font-size:0.85rem;">
+    Sources: Eurostat Regional Statistics (2022); INS Census 2021, INS Administrative Statistics 2022; roaep.ro election results 2019&ndash;2025.
+    All LOOCV performance metrics use leave-one-out cross-validation on N=42 Romanian judete.
+    Code: <code>C:\Users\andre\Desktop\Sandbox\RO-Voting-Prediction\</code>
+  </p>
+</section>
+
+</div>
+<footer>
+  Romanian County-Level Voting Prediction &mdash; Interim Report &mdash; 2026-05-21 &mdash; Andrei Manoloiu, MSc Data Science, SDU Kolding
+</footer>
+
+</body>
+</html>

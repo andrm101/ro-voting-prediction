@@ -1,0 +1,30 @@
+﻿=================================================================
+Conditional Projections (b) â€” Swing County Ranking
+=================================================================
+
+  n=42  predictors=9
+
+  OLS RÂ²=0.970  adj-RÂ²=0.961
+  Î²_simion_r1 = +0.0925  p=0.0000
+
+  Top 10 swing counties (most competitive & uncertain):
+  Rank  County           Cluster                 Pred R2   Obs R2   Distance  80% width
+  --------------------------------------------------------------------------------
+  1     BistriÈ›a-NÄƒsÄƒud  Arcul Identitar           49.7%     50.4%        0.3pp        3.4pp
+  2     BuzÄƒu            Campia Uitata             49.7%     50.4%        0.3pp        2.8pp
+  3     Prahova          Campia Uitata             50.4%     47.8%        0.4pp        3.6pp
+  4     ConstanÈ›a        Centrele Dinamice         49.3%     49.5%        0.7pp        2.7pp
+  5     ArgeÈ™            Campia Uitata             50.9%     52.9%        0.9pp        2.9pp
+  6     MaramureÈ™        Arcul Identitar           49.3%     48.8%        0.7pp        1.9pp
+  7     Alba             Centrele Dinamice         51.1%     48.3%        1.1pp        2.9pp
+  8     Giurgiu          Campia Uitata             51.8%     56.0%        1.8pp        2.8pp
+  9     Vrancea          Campia Uitata             51.5%     52.8%        1.5pp        2.1pp
+  10    MehedinÈ›i        Campia Uitata             52.8%     56.0%        2.8pp        3.8pp
+
+  Saved -> figures/14b_swing_county_ranking.png
+  Saved -> reports/14b_swing_counties.csv
+
+=================================================================
+CONDITIONAL PROJECTIONS (b) COMPLETE
+=================================================================
+

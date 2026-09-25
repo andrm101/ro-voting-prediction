@@ -1,0 +1,10 @@
+origin,destination,r_partial,p_value,n,description
+Georgescu 2024 R1,Simion 2025 R1,0.7700,0.0000,42,Nationalist continuity (main)
+Simion 2024 R1,Simion 2025 R1,0.7456,0.0000,42,Same-candidate continuity
+Lasconi 2024 R1,Dan 2025 R1,0.9599,0.0000,42,Reformist continuity
+Iohannis 2019 R2,Dan 2025 R1,0.6264,0.0000,42,Establishment → reformist (cross-cycle)
+Georgescu 2024 R1,Dan 2025 R1,-0.4194,0.0057,42,Cross-camp: nationalist → reformist
+Iohannis 2019 R2,Simion 2025 R1,-0.0557,0.7261,42,Cross-camp: establishment → nationalist
+Dăncilă 2019 R2,Simion 2025 R1,0.0557,0.7261,42,PSD-left populist → nationalist
+Ciolacu 2024 R1,Simion 2025 R1,-0.1592,0.3139,42,PSD 2024 → nationalist 2025
+Ciolacu 2024 R1,Dan 2025 R1,-0.3521,0.0222,42,PSD 2024 → reformist 2025

@@ -1,0 +1,12 @@
+﻿                  election chamber
+0                  ep_2024      EP
+42       parlamentare_2020      CD
+43       parlamentare_2020       S
+124      parlamentare_2024       S
+166  prezidentiale_2019_r2    PRES
+208  prezidentiale_2024_r1    PRES
+250  prezidentiale_2025_r1    PRES
+292  prezidentiale_2025_r2    PRES
+
+cols: ['judet', 'enrolled', 'voted', 'valid_votes', 'election', 'year', 'chamber', 't_UDMR', 't_OTHER', 't_PSD', 't_PNL', 't_USR', 't_AUR', 'turnout', 't_POT', 't_SOS', 'null_votes', 'ep_OTHER', 't_PSD_PNL', 'cand_g1', 'cand_g2', 'cand_LASCONI', 'cand_SIMION', 'cand_CIOLACU', 'cand_CIUCÄ‚', 'cand_KELEMEN', 'cand_GEOANÄ‚', 'cand_BIRCHALL', 'cand_PÄ‚CURARU', 'cand_POPESCU', 'cand_ORBAN', 'cand_GEORGESCU', 'cand_DIACONESCU', 'cand_TERHEÈ˜', 'cand_PREDOIU', 'cand_ANTONESCU', 'cand_È˜ANDRU', 'cand_PONTA', 'cand_MUSCEL', 'cand_FUNERIU', 'cand_DAN']
+

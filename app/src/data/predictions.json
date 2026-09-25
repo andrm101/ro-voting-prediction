@@ -1,0 +1,2060 @@
+[
+  {
+    "siruta": 10,
+    "judet": "Alba",
+    "target": "t_AUR",
+    "actual": 0.19482,
+    "predicted": 0.19512
+  },
+  {
+    "siruta": 20,
+    "judet": "Arad",
+    "target": "t_AUR",
+    "actual": 0.23676,
+    "predicted": 0.19557
+  },
+  {
+    "siruta": 30,
+    "judet": "Argeș",
+    "target": "t_AUR",
+    "actual": 0.20841,
+    "predicted": 0.19823
+  },
+  {
+    "siruta": 40,
+    "judet": "Bacău",
+    "target": "t_AUR",
+    "actual": 0.17759,
+    "predicted": 0.20319
+  },
+  {
+    "siruta": 50,
+    "judet": "Bihor",
+    "target": "t_AUR",
+    "actual": 0.10898,
+    "predicted": 0.13925
+  },
+  {
+    "siruta": 60,
+    "judet": "Bistrița-Năsăud",
+    "target": "t_AUR",
+    "actual": 0.1675,
+    "predicted": 0.19037
+  },
+  {
+    "siruta": 70,
+    "judet": "Botoșani",
+    "target": "t_AUR",
+    "actual": 0.18629,
+    "predicted": 0.20033
+  },
+  {
+    "siruta": 80,
+    "judet": "Brașov",
+    "target": "t_AUR",
+    "actual": 0.15406,
+    "predicted": 0.1528
+  },
+  {
+    "siruta": 90,
+    "judet": "Brăila",
+    "target": "t_AUR",
+    "actual": 0.18544,
+    "predicted": 0.20304
+  },
+  {
+    "siruta": 100,
+    "judet": "Buzău",
+    "target": "t_AUR",
+    "actual": 0.17272,
+    "predicted": 0.19264
+  },
+  {
+    "siruta": 110,
+    "judet": "Caraș-Severin",
+    "target": "t_AUR",
+    "actual": 0.21548,
+    "predicted": 0.20907
+  },
+  {
+    "siruta": 120,
+    "judet": "Călărași",
+    "target": "t_AUR",
+    "actual": 0.2081,
+    "predicted": 0.19674
+  },
+  {
+    "siruta": 130,
+    "judet": "Cluj",
+    "target": "t_AUR",
+    "actual": 0.14363,
+    "predicted": 0.12933
+  },
+  {
+    "siruta": 140,
+    "judet": "Constanța",
+    "target": "t_AUR",
+    "actual": 0.20822,
+    "predicted": 0.20017
+  },
+  {
+    "siruta": 150,
+    "judet": "Covasna",
+    "target": "t_AUR",
+    "actual": 0.04962,
+    "predicted": 0.13841
+  },
+  {
+    "siruta": 160,
+    "judet": "Dâmbovița",
+    "target": "t_AUR",
+    "actual": 0.18999,
+    "predicted": 0.19665
+  },
+  {
+    "siruta": 170,
+    "judet": "Dolj",
+    "target": "t_AUR",
+    "actual": 0.17942,
+    "predicted": 0.18316
+  },
+  {
+    "siruta": 179,
+    "judet": "Municipiul București",
+    "target": "t_AUR",
+    "actual": 0.12175,
+    "predicted": 0.1579
+  },
+  {
+    "siruta": 180,
+    "judet": "Galați",
+    "target": "t_AUR",
+    "actual": 0.19837,
+    "predicted": 0.18185
+  },
+  {
+    "siruta": 190,
+    "judet": "Giurgiu",
+    "target": "t_AUR",
+    "actual": 0.20123,
+    "predicted": 0.14488
+  },
+  {
+    "siruta": 200,
+    "judet": "Gorj",
+    "target": "t_AUR",
+    "actual": 0.27147,
+    "predicted": 0.20191
+  },
+  {
+    "siruta": 210,
+    "judet": "Harghita",
+    "target": "t_AUR",
+    "actual": 0.02248,
+    "predicted": 0.14359
+  },
+  {
+    "siruta": 220,
+    "judet": "Hunedoara",
+    "target": "t_AUR",
+    "actual": 0.2031,
+    "predicted": 0.21147
+  },
+  {
+    "siruta": 230,
+    "judet": "Ialomița",
+    "target": "t_AUR",
+    "actual": 0.24625,
+    "predicted": 0.19421
+  },
+  {
+    "siruta": 240,
+    "judet": "Iași",
+    "target": "t_AUR",
+    "actual": 0.1734,
+    "predicted": 0.1787
+  },
+  {
+    "siruta": 250,
+    "judet": "Ilfov",
+    "target": "t_AUR",
+    "actual": 0.17961,
+    "predicted": 0.14222
+  },
+  {
+    "siruta": 260,
+    "judet": "Maramureș",
+    "target": "t_AUR",
+    "actual": 0.20043,
+    "predicted": 0.18257
+  },
+  {
+    "siruta": 270,
+    "judet": "Mehedinți",
+    "target": "t_AUR",
+    "actual": 0.20415,
+    "predicted": 0.17414
+  },
+  {
+    "siruta": 280,
+    "judet": "Mureș",
+    "target": "t_AUR",
+    "actual": 0.14122,
+    "predicted": 0.12865
+  },
+  {
+    "siruta": 290,
+    "judet": "Neamț",
+    "target": "t_AUR",
+    "actual": 0.23384,
+    "predicted": 0.2057
+  },
+  {
+    "siruta": 300,
+    "judet": "Olt",
+    "target": "t_AUR",
+    "actual": 0.18398,
+    "predicted": 0.19678
+  },
+  {
+    "siruta": 310,
+    "judet": "Prahova",
+    "target": "t_AUR",
+    "actual": 0.17533,
+    "predicted": 0.19822
+  },
+  {
+    "siruta": 320,
+    "judet": "Satu Mare",
+    "target": "t_AUR",
+    "actual": 0.10177,
+    "predicted": 0.12781
+  },
+  {
+    "siruta": 330,
+    "judet": "Sălaj",
+    "target": "t_AUR",
+    "actual": 0.13255,
+    "predicted": 0.13125
+  },
+  {
+    "siruta": 340,
+    "judet": "Sibiu",
+    "target": "t_AUR",
+    "actual": 0.16971,
+    "predicted": 0.18068
+  },
+  {
+    "siruta": 350,
+    "judet": "Suceava",
+    "target": "t_AUR",
+    "actual": 0.26051,
+    "predicted": 0.1933
+  },
+  {
+    "siruta": 360,
+    "judet": "Teleorman",
+    "target": "t_AUR",
+    "actual": 0.19097,
+    "predicted": 0.17599
+  },
+  {
+    "siruta": 370,
+    "judet": "Timiș",
+    "target": "t_AUR",
+    "actual": 0.18926,
+    "predicted": 0.17503
+  },
+  {
+    "siruta": 380,
+    "judet": "Tulcea",
+    "target": "t_AUR",
+    "actual": 0.23103,
+    "predicted": 0.21154
+  },
+  {
+    "siruta": 390,
+    "judet": "Vaslui",
+    "target": "t_AUR",
+    "actual": 0.18953,
+    "predicted": 0.19486
+  },
+  {
+    "siruta": 400,
+    "judet": "Vâlcea",
+    "target": "t_AUR",
+    "actual": 0.2215,
+    "predicted": 0.20949
+  },
+  {
+    "siruta": 410,
+    "judet": "Vrancea",
+    "target": "t_AUR",
+    "actual": 0.21197,
+    "predicted": 0.1924
+  },
+  {
+    "siruta": 10,
+    "judet": "Alba",
+    "target": "t_PSD",
+    "actual": 0.19897,
+    "predicted": 0.25094
+  },
+  {
+    "siruta": 20,
+    "judet": "Arad",
+    "target": "t_PSD",
+    "actual": 0.17084,
+    "predicted": 0.23391
+  },
+  {
+    "siruta": 30,
+    "judet": "Argeș",
+    "target": "t_PSD",
+    "actual": 0.33004,
+    "predicted": 0.34358
+  },
+  {
+    "siruta": 40,
+    "judet": "Bacău",
+    "target": "t_PSD",
+    "actual": 0.30445,
+    "predicted": 0.27573
+  },
+  {
+    "siruta": 50,
+    "judet": "Bihor",
+    "target": "t_PSD",
+    "actual": 0.15484,
+    "predicted": 0.20763
+  },
+  {
+    "siruta": 60,
+    "judet": "Bistrița-Năsăud",
+    "target": "t_PSD",
+    "actual": 0.32236,
+    "predicted": 0.2039
+  },
+  {
+    "siruta": 70,
+    "judet": "Botoșani",
+    "target": "t_PSD",
+    "actual": 0.32871,
+    "predicted": 0.33342
+  },
+  {
+    "siruta": 80,
+    "judet": "Brașov",
+    "target": "t_PSD",
+    "actual": 0.19654,
+    "predicted": 0.15282
+  },
+  {
+    "siruta": 90,
+    "judet": "Brăila",
+    "target": "t_PSD",
+    "actual": 0.34101,
+    "predicted": 0.34346
+  },
+  {
+    "siruta": 100,
+    "judet": "Buzău",
+    "target": "t_PSD",
+    "actual": 0.48125,
+    "predicted": 0.3716
+  },
+  {
+    "siruta": 110,
+    "judet": "Caraș-Severin",
+    "target": "t_PSD",
+    "actual": 0.34514,
+    "predicted": 0.2753
+  },
+  {
+    "siruta": 120,
+    "judet": "Călărași",
+    "target": "t_PSD",
+    "actual": 0.3378,
+    "predicted": 0.36967
+  },
+  {
+    "siruta": 130,
+    "judet": "Cluj",
+    "target": "t_PSD",
+    "actual": 0.13985,
+    "predicted": 0.19299
+  },
+  {
+    "siruta": 140,
+    "judet": "Constanța",
+    "target": "t_PSD",
+    "actual": 0.20301,
+    "predicted": 0.21469
+  },
+  {
+    "siruta": 150,
+    "judet": "Covasna",
+    "target": "t_PSD",
+    "actual": 0.06133,
+    "predicted": 0.17981
+  },
+  {
+    "siruta": 160,
+    "judet": "Dâmbovița",
+    "target": "t_PSD",
+    "actual": 0.35323,
+    "predicted": 0.31245
+  },
+  {
+    "siruta": 170,
+    "judet": "Dolj",
+    "target": "t_PSD",
+    "actual": 0.42005,
+    "predicted": 0.35168
+  },
+  {
+    "siruta": 179,
+    "judet": "Municipiul București",
+    "target": "t_PSD",
+    "actual": 0.23657,
+    "predicted": 0.17877
+  },
+  {
+    "siruta": 180,
+    "judet": "Galați",
+    "target": "t_PSD",
+    "actual": 0.3504,
+    "predicted": 0.32944
+  },
+  {
+    "siruta": 190,
+    "judet": "Giurgiu",
+    "target": "t_PSD",
+    "actual": 0.22843,
+    "predicted": 0.38869
+  },
+  {
+    "siruta": 200,
+    "judet": "Gorj",
+    "target": "t_PSD",
+    "actual": 0.3477,
+    "predicted": 0.33084
+  },
+  {
+    "siruta": 210,
+    "judet": "Harghita",
+    "target": "t_PSD",
+    "actual": 0.03296,
+    "predicted": 0.20785
+  },
+  {
+    "siruta": 220,
+    "judet": "Hunedoara",
+    "target": "t_PSD",
+    "actual": 0.29748,
+    "predicted": 0.33398
+  },
+  {
+    "siruta": 230,
+    "judet": "Ialomița",
+    "target": "t_PSD",
+    "actual": 0.3627,
+    "predicted": 0.33522
+  },
+  {
+    "siruta": 240,
+    "judet": "Iași",
+    "target": "t_PSD",
+    "actual": 0.24774,
+    "predicted": 0.24303
+  },
+  {
+    "siruta": 250,
+    "judet": "Ilfov",
+    "target": "t_PSD",
+    "actual": 0.17139,
+    "predicted": 0.23951
+  },
+  {
+    "siruta": 260,
+    "judet": "Maramureș",
+    "target": "t_PSD",
+    "actual": 0.24748,
+    "predicted": 0.19153
+  },
+  {
+    "siruta": 270,
+    "judet": "Mehedinți",
+    "target": "t_PSD",
+    "actual": 0.42312,
+    "predicted": 0.37764
+  },
+  {
+    "siruta": 280,
+    "judet": "Mureș",
+    "target": "t_PSD",
+    "actual": 0.14767,
+    "predicted": 0.14738
+  },
+  {
+    "siruta": 290,
+    "judet": "Neamț",
+    "target": "t_PSD",
+    "actual": 0.28379,
+    "predicted": 0.31119
+  },
+  {
+    "siruta": 300,
+    "judet": "Olt",
+    "target": "t_PSD",
+    "actual": 0.45971,
+    "predicted": 0.37043
+  },
+  {
+    "siruta": 310,
+    "judet": "Prahova",
+    "target": "t_PSD",
+    "actual": 0.25251,
+    "predicted": 0.31567
+  },
+  {
+    "siruta": 320,
+    "judet": "Satu Mare",
+    "target": "t_PSD",
+    "actual": 0.15907,
+    "predicted": 0.15645
+  },
+  {
+    "siruta": 330,
+    "judet": "Sălaj",
+    "target": "t_PSD",
+    "actual": 0.20636,
+    "predicted": 0.17281
+  },
+  {
+    "siruta": 340,
+    "judet": "Sibiu",
+    "target": "t_PSD",
+    "actual": 0.16227,
+    "predicted": 0.24431
+  },
+  {
+    "siruta": 350,
+    "judet": "Suceava",
+    "target": "t_PSD",
+    "actual": 0.27018,
+    "predicted": 0.29818
+  },
+  {
+    "siruta": 360,
+    "judet": "Teleorman",
+    "target": "t_PSD",
+    "actual": 0.4581,
+    "predicted": 0.31112
+  },
+  {
+    "siruta": 370,
+    "judet": "Timiș",
+    "target": "t_PSD",
+    "actual": 0.20339,
+    "predicted": 0.20197
+  },
+  {
+    "siruta": 380,
+    "judet": "Tulcea",
+    "target": "t_PSD",
+    "actual": 0.26192,
+    "predicted": 0.25739
+  },
+  {
+    "siruta": 390,
+    "judet": "Vaslui",
+    "target": "t_PSD",
+    "actual": 0.36637,
+    "predicted": 0.3223
+  },
+  {
+    "siruta": 400,
+    "judet": "Vâlcea",
+    "target": "t_PSD",
+    "actual": 0.35537,
+    "predicted": 0.35308
+  },
+  {
+    "siruta": 410,
+    "judet": "Vrancea",
+    "target": "t_PSD",
+    "actual": 0.30906,
+    "predicted": 0.33383
+  },
+  {
+    "siruta": 10,
+    "judet": "Alba",
+    "target": "t_PNL",
+    "actual": 0.24081,
+    "predicted": 0.15149
+  },
+  {
+    "siruta": 20,
+    "judet": "Arad",
+    "target": "t_PNL",
+    "actual": 0.20196,
+    "predicted": 0.16216
+  },
+  {
+    "siruta": 30,
+    "judet": "Argeș",
+    "target": "t_PNL",
+    "actual": 0.11393,
+    "predicted": 0.14898
+  },
+  {
+    "siruta": 40,
+    "judet": "Bacău",
+    "target": "t_PNL",
+    "actual": 0.10795,
+    "predicted": 0.13315
+  },
+  {
+    "siruta": 50,
+    "judet": "Bihor",
+    "target": "t_PNL",
+    "actual": 0.36882,
+    "predicted": 0.12486
+  },
+  {
+    "siruta": 60,
+    "judet": "Bistrița-Năsăud",
+    "target": "t_PNL",
+    "actual": 0.15674,
+    "predicted": 0.14225
+  },
+  {
+    "siruta": 70,
+    "judet": "Botoșani",
+    "target": "t_PNL",
+    "actual": 0.19303,
+    "predicted": 0.14
+  },
+  {
+    "siruta": 80,
+    "judet": "Brașov",
+    "target": "t_PNL",
+    "actual": 0.16923,
+    "predicted": 0.20011
+  },
+  {
+    "siruta": 90,
+    "judet": "Brăila",
+    "target": "t_PNL",
+    "actual": 0.1368,
+    "predicted": 0.16252
+  },
+  {
+    "siruta": 100,
+    "judet": "Buzău",
+    "target": "t_PNL",
+    "actual": 0.08205,
+    "predicted": 0.18471
+  },
+  {
+    "siruta": 110,
+    "judet": "Caraș-Severin",
+    "target": "t_PNL",
+    "actual": 0.12132,
+    "predicted": 0.12296
+  },
+  {
+    "siruta": 120,
+    "judet": "Călărași",
+    "target": "t_PNL",
+    "actual": 0.17326,
+    "predicted": 0.1685
+  },
+  {
+    "siruta": 130,
+    "judet": "Cluj",
+    "target": "t_PNL",
+    "actual": 0.21401,
+    "predicted": 0.16577
+  },
+  {
+    "siruta": 140,
+    "judet": "Constanța",
+    "target": "t_PNL",
+    "actual": 0.13827,
+    "predicted": 0.16534
+  },
+  {
+    "siruta": 150,
+    "judet": "Covasna",
+    "target": "t_PNL",
+    "actual": 0.03302,
+    "predicted": 0.14814
+  },
+  {
+    "siruta": 160,
+    "judet": "Dâmbovița",
+    "target": "t_PNL",
+    "actual": 0.12125,
+    "predicted": 0.18762
+  },
+  {
+    "siruta": 170,
+    "judet": "Dolj",
+    "target": "t_PNL",
+    "actual": 0.11874,
+    "predicted": 0.16714
+  },
+  {
+    "siruta": 179,
+    "judet": "Municipiul București",
+    "target": "t_PNL",
+    "actual": 0.13518,
+    "predicted": 0.20043
+  },
+  {
+    "siruta": 180,
+    "judet": "Galați",
+    "target": "t_PNL",
+    "actual": 0.10354,
+    "predicted": 0.15222
+  },
+  {
+    "siruta": 190,
+    "judet": "Giurgiu",
+    "target": "t_PNL",
+    "actual": 0.35327,
+    "predicted": 0.12889
+  },
+  {
+    "siruta": 200,
+    "judet": "Gorj",
+    "target": "t_PNL",
+    "actual": 0.10894,
+    "predicted": 0.12279
+  },
+  {
+    "siruta": 210,
+    "judet": "Harghita",
+    "target": "t_PNL",
+    "actual": 0.01505,
+    "predicted": 0.16044
+  },
+  {
+    "siruta": 220,
+    "judet": "Hunedoara",
+    "target": "t_PNL",
+    "actual": 0.13805,
+    "predicted": 0.16009
+  },
+  {
+    "siruta": 230,
+    "judet": "Ialomița",
+    "target": "t_PNL",
+    "actual": 0.08333,
+    "predicted": 0.1842
+  },
+  {
+    "siruta": 240,
+    "judet": "Iași",
+    "target": "t_PNL",
+    "actual": 0.14721,
+    "predicted": 0.17662
+  },
+  {
+    "siruta": 250,
+    "judet": "Ilfov",
+    "target": "t_PNL",
+    "actual": 0.20767,
+    "predicted": 0.13823
+  },
+  {
+    "siruta": 260,
+    "judet": "Maramureș",
+    "target": "t_PNL",
+    "actual": 0.14836,
+    "predicted": 0.17632
+  },
+  {
+    "siruta": 270,
+    "judet": "Mehedinți",
+    "target": "t_PNL",
+    "actual": 0.16754,
+    "predicted": 0.11765
+  },
+  {
+    "siruta": 280,
+    "judet": "Mureș",
+    "target": "t_PNL",
+    "actual": 0.10562,
+    "predicted": 0.15129
+  },
+  {
+    "siruta": 290,
+    "judet": "Neamț",
+    "target": "t_PNL",
+    "actual": 0.12476,
+    "predicted": 0.14339
+  },
+  {
+    "siruta": 300,
+    "judet": "Olt",
+    "target": "t_PNL",
+    "actual": 0.10893,
+    "predicted": 0.12418
+  },
+  {
+    "siruta": 310,
+    "judet": "Prahova",
+    "target": "t_PNL",
+    "actual": 0.1378,
+    "predicted": 0.13576
+  },
+  {
+    "siruta": 320,
+    "judet": "Satu Mare",
+    "target": "t_PNL",
+    "actual": 0.12659,
+    "predicted": 0.18676
+  },
+  {
+    "siruta": 330,
+    "judet": "Sălaj",
+    "target": "t_PNL",
+    "actual": 0.19066,
+    "predicted": 0.14301
+  },
+  {
+    "siruta": 340,
+    "judet": "Sibiu",
+    "target": "t_PNL",
+    "actual": 0.18859,
+    "predicted": 0.13183
+  },
+  {
+    "siruta": 350,
+    "judet": "Suceava",
+    "target": "t_PNL",
+    "actual": 0.1394,
+    "predicted": 0.13571
+  },
+  {
+    "siruta": 360,
+    "judet": "Teleorman",
+    "target": "t_PNL",
+    "actual": 0.14612,
+    "predicted": 0.15826
+  },
+  {
+    "siruta": 370,
+    "judet": "Timiș",
+    "target": "t_PNL",
+    "actual": 0.12968,
+    "predicted": 0.16821
+  },
+  {
+    "siruta": 380,
+    "judet": "Tulcea",
+    "target": "t_PNL",
+    "actual": 0.10438,
+    "predicted": 0.12013
+  },
+  {
+    "siruta": 390,
+    "judet": "Vaslui",
+    "target": "t_PNL",
+    "actual": 0.08395,
+    "predicted": 0.12281
+  },
+  {
+    "siruta": 400,
+    "judet": "Vâlcea",
+    "target": "t_PNL",
+    "actual": 0.13006,
+    "predicted": 0.1164
+  },
+  {
+    "siruta": 410,
+    "judet": "Vrancea",
+    "target": "t_PNL",
+    "actual": 0.16589,
+    "predicted": 0.16128
+  },
+  {
+    "siruta": 10,
+    "judet": "Alba",
+    "target": "t_USR",
+    "actual": 0.09619,
+    "predicted": 0.09084
+  },
+  {
+    "siruta": 20,
+    "judet": "Arad",
+    "target": "t_USR",
+    "actual": 0.08717,
+    "predicted": 0.10367
+  },
+  {
+    "siruta": 30,
+    "judet": "Argeș",
+    "target": "t_USR",
+    "actual": 0.1134,
+    "predicted": 0.08805
+  },
+  {
+    "siruta": 40,
+    "judet": "Bacău",
+    "target": "t_USR",
+    "actual": 0.1103,
+    "predicted": 0.08822
+  },
+  {
+    "siruta": 50,
+    "judet": "Bihor",
+    "target": "t_USR",
+    "actual": 0.02413,
+    "predicted": 0.1059
+  },
+  {
+    "siruta": 60,
+    "judet": "Bistrița-Năsăud",
+    "target": "t_USR",
+    "actual": 0.06645,
+    "predicted": 0.08147
+  },
+  {
+    "siruta": 70,
+    "judet": "Botoșani",
+    "target": "t_USR",
+    "actual": 0.05577,
+    "predicted": 0.09
+  },
+  {
+    "siruta": 80,
+    "judet": "Brașov",
+    "target": "t_USR",
+    "actual": 0.18332,
+    "predicted": 0.13635
+  },
+  {
+    "siruta": 90,
+    "judet": "Brăila",
+    "target": "t_USR",
+    "actual": 0.07489,
+    "predicted": 0.11947
+  },
+  {
+    "siruta": 100,
+    "judet": "Buzău",
+    "target": "t_USR",
+    "actual": 0.07647,
+    "predicted": 0.07098
+  },
+  {
+    "siruta": 110,
+    "judet": "Caraș-Severin",
+    "target": "t_USR",
+    "actual": 0.08125,
+    "predicted": 0.0914
+  },
+  {
+    "siruta": 120,
+    "judet": "Călărași",
+    "target": "t_USR",
+    "actual": 0.06991,
+    "predicted": 0.06949
+  },
+  {
+    "siruta": 130,
+    "judet": "Cluj",
+    "target": "t_USR",
+    "actual": 0.15288,
+    "predicted": 0.14431
+  },
+  {
+    "siruta": 140,
+    "judet": "Constanța",
+    "target": "t_USR",
+    "actual": 0.13391,
+    "predicted": 0.12349
+  },
+  {
+    "siruta": 150,
+    "judet": "Covasna",
+    "target": "t_USR",
+    "actual": 0.03023,
+    "predicted": 0.07228
+  },
+  {
+    "siruta": 160,
+    "judet": "Dâmbovița",
+    "target": "t_USR",
+    "actual": 0.08622,
+    "predicted": 0.08764
+  },
+  {
+    "siruta": 170,
+    "judet": "Dolj",
+    "target": "t_USR",
+    "actual": 0.09193,
+    "predicted": 0.08411
+  },
+  {
+    "siruta": 179,
+    "judet": "Municipiul București",
+    "target": "t_USR",
+    "actual": 0.23249,
+    "predicted": 0.12111
+  },
+  {
+    "siruta": 180,
+    "judet": "Galați",
+    "target": "t_USR",
+    "actual": 0.10775,
+    "predicted": 0.08503
+  },
+  {
+    "siruta": 190,
+    "judet": "Giurgiu",
+    "target": "t_USR",
+    "actual": 0.0597,
+    "predicted": 0.07423
+  },
+  {
+    "siruta": 200,
+    "judet": "Gorj",
+    "target": "t_USR",
+    "actual": 0.07268,
+    "predicted": 0.08218
+  },
+  {
+    "siruta": 210,
+    "judet": "Harghita",
+    "target": "t_USR",
+    "actual": 0.01246,
+    "predicted": 0.07419
+  },
+  {
+    "siruta": 220,
+    "judet": "Hunedoara",
+    "target": "t_USR",
+    "actual": 0.08578,
+    "predicted": 0.11958
+  },
+  {
+    "siruta": 230,
+    "judet": "Ialomița",
+    "target": "t_USR",
+    "actual": 0.08228,
+    "predicted": 0.07434
+  },
+  {
+    "siruta": 240,
+    "judet": "Iași",
+    "target": "t_USR",
+    "actual": 0.15002,
+    "predicted": 0.10252
+  },
+  {
+    "siruta": 250,
+    "judet": "Ilfov",
+    "target": "t_USR",
+    "actual": 0.17777,
+    "predicted": 0.11548
+  },
+  {
+    "siruta": 260,
+    "judet": "Maramureș",
+    "target": "t_USR",
+    "actual": 0.09597,
+    "predicted": 0.11507
+  },
+  {
+    "siruta": 270,
+    "judet": "Mehedinți",
+    "target": "t_USR",
+    "actual": 0.05111,
+    "predicted": 0.07227
+  },
+  {
+    "siruta": 280,
+    "judet": "Mureș",
+    "target": "t_USR",
+    "actual": 0.07467,
+    "predicted": 0.08951
+  },
+  {
+    "siruta": 290,
+    "judet": "Neamț",
+    "target": "t_USR",
+    "actual": 0.09917,
+    "predicted": 0.07852
+  },
+  {
+    "siruta": 300,
+    "judet": "Olt",
+    "target": "t_USR",
+    "actual": 0.0596,
+    "predicted": 0.07096
+  },
+  {
+    "siruta": 310,
+    "judet": "Prahova",
+    "target": "t_USR",
+    "actual": 0.10858,
+    "predicted": 0.09446
+  },
+  {
+    "siruta": 320,
+    "judet": "Satu Mare",
+    "target": "t_USR",
+    "actual": 0.05654,
+    "predicted": 0.07476
+  },
+  {
+    "siruta": 330,
+    "judet": "Sălaj",
+    "target": "t_USR",
+    "actual": 0.07073,
+    "predicted": 0.07074
+  },
+  {
+    "siruta": 340,
+    "judet": "Sibiu",
+    "target": "t_USR",
+    "actual": 0.16738,
+    "predicted": 0.10346
+  },
+  {
+    "siruta": 350,
+    "judet": "Suceava",
+    "target": "t_USR",
+    "actual": 0.06519,
+    "predicted": 0.09138
+  },
+  {
+    "siruta": 360,
+    "judet": "Teleorman",
+    "target": "t_USR",
+    "actual": 0.05417,
+    "predicted": 0.07436
+  },
+  {
+    "siruta": 370,
+    "judet": "Timiș",
+    "target": "t_USR",
+    "actual": 0.20077,
+    "predicted": 0.12576
+  },
+  {
+    "siruta": 380,
+    "judet": "Tulcea",
+    "target": "t_USR",
+    "actual": 0.09315,
+    "predicted": 0.08632
+  },
+  {
+    "siruta": 390,
+    "judet": "Vaslui",
+    "target": "t_USR",
+    "actual": 0.10952,
+    "predicted": 0.08165
+  },
+  {
+    "siruta": 400,
+    "judet": "Vâlcea",
+    "target": "t_USR",
+    "actual": 0.08099,
+    "predicted": 0.07903
+  },
+  {
+    "siruta": 410,
+    "judet": "Vrancea",
+    "target": "t_USR",
+    "actual": 0.0766,
+    "predicted": 0.07119
+  },
+  {
+    "siruta": 10,
+    "judet": "Alba",
+    "target": "t_SOS",
+    "actual": 0.05469,
+    "predicted": 0.06258
+  },
+  {
+    "siruta": 20,
+    "judet": "Arad",
+    "target": "t_SOS",
+    "actual": 0.07666,
+    "predicted": 0.06731
+  },
+  {
+    "siruta": 30,
+    "judet": "Argeș",
+    "target": "t_SOS",
+    "actual": 0.06719,
+    "predicted": 0.07913
+  },
+  {
+    "siruta": 40,
+    "judet": "Bacău",
+    "target": "t_SOS",
+    "actual": 0.10535,
+    "predicted": 0.07656
+  },
+  {
+    "siruta": 50,
+    "judet": "Bihor",
+    "target": "t_SOS",
+    "actual": 0.03611,
+    "predicted": 0.06267
+  },
+  {
+    "siruta": 60,
+    "judet": "Bistrița-Năsăud",
+    "target": "t_SOS",
+    "actual": 0.05993,
+    "predicted": 0.06833
+  },
+  {
+    "siruta": 70,
+    "judet": "Botoșani",
+    "target": "t_SOS",
+    "actual": 0.08299,
+    "predicted": 0.07729
+  },
+  {
+    "siruta": 80,
+    "judet": "Brașov",
+    "target": "t_SOS",
+    "actual": 0.06639,
+    "predicted": 0.06563
+  },
+  {
+    "siruta": 90,
+    "judet": "Brăila",
+    "target": "t_SOS",
+    "actual": 0.10232,
+    "predicted": 0.07618
+  },
+  {
+    "siruta": 100,
+    "judet": "Buzău",
+    "target": "t_SOS",
+    "actual": 0.07918,
+    "predicted": 0.07423
+  },
+  {
+    "siruta": 110,
+    "judet": "Caraș-Severin",
+    "target": "t_SOS",
+    "actual": 0.06701,
+    "predicted": 0.06966
+  },
+  {
+    "siruta": 120,
+    "judet": "Călărași",
+    "target": "t_SOS",
+    "actual": 0.08216,
+    "predicted": 0.0774
+  },
+  {
+    "siruta": 130,
+    "judet": "Cluj",
+    "target": "t_SOS",
+    "actual": 0.0449,
+    "predicted": 0.06718
+  },
+  {
+    "siruta": 140,
+    "judet": "Constanța",
+    "target": "t_SOS",
+    "actual": 0.10354,
+    "predicted": 0.07678
+  },
+  {
+    "siruta": 150,
+    "judet": "Covasna",
+    "target": "t_SOS",
+    "actual": 0.02079,
+    "predicted": 0.06359
+  },
+  {
+    "siruta": 160,
+    "judet": "Dâmbovița",
+    "target": "t_SOS",
+    "actual": 0.07752,
+    "predicted": 0.07704
+  },
+  {
+    "siruta": 170,
+    "judet": "Dolj",
+    "target": "t_SOS",
+    "actual": 0.04585,
+    "predicted": 0.0621
+  },
+  {
+    "siruta": 179,
+    "judet": "Municipiul București",
+    "target": "t_SOS",
+    "actual": 0.06815,
+    "predicted": 0.06136
+  },
+  {
+    "siruta": 180,
+    "judet": "Galați",
+    "target": "t_SOS",
+    "actual": 0.07912,
+    "predicted": 0.07418
+  },
+  {
+    "siruta": 190,
+    "judet": "Giurgiu",
+    "target": "t_SOS",
+    "actual": 0.08304,
+    "predicted": 0.07451
+  },
+  {
+    "siruta": 200,
+    "judet": "Gorj",
+    "target": "t_SOS",
+    "actual": 0.05376,
+    "predicted": 0.06873
+  },
+  {
+    "siruta": 210,
+    "judet": "Harghita",
+    "target": "t_SOS",
+    "actual": 0.01144,
+    "predicted": 0.06433
+  },
+  {
+    "siruta": 220,
+    "judet": "Hunedoara",
+    "target": "t_SOS",
+    "actual": 0.06855,
+    "predicted": 0.07053
+  },
+  {
+    "siruta": 230,
+    "judet": "Ialomița",
+    "target": "t_SOS",
+    "actual": 0.11031,
+    "predicted": 0.0762
+  },
+  {
+    "siruta": 240,
+    "judet": "Iași",
+    "target": "t_SOS",
+    "actual": 0.07901,
+    "predicted": 0.07144
+  },
+  {
+    "siruta": 250,
+    "judet": "Ilfov",
+    "target": "t_SOS",
+    "actual": 0.06945,
+    "predicted": 0.06659
+  },
+  {
+    "siruta": 260,
+    "judet": "Maramureș",
+    "target": "t_SOS",
+    "actual": 0.06155,
+    "predicted": 0.06593
+  },
+  {
+    "siruta": 270,
+    "judet": "Mehedinți",
+    "target": "t_SOS",
+    "actual": 0.05578,
+    "predicted": 0.06093
+  },
+  {
+    "siruta": 280,
+    "judet": "Mureș",
+    "target": "t_SOS",
+    "actual": 0.05123,
+    "predicted": 0.06107
+  },
+  {
+    "siruta": 290,
+    "judet": "Neamț",
+    "target": "t_SOS",
+    "actual": 0.11683,
+    "predicted": 0.07577
+  },
+  {
+    "siruta": 300,
+    "judet": "Olt",
+    "target": "t_SOS",
+    "actual": 0.05848,
+    "predicted": 0.06122
+  },
+  {
+    "siruta": 310,
+    "judet": "Prahova",
+    "target": "t_SOS",
+    "actual": 0.08406,
+    "predicted": 0.07625
+  },
+  {
+    "siruta": 320,
+    "judet": "Satu Mare",
+    "target": "t_SOS",
+    "actual": 0.03692,
+    "predicted": 0.06229
+  },
+  {
+    "siruta": 330,
+    "judet": "Sălaj",
+    "target": "t_SOS",
+    "actual": 0.03776,
+    "predicted": 0.06225
+  },
+  {
+    "siruta": 340,
+    "judet": "Sibiu",
+    "target": "t_SOS",
+    "actual": 0.07855,
+    "predicted": 0.06501
+  },
+  {
+    "siruta": 350,
+    "judet": "Suceava",
+    "target": "t_SOS",
+    "actual": 0.0952,
+    "predicted": 0.07765
+  },
+  {
+    "siruta": 360,
+    "judet": "Teleorman",
+    "target": "t_SOS",
+    "actual": 0.06715,
+    "predicted": 0.07205
+  },
+  {
+    "siruta": 370,
+    "judet": "Timiș",
+    "target": "t_SOS",
+    "actual": 0.07224,
+    "predicted": 0.06528
+  },
+  {
+    "siruta": 380,
+    "judet": "Tulcea",
+    "target": "t_SOS",
+    "actual": 0.11361,
+    "predicted": 0.0763
+  },
+  {
+    "siruta": 390,
+    "judet": "Vaslui",
+    "target": "t_SOS",
+    "actual": 0.08511,
+    "predicted": 0.07737
+  },
+  {
+    "siruta": 400,
+    "judet": "Vâlcea",
+    "target": "t_SOS",
+    "actual": 0.0626,
+    "predicted": 0.06422
+  },
+  {
+    "siruta": 410,
+    "judet": "Vrancea",
+    "target": "t_SOS",
+    "actual": 0.06528,
+    "predicted": 0.07377
+  },
+  {
+    "siruta": 10,
+    "judet": "Alba",
+    "target": "t_POT",
+    "actual": 0.10016,
+    "predicted": 0.06267
+  },
+  {
+    "siruta": 20,
+    "judet": "Arad",
+    "target": "t_POT",
+    "actual": 0.07139,
+    "predicted": 0.06607
+  },
+  {
+    "siruta": 30,
+    "judet": "Argeș",
+    "target": "t_POT",
+    "actual": 0.08051,
+    "predicted": 0.05877
+  },
+  {
+    "siruta": 40,
+    "judet": "Bacău",
+    "target": "t_POT",
+    "actual": 0.06711,
+    "predicted": 0.06204
+  },
+  {
+    "siruta": 50,
+    "judet": "Bihor",
+    "target": "t_POT",
+    "actual": 0.03899,
+    "predicted": 0.04497
+  },
+  {
+    "siruta": 60,
+    "judet": "Bistrița-Năsăud",
+    "target": "t_POT",
+    "actual": 0.08632,
+    "predicted": 0.05782
+  },
+  {
+    "siruta": 70,
+    "judet": "Botoșani",
+    "target": "t_POT",
+    "actual": 0.06569,
+    "predicted": 0.05533
+  },
+  {
+    "siruta": 80,
+    "judet": "Brașov",
+    "target": "t_POT",
+    "actual": 0.06215,
+    "predicted": 0.04379
+  },
+  {
+    "siruta": 90,
+    "judet": "Brăila",
+    "target": "t_POT",
+    "actual": 0.06112,
+    "predicted": 0.0657
+  },
+  {
+    "siruta": 100,
+    "judet": "Buzău",
+    "target": "t_POT",
+    "actual": 0.0,
+    "predicted": 0.04745
+  },
+  {
+    "siruta": 110,
+    "judet": "Caraș-Severin",
+    "target": "t_POT",
+    "actual": 0.07272,
+    "predicted": 0.06437
+  },
+  {
+    "siruta": 120,
+    "judet": "Călărași",
+    "target": "t_POT",
+    "actual": 0.05959,
+    "predicted": 0.04958
+  },
+  {
+    "siruta": 130,
+    "judet": "Cluj",
+    "target": "t_POT",
+    "actual": 0.05463,
+    "predicted": 0.05018
+  },
+  {
+    "siruta": 140,
+    "judet": "Constanța",
+    "target": "t_POT",
+    "actual": 0.07936,
+    "predicted": 0.06464
+  },
+  {
+    "siruta": 150,
+    "judet": "Covasna",
+    "target": "t_POT",
+    "actual": 0.0,
+    "predicted": 0.0465
+  },
+  {
+    "siruta": 160,
+    "judet": "Dâmbovița",
+    "target": "t_POT",
+    "actual": 0.08353,
+    "predicted": 0.05016
+  },
+  {
+    "siruta": 170,
+    "judet": "Dolj",
+    "target": "t_POT",
+    "actual": 0.06295,
+    "predicted": 0.04457
+  },
+  {
+    "siruta": 179,
+    "judet": "Municipiul București",
+    "target": "t_POT",
+    "actual": 0.05016,
+    "predicted": 0.0477
+  },
+  {
+    "siruta": 180,
+    "judet": "Galați",
+    "target": "t_POT",
+    "actual": 0.05535,
+    "predicted": 0.06409
+  },
+  {
+    "siruta": 190,
+    "judet": "Giurgiu",
+    "target": "t_POT",
+    "actual": 0.0,
+    "predicted": 0.04269
+  },
+  {
+    "siruta": 200,
+    "judet": "Gorj",
+    "target": "t_POT",
+    "actual": 0.07176,
+    "predicted": 0.06201
+  },
+  {
+    "siruta": 210,
+    "judet": "Harghita",
+    "target": "t_POT",
+    "actual": 0.00884,
+    "predicted": 0.04651
+  },
+  {
+    "siruta": 220,
+    "judet": "Hunedoara",
+    "target": "t_POT",
+    "actual": 0.08786,
+    "predicted": 0.0643
+  },
+  {
+    "siruta": 230,
+    "judet": "Ialomița",
+    "target": "t_POT",
+    "actual": 0.0,
+    "predicted": 0.05967
+  },
+  {
+    "siruta": 240,
+    "judet": "Iași",
+    "target": "t_POT",
+    "actual": 0.06092,
+    "predicted": 0.063
+  },
+  {
+    "siruta": 250,
+    "judet": "Ilfov",
+    "target": "t_POT",
+    "actual": 0.07883,
+    "predicted": 0.05654
+  },
+  {
+    "siruta": 260,
+    "judet": "Maramureș",
+    "target": "t_POT",
+    "actual": 0.06768,
+    "predicted": 0.06651
+  },
+  {
+    "siruta": 270,
+    "judet": "Mehedinți",
+    "target": "t_POT",
+    "actual": 0.05302,
+    "predicted": 0.05865
+  },
+  {
+    "siruta": 280,
+    "judet": "Mureș",
+    "target": "t_POT",
+    "actual": 0.0,
+    "predicted": 0.05194
+  },
+  {
+    "siruta": 290,
+    "judet": "Neamț",
+    "target": "t_POT",
+    "actual": 0.0,
+    "predicted": 0.06588
+  },
+  {
+    "siruta": 300,
+    "judet": "Olt",
+    "target": "t_POT",
+    "actual": 0.06398,
+    "predicted": 0.05454
+  },
+  {
+    "siruta": 310,
+    "judet": "Prahova",
+    "target": "t_POT",
+    "actual": 0.0902,
+    "predicted": 0.06364
+  },
+  {
+    "siruta": 320,
+    "judet": "Satu Mare",
+    "target": "t_POT",
+    "actual": 0.03855,
+    "predicted": 0.04477
+  },
+  {
+    "siruta": 330,
+    "judet": "Sălaj",
+    "target": "t_POT",
+    "actual": 0.04879,
+    "predicted": 0.03709
+  },
+  {
+    "siruta": 340,
+    "judet": "Sibiu",
+    "target": "t_POT",
+    "actual": 0.08543,
+    "predicted": 0.06386
+  },
+  {
+    "siruta": 350,
+    "judet": "Suceava",
+    "target": "t_POT",
+    "actual": 0.07099,
+    "predicted": 0.05897
+  },
+  {
+    "siruta": 360,
+    "judet": "Teleorman",
+    "target": "t_POT",
+    "actual": 0.0,
+    "predicted": 0.05045
+  },
+  {
+    "siruta": 370,
+    "judet": "Timiș",
+    "target": "t_POT",
+    "actual": 0.06774,
+    "predicted": 0.06635
+  },
+  {
+    "siruta": 380,
+    "judet": "Tulcea",
+    "target": "t_POT",
+    "actual": 0.08896,
+    "predicted": 0.05808
+  },
+  {
+    "siruta": 390,
+    "judet": "Vaslui",
+    "target": "t_POT",
+    "actual": 0.06832,
+    "predicted": 0.05469
+  },
+  {
+    "siruta": 400,
+    "judet": "Vâlcea",
+    "target": "t_POT",
+    "actual": 0.06962,
+    "predicted": 0.05821
+  },
+  {
+    "siruta": 410,
+    "judet": "Vrancea",
+    "target": "t_POT",
+    "actual": 0.05538,
+    "predicted": 0.05811
+  },
+  {
+    "siruta": 10,
+    "judet": "Alba",
+    "target": "t_turnout",
+    "actual": 0.47081,
+    "predicted": 0.43044
+  },
+  {
+    "siruta": 20,
+    "judet": "Arad",
+    "target": "t_turnout",
+    "actual": 0.43197,
+    "predicted": 0.4114
+  },
+  {
+    "siruta": 30,
+    "judet": "Argeș",
+    "target": "t_turnout",
+    "actual": 0.47407,
+    "predicted": 0.4381
+  },
+  {
+    "siruta": 40,
+    "judet": "Bacău",
+    "target": "t_turnout",
+    "actual": 0.36567,
+    "predicted": 0.39277
+  },
+  {
+    "siruta": 50,
+    "judet": "Bihor",
+    "target": "t_turnout",
+    "actual": 0.50346,
+    "predicted": 0.44306
+  },
+  {
+    "siruta": 60,
+    "judet": "Bistrița-Năsăud",
+    "target": "t_turnout",
+    "actual": 0.42703,
+    "predicted": 0.43011
+  },
+  {
+    "siruta": 70,
+    "judet": "Botoșani",
+    "target": "t_turnout",
+    "actual": 0.36231,
+    "predicted": 0.39868
+  },
+  {
+    "siruta": 80,
+    "judet": "Brașov",
+    "target": "t_turnout",
+    "actual": 0.44893,
+    "predicted": 0.43838
+  },
+  {
+    "siruta": 90,
+    "judet": "Brăila",
+    "target": "t_turnout",
+    "actual": 0.41811,
+    "predicted": 0.39595
+  },
+  {
+    "siruta": 100,
+    "judet": "Buzău",
+    "target": "t_turnout",
+    "actual": 0.45833,
+    "predicted": 0.42979
+  },
+  {
+    "siruta": 110,
+    "judet": "Caraș-Severin",
+    "target": "t_turnout",
+    "actual": 0.38038,
+    "predicted": 0.43231
+  },
+  {
+    "siruta": 120,
+    "judet": "Călărași",
+    "target": "t_turnout",
+    "actual": 0.41145,
+    "predicted": 0.42377
+  },
+  {
+    "siruta": 130,
+    "judet": "Cluj",
+    "target": "t_turnout",
+    "actual": 0.49503,
+    "predicted": 0.43126
+  },
+  {
+    "siruta": 140,
+    "judet": "Constanța",
+    "target": "t_turnout",
+    "actual": 0.42954,
+    "predicted": 0.41186
+  },
+  {
+    "siruta": 150,
+    "judet": "Covasna",
+    "target": "t_turnout",
+    "actual": 0.47889,
+    "predicted": 0.45918
+  },
+  {
+    "siruta": 160,
+    "judet": "Dâmbovița",
+    "target": "t_turnout",
+    "actual": 0.43724,
+    "predicted": 0.42422
+  },
+  {
+    "siruta": 170,
+    "judet": "Dolj",
+    "target": "t_turnout",
+    "actual": 0.45564,
+    "predicted": 0.43689
+  },
+  {
+    "siruta": 179,
+    "judet": "Municipiul București",
+    "target": "t_turnout",
+    "actual": 0.44766,
+    "predicted": 0.43718
+  },
+  {
+    "siruta": 180,
+    "judet": "Galați",
+    "target": "t_turnout",
+    "actual": 0.37512,
+    "predicted": 0.42656
+  },
+  {
+    "siruta": 190,
+    "judet": "Giurgiu",
+    "target": "t_turnout",
+    "actual": 0.44638,
+    "predicted": 0.44179
+  },
+  {
+    "siruta": 200,
+    "judet": "Gorj",
+    "target": "t_turnout",
+    "actual": 0.46235,
+    "predicted": 0.4349
+  },
+  {
+    "siruta": 210,
+    "judet": "Harghita",
+    "target": "t_turnout",
+    "actual": 0.5267,
+    "predicted": 0.44764
+  },
+  {
+    "siruta": 220,
+    "judet": "Hunedoara",
+    "target": "t_turnout",
+    "actual": 0.43729,
+    "predicted": 0.42587
+  },
+  {
+    "siruta": 230,
+    "judet": "Ialomița",
+    "target": "t_turnout",
+    "actual": 0.36995,
+    "predicted": 0.42947
+  },
+  {
+    "siruta": 240,
+    "judet": "Iași",
+    "target": "t_turnout",
+    "actual": 0.36308,
+    "predicted": 0.41331
+  },
+  {
+    "siruta": 250,
+    "judet": "Ilfov",
+    "target": "t_turnout",
+    "actual": 0.48646,
+    "predicted": 0.43649
+  },
+  {
+    "siruta": 260,
+    "judet": "Maramureș",
+    "target": "t_turnout",
+    "actual": 0.39398,
+    "predicted": 0.45422
+  },
+  {
+    "siruta": 270,
+    "judet": "Mehedinți",
+    "target": "t_turnout",
+    "actual": 0.46165,
+    "predicted": 0.44117
+  },
+  {
+    "siruta": 280,
+    "judet": "Mureș",
+    "target": "t_turnout",
+    "actual": 0.45162,
+    "predicted": 0.46002
+  },
+  {
+    "siruta": 290,
+    "judet": "Neamț",
+    "target": "t_turnout",
+    "actual": 0.38091,
+    "predicted": 0.39062
+  },
+  {
+    "siruta": 300,
+    "judet": "Olt",
+    "target": "t_turnout",
+    "actual": 0.47394,
+    "predicted": 0.43652
+  },
+  {
+    "siruta": 310,
+    "judet": "Prahova",
+    "target": "t_turnout",
+    "actual": 0.44589,
+    "predicted": 0.41781
+  },
+  {
+    "siruta": 320,
+    "judet": "Satu Mare",
+    "target": "t_turnout",
+    "actual": 0.40302,
+    "predicted": 0.45239
+  },
+  {
+    "siruta": 330,
+    "judet": "Sălaj",
+    "target": "t_turnout",
+    "actual": 0.48342,
+    "predicted": 0.4594
+  },
+  {
+    "siruta": 340,
+    "judet": "Sibiu",
+    "target": "t_turnout",
+    "actual": 0.42734,
+    "predicted": 0.44354
+  },
+  {
+    "siruta": 350,
+    "judet": "Suceava",
+    "target": "t_turnout",
+    "actual": 0.39536,
+    "predicted": 0.38881
+  },
+  {
+    "siruta": 360,
+    "judet": "Teleorman",
+    "target": "t_turnout",
+    "actual": 0.42375,
+    "predicted": 0.4454
+  },
+  {
+    "siruta": 370,
+    "judet": "Timiș",
+    "target": "t_turnout",
+    "actual": 0.43744,
+    "predicted": 0.42793
+  },
+  {
+    "siruta": 380,
+    "judet": "Tulcea",
+    "target": "t_turnout",
+    "actual": 0.38681,
+    "predicted": 0.40321
+  },
+  {
+    "siruta": 390,
+    "judet": "Vaslui",
+    "target": "t_turnout",
+    "actual": 0.29076,
+    "predicted": 0.39707
+  },
+  {
+    "siruta": 400,
+    "judet": "Vâlcea",
+    "target": "t_turnout",
+    "actual": 0.44709,
+    "predicted": 0.46066
+  },
+  {
+    "siruta": 410,
+    "judet": "Vrancea",
+    "target": "t_turnout",
+    "actual": 0.40146,
+    "predicted": 0.41841
+  }
+]

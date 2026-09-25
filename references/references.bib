@@ -1,0 +1,350 @@
+% References for RO-Voting-Prediction
+% APA 7th / Chicago Author-Date
+
+% =============================================================================
+% Data sources
+% =============================================================================
+
+@misc{aep2024prezidentiale,
+  author       = {{Autoritatea Electorală Permanentă}},
+  title        = {Rezultate alegeri prezidențiale, turul 1, noiembrie 2024},
+  year         = {2024},
+  url          = {https://www.roaep.ro/prezenta/},
+  note         = {Accessed: 2025-01-15}
+}
+
+@misc{aep2025prezidentiale,
+  author       = {{Autoritatea Electorală Permanentă}},
+  title        = {Rezultate alegeri prezidențiale, turul 1, mai 2025},
+  year         = {2025},
+  url          = {https://www.roaep.ro/prezenta/},
+  note         = {Accessed: 2025-05-21}
+}
+
+@misc{aep2024parlamentare,
+  author       = {{Autoritatea Electorală Permanentă}},
+  title        = {Rezultate alegeri parlamentare, decembrie 2024},
+  year         = {2024},
+  url          = {https://www.roaep.ro/prezenta/},
+  note         = {Accessed: 2025-01-15}
+}
+
+@misc{eurostat_gdp_nuts3,
+  author       = {{Eurostat}},
+  title        = {Gross domestic product (GDP) at current market prices by NUTS 3 regions [nama\_10r\_3gdp]},
+  year         = {2024},
+  url          = {https://ec.europa.eu/eurostat/databrowser/view/nama_10r_3gdp},
+  note         = {Accessed: 2025-01-10}
+}
+
+@misc{eurostat_gva_nuts3,
+  author       = {{Eurostat}},
+  title        = {Gross value added at basic prices by NUTS 3 regions [nama\_10r\_3gva]},
+  year         = {2024},
+  url          = {https://ec.europa.eu/eurostat/databrowser/view/nama_10r_3gva},
+  note         = {Accessed: 2025-01-10}
+}
+
+@misc{eurostat_ltu,
+  author       = {{Eurostat}},
+  title        = {Long-term unemployment by NUTS 2 regions [lfst\_r\_lfu2ltu]},
+  year         = {2024},
+  url          = {https://ec.europa.eu/eurostat/databrowser/view/lfst_r_lfu2ltu},
+  note         = {Accessed: 2025-01-10}
+}
+
+@misc{eurostat_hhinc,
+  author       = {{Eurostat}},
+  title        = {Household income by NUTS 2 regions [nama\_10r\_2hhinc]},
+  year         = {2024},
+  url          = {https://ec.europa.eu/eurostat/databrowser/view/nama_10r_2hhinc},
+  note         = {Accessed: 2025-01-10}
+}
+
+@misc{ins2021census,
+  author       = {{Institutul Național de Statistică}},
+  title        = {Recensământul populației și al locuințelor 2021 (RPL-2021)},
+  year         = {2023},
+  url          = {https://insse.ro/cms/ro/content/recensamantul-populatiei-si-al-locuintelor-2021},
+  note         = {Accessed: 2025-01-10}
+}
+
+% =============================================================================
+% Statistical methods
+% =============================================================================
+
+@book{Aitchison1986,
+  author    = {Aitchison, John},
+  title     = {The Statistical Analysis of Compositional Data},
+  year      = {1986},
+  publisher = {Chapman \& Hall},
+  address   = {London}
+}
+
+@book{Pawlowsky-Glahn2015,
+  author    = {Pawlowsky-Glahn, Vera and Buccianti, Antonella},
+  title     = {Compositional Data Analysis: Theory and Applications},
+  year      = {2011},
+  publisher = {Wiley},
+  address   = {Chichester}
+}
+
+@techreport{Maier2014,
+  author      = {Maier, Marco J.},
+  title       = {{DirichletReg}: {Dirichlet} Regression for Compositional Data in {R}},
+  institution = {Department of Statistics and Mathematics, WU Vienna},
+  year        = {2014},
+  type        = {Research Report Series},
+  number      = {125},
+  url         = {https://epub.wu.ac.at/4077/}
+}
+
+@article{Ward1963,
+  author  = {Ward, Joe H.},
+  title   = {Hierarchical Grouping to Optimize an Objective Function},
+  journal = {Journal of the American Statistical Association},
+  year    = {1963},
+  volume  = {58},
+  number  = {301},
+  pages   = {236--244},
+  doi     = {10.1080/01621459.1963.10500845}
+}
+
+@article{Tibshirani2001,
+  author  = {Tibshirani, Robert and Walther, Guenther and Hastie, Trevor},
+  title   = {Estimating the Number of Clusters in a Data Set via the Gap Statistic},
+  journal = {Journal of the Royal Statistical Society: Series B},
+  year    = {2001},
+  volume  = {63},
+  number  = {2},
+  pages   = {411--423},
+  doi     = {10.1111/1467-9868.00293}
+}
+
+@article{Hennig2007,
+  author  = {Hennig, Christian},
+  title   = {Cluster-wise Assessment of Cluster Stability},
+  journal = {Computational Statistics \& Data Analysis},
+  year    = {2007},
+  volume  = {52},
+  number  = {1},
+  pages   = {258--271},
+  doi     = {10.1016/j.csda.2006.11.025}
+}
+
+@article{Frisch1933,
+  author  = {Frisch, Ragnar and Waugh, Frederick V.},
+  title   = {Partial Time Regressions as Compared with Individual Trends},
+  journal = {Econometrica},
+  year    = {1933},
+  volume  = {1},
+  number  = {4},
+  pages   = {387--401},
+  doi     = {10.2307/1907330}
+}
+
+@article{Lovell1963,
+  author  = {Lovell, Michael C.},
+  title   = {Seasonal Adjustment of Economic Time Series and Multiple Regression Analysis},
+  journal = {Journal of the American Statistical Association},
+  year    = {1963},
+  volume  = {58},
+  number  = {304},
+  pages   = {993--1010},
+  doi     = {10.1080/01621459.1963.10480682}
+}
+
+@article{Cinelli2020,
+  author  = {Cinelli, Carlos and Hazlett, Chad},
+  title   = {Making Sense of Sensitivity: Extending Omitted Variable Bias},
+  journal = {Journal of the Royal Statistical Society: Series B},
+  year    = {2020},
+  volume  = {82},
+  number  = {1},
+  pages   = {39--67},
+  doi     = {10.1111/rssb.12348}
+}
+
+@article{Maddala1983,
+  author  = {Maddala, G. S.},
+  title   = {Limited-Dependent and Qualitative Variables in Econometrics},
+  journal = {Cambridge University Press},
+  year    = {1983},
+  doi     = {10.1017/CBO9780511810176}
+}
+
+% =============================================================================
+% Political science and comparative politics
+% =============================================================================
+
+@article{Rodríguez-Pose2018,
+  author  = {Rodríguez-Pose, Andrés},
+  title   = {The Revenge of the Places That Don't Matter (and What to Do about It)},
+  journal = {Cambridge Journal of Regions, Economy and Society},
+  year    = {2018},
+  volume  = {11},
+  number  = {1},
+  pages   = {189--209},
+  doi     = {10.1093/cjres/rsx024}
+}
+
+@article{Oesch2008,
+  author  = {Oesch, Daniel},
+  title   = {Explaining Workers' Support for Right-Wing Populist Parties in Western Europe},
+  journal = {International Political Science Review},
+  year    = {2008},
+  volume  = {29},
+  number  = {3},
+  pages   = {349--373},
+  doi     = {10.1177/0192512107088390}
+}
+
+@article{Rooduijn2018,
+  author  = {Rooduijn, Matthijs and van Kessel, Stijn and Froio, Caterina and Pirro, Andrea and De Lange, Sarah and Halikiopoulou, Daphne and Lewis, Paul and Mudde, Cas and Taggart, Paul},
+  title   = {The PopuList: An Overview of Populist, Far Right, Far Left and Eurosceptic Parties in Europe},
+  journal = {PopuList},
+  year    = {2018},
+  url     = {https://popu-list.org/}
+}
+
+@book{Mudde2017,
+  author    = {Mudde, Cas and Kaltwasser, Cristóbal Rovira},
+  title     = {Populism: A Very Short Introduction},
+  year      = {2017},
+  publisher = {Oxford University Press},
+  address   = {Oxford}
+}
+
+@book{Norris2019,
+  author    = {Norris, Pippa and Inglehart, Ronald},
+  title     = {Cultural Backlash: Trump, Brexit, and Authoritarian Populism},
+  year      = {2019},
+  publisher = {Cambridge University Press},
+  address   = {Cambridge},
+  doi       = {10.1017/9781108595841}
+}
+
+@article{Iammarino2019,
+  author  = {Iammarino, Simona and Rodríguez-Pose, Andrés and Storper, Michael},
+  title   = {Regional Inequality in Europe: Evidence, Theory and Policy Implications},
+  journal = {Journal of Economic Geography},
+  year    = {2019},
+  volume  = {19},
+  number  = {2},
+  pages   = {273--298},
+  doi     = {10.1093/jeg/lby021}
+}
+
+@book{Nölke2009,
+  author    = {Nölke, Andreas and Vliegenthart, Arjan},
+  title     = {Enlarging the Varieties of Capitalism: The Emergence of Dependent Market Economies in East Central Europe},
+  year      = {2009},
+  journal   = {World Politics},
+  volume    = {61},
+  number    = {4},
+  pages     = {670--702},
+  doi       = {10.1017/S0043887109990098}
+}
+
+@book{Bohle2012,
+  author    = {Bohle, Dorothee and Greskovits, Béla},
+  title     = {Capitalist Diversity on Europe's Periphery},
+  year      = {2012},
+  publisher = {Cornell University Press},
+  address   = {Ithaca, NY}
+}
+
+@article{Enyedi2005,
+  author  = {Enyedi, Zsolt},
+  title   = {The Role of Agency in Cleavage Formation},
+  journal = {European Journal of Political Research},
+  year    = {2005},
+  volume  = {44},
+  number  = {5},
+  pages   = {697--720},
+  doi     = {10.1111/j.1475-6765.2005.00244.x}
+}
+
+@article{Holesch2021,
+  author  = {Holesch, Adam and Kyriazi, Anna},
+  title   = {Democratic Backsliding in the European Union: The Role of the Central and Eastern European Countries},
+  journal = {East European Politics},
+  year    = {2022},
+  volume  = {38},
+  number  = {1},
+  pages   = {1--18},
+  doi     = {10.1080/21599165.2021.1876428}
+}
+
+@article{Cantú2019,
+  author  = {Cantú, Francisco and García-Ponce, Omar},
+  title   = {Partisan Losers' Effects: Perceptions of Electoral Integrity in Mexico},
+  journal = {Electoral Studies},
+  year    = {2015},
+  volume  = {39},
+  pages   = {1--14},
+  doi     = {10.1016/j.electstud.2015.03.004}
+}
+
+% =============================================================================
+% Bayesian computation
+% =============================================================================
+
+@article{Salvatier2016,
+  author  = {Salvatier, John and Wiecki, Thomas V. and Fonnesbeck, Christopher},
+  title   = {Probabilistic Programming in {Python} Using {PyMC3}},
+  journal = {PeerJ Computer Science},
+  year    = {2016},
+  volume  = {2},
+  pages   = {e55},
+  doi     = {10.7717/peerj-cs.55}
+}
+
+% Multiple testing
+% =============================================================================
+
+@article{Benjamini1995,
+  author  = {Benjamini, Yoav and Hochberg, Yosef},
+  title   = {Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing},
+  journal = {Journal of the Royal Statistical Society: Series B (Methodological)},
+  year    = {1995},
+  volume  = {57},
+  number  = {1},
+  pages   = {289--300},
+  doi     = {10.1111/j.2517-6161.1995.tb02031.x}
+}
+
+% Spatial econometrics
+% =============================================================================
+
+@book{Anselin1988,
+  author    = {Anselin, Luc},
+  title     = {Spatial Econometrics: Methods and Models},
+  year      = {1988},
+  publisher = {Kluwer Academic Publishers},
+  address   = {Dordrecht}
+}
+
+@article{Kelejian1999,
+  author  = {Kelejian, Harry H. and Prucha, Ingmar R.},
+  title   = {A Generalized Spatial Two-Stage Least Squares Procedure for Estimating a Spatial Autoregressive Model with Autoregressive Disturbances},
+  journal = {Journal of Real Estate Finance and Economics},
+  year    = {1999},
+  volume  = {17},
+  number  = {1},
+  pages   = {99--121},
+  doi     = {10.1023/A:1007714430488}
+}
+
+% =============================================================================
+% Machine learning (earlier pipeline stages)
+% =============================================================================
+
+@inproceedings{chen2016xgboost,
+  author    = {Chen, Tianqi and Guestrin, Carlos},
+  title     = {{XGBoost}: A Scalable Tree Boosting System},
+  booktitle = {Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining},
+  year      = {2016},
+  pages     = {785--794},
+  doi       = {10.1145/2939672.2939785}
+}

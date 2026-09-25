@@ -1,0 +1,11 @@
+﻿conda : Traceback (most recent call last):
+At line:1 char:151
++ ... ts/tmp.txt; conda run -n proc_env python -c "import bambi; print(bamb ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'bambi'
+
+ERROR conda.cli.main_run:execute(127): `conda run python -c import bambi; print(bambi.__version__)` failed. (See above for error)

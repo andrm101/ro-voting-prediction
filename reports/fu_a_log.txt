@@ -1,0 +1,30 @@
+﻿=================================================================
+Follow-up A â€” Grievance vs Deindustrialisation Collinearity
+=================================================================
+
+  Pearson r(grievance, deindustrialisation) = -0.1779  p = 0.2597
+
+  VIF in M1 predictor matrix:
+               predictor   VIF
+           idx_grievance 2.526
+           idx_modernity 2.237
+            pct_maghiari 1.547
+idx_demographic_pressure 1.340
+  gva_deindustrial_index 1.204
+
+  OLS on AUR 2024 share â€” incremental RÂ²:
+    Grievance alone:           RÂ²=0.012
+    Deindustrialisation alone: RÂ²=0.141
+    Both together:             RÂ²=0.143  (increment = +0.002)
+
+    Î²_grievance  in joint model: +0.0023  p=0.7616
+    Î²_deindustrial in joint model: -0.0181  p=0.0195
+
+  Saved -> 13a_grievance_deindustrial_scatter.png
+  Saved -> reports/13a_grievance_collinearity.csv
+  Saved -> reports/13a_grievance_vif.csv
+
+=================================================================
+FOLLOW-UP A COMPLETE
+=================================================================
+

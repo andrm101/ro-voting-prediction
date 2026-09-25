@@ -1,0 +1,14 @@
+﻿conda : C:\Users\andre\anaconda3\envs\proc_env\Lib\site-packages\arviz\__init__.py:50: FutureWarning: 
+At line:1 char:1
++ conda run -n proc_env python -c "import pymc; print('PyMC', pymc.__ve ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Users\andre\...FutureWarning: :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ArviZ is undergoing a major refactor to improve flexibility and extensibility while maintaining a user-friendly interface.
+Some upcoming changes may be backward incompatible.
+For details and migration guidance, visit: https://python.arviz.org/en/latest/user_guide/migration_guide.html
+  warn(
+
+PyMC 5.28.5
+

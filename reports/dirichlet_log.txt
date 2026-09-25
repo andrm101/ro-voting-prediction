@@ -1,0 +1,295 @@
+﻿=============================================================
+Task 2 — Dirichlet Regression  (N=42 Romanian Judete)
+=============================================================
+
+Loaded: 42 rows x 26 cols
+Composition: 8 categories  sum-to-1 check: min=1.000000 max=1.000000
+
+Fitting M1: Y ~ grievance + modernity + magyari + deindustrial
+  Log-likelihood: 639.22
+  AIC: -1198.43
+
+Fitting M2: M1 + demog_pressure + romi + ltu
+  Log-likelihood: 718.39
+  AIC: -1308.78
+
+LRT M1 vs M2:
+Analysis of Deviance Table
+
+Model 1: DirichReg(formula = Y ~ z_grievance + z_modernity + z_magyari +
+  z_deindustrial, data = df, model = "common")
+Model 2: DirichReg(formula = Y ~ z_grievance + z_modernity + z_magyari +
+  z_deindustrial + z_demog + z_romi + z_ltu, data = df, model = "common")
+
+        Deviance N. par Difference df  Pr(>Chi)    
+Model 1  -1278.4     40                            
+Model 2  -1436.8     64     158.34 24 < 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+=== M1 Coefficient Summary ===
+Call:
+DirichReg(formula = Y ~ z_grievance + z_modernity + z_magyari + z_deindustrial,
+data = df, model = "common")
+
+Standardized Residuals:
+             Min       1Q   Median      3Q     Max
+t_AUR    -1.1463  -0.5215  -0.1593  0.2520  1.3162
+t_PSD    -2.7439  -0.9951   0.0031  0.8196  2.8647
+t_PNL    -1.4361  -0.6044  -0.4234  0.4271  4.5676
+t_USR    -1.9821  -0.6922  -0.2628  0.5151  2.3481
+t_UDMR   -1.3573  -0.7771  -0.6351  0.4140  3.6410
+t_SOS    -1.1199  -0.5273  -0.0962  0.1525  0.6781
+t_POT    -2.0388  -0.3283   0.3340  1.0050  2.8827
+t_OTHER  -1.4604  -0.5529  -0.0778  0.3214  1.0513
+
+------------------------------------------------------------------
+Beta-Coefficients for variable no. 1: t_AUR
+               Estimate Std. Error z value Pr(>|z|)    
+(Intercept)     2.53048    0.09306  27.191   <2e-16 ***
+z_grievance     0.08485    0.15086   0.562   0.5738    
+z_modernity    -0.23250    0.13658  -1.702   0.0887 .  
+z_magyari      -0.08975    0.16225  -0.553   0.5801    
+z_deindustrial  0.28493    0.13114   2.173   0.0298 *  
+------------------------------------------------------------------
+Beta-Coefficients for variable no. 2: t_PSD
+               Estimate Std. Error z value Pr(>|z|)    
+(Intercept)     2.88756    0.09106  31.711  < 2e-16 ***
+z_grievance     0.14297    0.14179   1.008  0.31329    
+z_modernity    -0.24866    0.12269  -2.027  0.04269 *  
+z_magyari      -0.16175    0.17053  -0.949  0.34287    
+z_deindustrial  0.34842    0.12761   2.730  0.00633 ** 
+------------------------------------------------------------------
+Beta-Coefficients for variable no. 3: t_PNL
+               Estimate Std. Error z value Pr(>|z|)    
+(Intercept)     2.29035    0.09471  24.182   <2e-16 ***
+z_grievance     0.01276    0.15633   0.082   0.9349    
+z_modernity    -0.10653    0.15354  -0.694   0.4878    
+z_magyari      -0.05076    0.14199  -0.358   0.7207    
+z_deindustrial  0.25541    0.12142   2.104   0.0354 *  
+------------------------------------------------------------------
+Beta-Coefficients for variable no. 4: t_USR
+                Estimate Std. Error z value Pr(>|z|)    
+(Intercept)     1.870558   0.099027  18.889   <2e-16 ***
+z_grievance     0.002897   0.205080   0.014   0.9887    
+z_modernity    -0.175163   0.158046  -1.108   0.2677    
+z_magyari      -0.063252   0.172227  -0.367   0.7134    
+z_deindustrial  0.335635   0.137809   2.436   0.0149 *  
+------------------------------------------------------------------
+Beta-Coefficients for variable no. 5: t_UDMR
+               Estimate Std. Error z value Pr(>|z|)    
+(Intercept)      0.7721     0.1279   6.038 1.56e-09 ***
+z_grievance      0.2711     0.1847   1.468   0.1422    
+z_modernity      0.6752     0.2935   2.301   0.0214 *  
+z_magyari        1.0260     0.1363   7.530 5.09e-14 ***
+z_deindustrial   0.2327     0.1205   1.931   0.0535 .  
+------------------------------------------------------------------
+Beta-Coefficients for variable no. 6: t_SOS
+               Estimate Std. Error z value Pr(>|z|)    
+(Intercept)     1.65493    0.10171  16.271   <2e-16 ***
+z_grievance     0.05445    0.17540   0.310   0.7562    
+z_modernity    -0.32634    0.14783  -2.208   0.0273 *  
+z_magyari      -0.01100    0.16751  -0.066   0.9476    
+z_deindustrial  0.27821    0.13315   2.089   0.0367 *  
+------------------------------------------------------------------
+Beta-Coefficients for variable no. 7: t_POT
+               Estimate Std. Error z value Pr(>|z|)    
+(Intercept)     1.16018    0.11039  10.510  < 2e-16 ***
+z_grievance    -0.03220    0.16783  -0.192 0.847867    
+z_modernity    -0.07072    0.16990  -0.416 0.677211    
+z_magyari      -0.27247    0.19450  -1.401 0.161256    
+z_deindustrial  0.54317    0.16451   3.302 0.000961 ***
+------------------------------------------------------------------
+Beta-Coefficients for variable no. 8: t_OTHER
+                Estimate Std. Error z value Pr(>|z|)    
+(Intercept)     1.895678   0.098759  19.195   <2e-16 ***
+z_grievance     0.036823   0.183827   0.200    0.841    
+z_modernity    -0.245206   0.151455  -1.619    0.105    
+z_magyari       0.001509   0.161867   0.009    0.993    
+z_deindustrial  0.310777   0.127794   2.432    0.015 *  
+------------------------------------------------------------------
+Significance codes: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Log-likelihood: 639.2 on 40 df (201 BFGS + 2 NR Iterations)
+AIC: -1198, BIC: -1129
+Number of Observations: 42
+Link: Log
+Parametrization: common
+  [M2] summary() failed (Hessian convergence) — SEs unavailable
+
+=== M1 Significant predictors (p < 0.10) ===
+ category           term estimate    se        p sig
+   t_UDMR      z_magyari    1.026 0.136 5.09e-14 ***
+    t_POT z_deindustrial    0.543 0.165 9.61e-04 ***
+    t_PSD z_deindustrial    0.348 0.128 6.33e-03  **
+    t_USR z_deindustrial    0.336 0.138 1.49e-02   *
+  t_OTHER z_deindustrial    0.311 0.128 1.50e-02   *
+   t_UDMR    z_modernity    0.675 0.293 2.14e-02   *
+    t_SOS    z_modernity   -0.326 0.148 2.73e-02   *
+    t_AUR z_deindustrial    0.285 0.131 2.98e-02   *
+    t_PNL z_deindustrial    0.255 0.121 3.54e-02   *
+conda : Warning in DR_data(df[, comp_cols]) :
+At line:1 char:1
++ conda run -n r-dirichlet Rscript scripts/06_profiles/dirichlet_regres ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Warning in DR_data(df[, comp_cols]) ::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  some entries are 0 or 1 => transformation forced
+Warning message:
+`geom_errorbarh()` was deprecated in ggplot2 4.0.0.
+ℹ Please use the `orientation` argument of `geom_errorbar()` instead. 
+`height` was translated to `width`.
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Warning in DR_data(df_train[, comp_cols]) :
+  some entries are 0 or 1 => transformation forced
+Error in rbind(deparse.level, ...) : 
+  numbers of columns of arguments do not match
+Calls: rbind -> rbind
+Execution halted
+
+ERROR conda.cli.main_run:execute(127): `conda run Rscript scripts/06_profiles/dirichlet_regression.R` failed. (See above for error)
+    t_SOS z_deindustrial    0.278 0.133 3.67e-02   *
+    t_PSD    z_modernity   -0.249 0.123 4.27e-02   *
+   t_UDMR z_deindustrial    0.233 0.120 5.35e-02   .
+    t_AUR    z_modernity   -0.232 0.137 8.87e-02   .
+
+=== M2 Significant predictors (p < 0.10) ===
+  (SEs unavailable — see point estimates in tidy_m2)
+
+=== Deviance fit (LR R²) ===
+M1:
+$LR_stat
+[1] 334.5555
+
+$LR_pvalue
+[1] 4.466245e-51
+
+$R2_Maddala
+[1] 0.9996528
+
+M2:
+$LR_stat
+[1] 492.8979
+
+$LR_pvalue
+[1] 8.802869e-83
+
+$R2_Maddala
+[1] 0.999992
+
+
+=== RMSE (observed vs fitted, M2) ===
+  t_AUR   t_PSD   t_PNL   t_USR  t_UDMR   t_SOS   t_POT t_OTHER 
+ 0.0265  0.0557  0.0551  0.0287  0.0242  0.0156  0.0238  0.0207 
+
+  Saved -> 08a_dirichlet_coefs.png
+  Saved -> 08a_dirichlet_fitted_obs.png
+  Saved -> 08a_dirichlet_cluster_pred.png
+
+=== Benjamini-Hochberg FDR correction (M1 non-intercepts) ===
+  Tests conducted: 32
+  Survive FDR q<0.10: 5
+ category           term estimate        p    p_adj sig_bh
+   t_UDMR      z_magyari    1.026 5.09e-14 1.63e-12 q<0.10
+    t_POT z_deindustrial    0.543 9.61e-04 1.54e-02 q<0.10
+    t_PSD z_deindustrial    0.348 6.33e-03 6.75e-02 q<0.10
+    t_USR z_deindustrial    0.336 1.49e-02 9.61e-02 q<0.10
+  t_OTHER z_deindustrial    0.311 1.50e-02 9.61e-02 q<0.10
+
+=== Leave-One-Out Cross-Validation (M1) ===
+  M1 mean Aitchison dist (LOO): 3.6746  (SD=4.8122)
+  Null mean Aitchison dist:     4.4736
+  LOO skill score (1 - M1/null): 0.179
+  Saved -> reports/08b_dirichlet_loo.csv
+
+=== ALR -> Marginal Effects (raw share space, +1 SD at grand mean) ===
+  Marginal effects (pp change in predicted vote share per +1 SD):
+           predictor t_AUR t_PSD t_PNL t_USR t_UDMR t_SOS t_POT t_OTHER
+     Grievance Index  0.15  1.91 -0.96 -0.72   0.72 -0.18 -0.52  -0.409
+     Modernity Index -1.32 -2.30  0.89 -0.12   4.43 -1.23  0.48  -0.821
+            % Magyar -1.23 -3.58 -0.39 -0.38   6.28  0.12 -1.09   0.278
+ Deindustrialisation -0.65  0.85 -0.94  0.17  -0.28 -0.32  1.25  -0.081
+  Saved -> reports/08c_dirichlet_marginal_effects.csv
+
