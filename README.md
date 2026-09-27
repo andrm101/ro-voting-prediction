@@ -8,6 +8,20 @@ ML-driven model predicting Romanian voting patterns at sub-national level using 
 - Local (county councils + mayors): 2020, 2024
 - European Parliament: 2019, 2024
 
+📖 **[Full abstract, 7 empirical findings, and hypothesis-testing methodology → project Wiki](https://github.com/andrm101/ro-voting-prediction/wiki)**
+
+## Results at a glance
+
+<p align="center">
+  <img src="figures/06c_vote_profiles_final.png" width="48%" alt="Five stable voter-profile clusters" />
+  <img src="figures/09a_swing_heatmap.png" width="48%" alt="AUR 2020-2024 swing heatmap" />
+</p>
+
+<p align="center">
+  <img src="figures/10c_ger_ranked.png" width="48%" alt="Ghost electorate rate, ranked by county" />
+  <img src="figures/07a_partial_corr_clusters.png" width="48%" alt="Georgescu-Simion bloc persistence, partial correlation" />
+</p>
+
 ## Architecture
 
 ```mermaid
