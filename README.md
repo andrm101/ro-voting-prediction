@@ -10,6 +10,12 @@ ML-driven model predicting Romanian voting patterns at sub-national level using 
 
 📖 **[Full abstract, 7 empirical findings, and hypothesis-testing methodology → project Wiki](https://github.com/andrm101/ro-voting-prediction/wiki)**
 
+## The project in 66 seconds
+
+[![Animated map of the AUR swing and Romania's five voter profiles](docs/media/ro-voting-explainer-preview.gif)](docs/media/ro-voting-explainer.mp4)
+
+[Watch the full explainer (MP4, 66 s)](docs/media/ro-voting-explainer.mp4). It covers the AUR swing, the five voter profiles, the Georgescu-to-Simion transfer, the ghost electorate and the Bayesian prediction. The video is drawn in code from the project's own outputs (`assets/motion/`).
+
 ## Results at a glance
 
 <p align="center">
